@@ -113,37 +113,6 @@ public class binary_trees {
         return ans;
     }
 
-    // Iterative postorder traversal using two stacks
-    public static List<Integer> postOrder2Stack(TreeNode root) {
-        List<Integer> ans = new ArrayList<>();
-
-        if (root == null) {
-            return ans;
-        }
-
-        Stack<TreeNode> st1 = new Stack<>();
-        Stack<TreeNode> st2 = new Stack<>();
-        st1.push(root);
-
-        while (!st1.isEmpty()) {
-            TreeNode curr = st1.pop();
-            st2.push(curr);
-
-            if (curr.left != null) {
-                st1.push(curr.left);
-            }
-            if (curr.right != null) {
-                st1.push(curr.right);
-            }
-        }
-
-        while (!st2.isEmpty()) {
-            ans.add(st2.pop().val);
-        }
-
-        return ans;
-    }
-
     // Level order traversal using queue (BFS)
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> ans = new ArrayList<>();
@@ -231,8 +200,67 @@ public class binary_trees {
     }
 
     // Post-order Traversal of Binary Tree using 2 stack
+    public static List<Integer> postOrder2Stack(TreeNode root) {
+        List<Integer> ans = new ArrayList<>();
+
+        if (root == null) {
+            return ans;
+        }
+
+        Stack<TreeNode> st1 = new Stack<>();
+        Stack<TreeNode> st2 = new Stack<>();
+        st1.push(root);
+
+        while (!st1.isEmpty()) {
+            TreeNode curr = st1.pop();
+
+            st2.push(curr);
+
+            if(curr.left != null) {
+                st1.push(curr.left);
+            }
+
+            if(curr.right != null) {
+                st1.push(curr.right);
+            }
+        }
+
+        while (!st2.isEmpty()) {
+            ans.add(st2.pop().val);
+        }
+
+        return ans;
+    }
 
     // Post-order Traversal of Binary Tree using 1 stack
+    public static List<Integer> postOrder1Stack(TreeNode root) {
+        List<Integer> ans = new ArrayList<>();
+
+        if(root == null) return ans;
+
+        Stack<TreeNode> st = new Stack<>();
+
+        TreeNode curr = root;
+        TreeNode lastVisited = null;
+
+        while(curr != null || !st.isEmpty()){
+            while(curr != null){
+                st.push(curr);
+                curr = curr.left;
+            }
+
+            TreeNode peekNode = st.peek();
+
+            if(peekNode.right != null && lastVisited != peekNode.right) {
+                curr = peekNode.right;
+            } else{
+                ans.add(peekNode.val);
+                lastVisited = st.pop();
+            }
+        }
+
+        return ans;
+    }
 
     // Find maximum depth/height of binary tree
     public int maxDepth(TreeNode root) {
