@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class binary_serach_tree {
     public class TreeNode {
@@ -210,4 +213,132 @@ public class binary_serach_tree {
         }
         return predecessor;
     }
+
+    // Merge 2 BST's
+    public List<Integer> merge(TreeNode root1, TreeNode root2){
+        List<Integer> list1 = new ArrayList<>();
+        List<Integer> list2 = new ArrayList<>();
+
+        inorderTraversal(root1, list1);
+        inorderTraversal(root2, list2);
+
+        return mergeSorted(list1, list2);
+    }
+
+    public void inorderTraversal(TreeNode root, List<Integer> list) {
+        if(root == null) return;
+
+        inorderTraversal(root.left, list);
+        list.add(root.val);
+        inorderTraversal(root.right, list);
+    }
+
+    public List<Integer> mergeSorted(List<Integer> a, List<Integer> b) {
+        List<Integer> ans = new ArrayList<>();
+        int i = 0, j = 0;
+
+        while (i < a.size() && j < b.size()) {
+            if(a.get(i) <= b.get(j)) {
+                ans.add(a.get(i));
+                i++;
+            } else{
+                ans.add(b.get(j));
+                j++;
+            }
+        }
+
+        while(i < a.size()) {
+            ans.add(a.get(i));
+            i++;
+        }
+
+        while(j < b.size()) {
+            ans.add(b.get(j));
+            j++;
+        }
+
+        return ans;
+    }
+
+    // Two Sum In BST | Check if there exists a pair with Sum K
+    public boolean helper(TreeNode root, int k, HashSet<Integer> set){
+        if(root == null) return false;
+
+        if(set.contains(k-root.val)) {
+            return true;
+        }
+
+        set.add(root.val);
+
+        return helper(root.left, k, set) || helper(root.right, k, set);
+    }
+
+    public boolean findTarget(TreeNode root, int k) {
+        HashSet<Integer> set = new HashSet<>();
+        return helper(root, k, set);
+    }
+
+    // Correct BST with two nodes swapped
+    TreeNode first = null;
+    TreeNode second = null;
+    TreeNode prev = null;
+
+    public void HelperRecoverTree(TreeNode root) {
+        if(root == null) return;
+
+        HelperRecoverTree(root.left);
+        if(prev != null && prev.val > root.val) {
+            if(first == null) first = prev;
+            second = root;
+        }
+
+        prev = root;
+        HelperRecoverTree(root.right);
+    }
+
+    public void recoverTree(TreeNode root) {
+        HelperRecoverTree(root);
+
+        int temp = first.val;
+        first.val = second.val;
+        second.val = temp;
+    }
+
+    // Largest BST in Binary Tree
+    int maxSum = 0;
+
+    public int[] postOrder(TreeNode root) {
+        if(root == null){
+            return new int[]{
+                Integer.MAX_VALUE,
+                Integer.MIN_VALUE,
+                0
+            }; // min, max, currSum
+        }
+
+        int[] left = postOrder(root.left);
+        int[] right = postOrder(root.right);
+
+        if(left == null || right == null || root.val <= left[1] || root.val >= right[0]) {
+            return null;
+        }
+
+        int currSum = left[2] + right[2] + root.val;
+        maxSum = Math.max(maxSum, currSum);
+
+        int currMin = Math.min(root.val, left[0]);
+        int currMax = Math.max(root.val, right[1]);
+
+        return new int[]{
+            currMin,
+            currMax,
+            currSum
+        };
+    }
+    
+    public int maxSumBST(TreeNode root) {
+        postOrder(root);
+        return maxSum;
+    }
+
 }
