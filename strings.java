@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.HashSet;
+
 public class strings {
     // Remove Outermost Parentheses
     public String removeOuterParentheses(String s) {
@@ -65,7 +68,6 @@ public class strings {
 
     // Isomorphic Strings
     public boolean isIsomorphic(String s, String t) {
-        
     }
 
     // Rotated Substring
@@ -80,6 +82,129 @@ public class strings {
 
     // Check if two strings are anagram of each other
     public boolean isAnagram(String s, String t) {
-        
+        if (s.length() != t.length()) return false;
+
+        int[] arr = new int[26];
+
+        for(int i = 0; i < s.length(); i++){
+            arr[s.charAt(i) - 'a']++;
+            arr[t.charAt(i) - 'a']--;
+        }
+
+        for(int check : arr){
+            if(check != 0){
+                return false;
+            }
+        }
+
+        return true;
     }
+
+    // Sort Characters by Frequency
+
+
+    // Maximum Nesting Depth of the Parentheses
+
+    // Roman to Integer
+    public int romanToInt(String s) {
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        map.put('I', 1);
+        map.put('V', 5);
+        map.put('X', 10);
+        map.put('L', 50);
+        map.put('C', 100);
+        map.put('D', 500);
+        map.put('M', 1000);
+
+        int sum = 0;
+        for(int i = 0; i < s.length(); i++){
+            int current = map.get(s.charAt(i));
+            if( i + 1 < s.length() ){
+                int next = map.get(s.charAt(i + 1));
+
+                if(current < next){
+                    sum -= current;
+                } else{
+                    sum += current;
+                }
+            } else{
+                sum += current;
+            }
+        }
+
+        return sum;
+    }
+
+    // String to Integer (atoi)
+    public int myAtoi(String s) {
+        int i = 0;
+        int n = s.length();
+
+        while(i<n && s.charAt(i)==' '){
+            i++;
+        }
+
+        int sign = 1;
+        if(i < n && (s.charAt(i)=='+' || s.charAt(i) == '-')){
+            if(s.charAt(i) == '-') sign = -1;
+            i++;
+        }
+
+        long ans = 0;
+        while(i < n && Character.isDigit(s.charAt(i))) {
+            int digit = s.charAt(i) - '0';
+            ans = ans * 10 + digit;
+
+            if(sign * ans > Integer.MAX_VALUE) {
+                return Integer.MAX_VALUE;
+            }
+
+            if(sign * ans < Integer.MIN_VALUE) {
+                return Integer.MIN_VALUE;
+            }
+
+            i++;
+        }
+        return (int)(sign * ans);
+    }
+
+    // Count Number of Substrings
+    // Problem Statement: You are given a string s and a positive integer k. Return the number of substrings that contain exactly k distinct characters.
+    public int substringsWithKDistinct(String s, int k) {
+        return atMostKdifferentCharacters(s, k) - atMostKdifferentCharacters(s, k - 1);
+    }
+
+    public int atMostKdifferentCharacters(String s, int k) {
+        if(k < 0) return 0;
+
+        int n = s.length();
+        int left = 0;
+        int count = 0;
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        for(int right = 0; right < n; right++){
+            char ch = s.charAt(right);
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+
+            while(map.size() > k){
+                char leftCh = s.charAt(left);
+                map.put(leftCh, map.get(leftCh) - 1);
+                if(map.get(leftCh) == 0){
+                    map.remove(leftCh);
+                }
+                left++;
+            }
+
+            count += (right - left + 1);
+        }
+        return count;
+    }
+
+
+    // Longest Palindromic Substring
+
+    // Sum of Beauty of All Substrings
+
+    // Reverse every word in a string - (Repeated) : reverseWords(String s)
 }

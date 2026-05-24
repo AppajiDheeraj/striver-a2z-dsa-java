@@ -225,6 +225,38 @@ public class sliding_window_2_pointer {
         return maxLen;
     }
 
+    // Count Substrings With Exactly K Distinct Characters
+    public int substringsWithKDistinct(String s, int k) {
+        return atMostKdifferentCharacters(s, k) - atMostKdifferentCharacters(s, k - 1);
+    }
+
+    public int atMostKdifferentCharacters(String s, int k) {
+        if(k < 0) return 0;
+
+        int n = s.length();
+        int left = 0;
+        int count = 0;
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        for(int right = 0; right < n; right++){
+            char ch = s.charAt(right);
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+
+            while(map.size() > k){
+                char leftCh = s.charAt(left);
+                map.put(leftCh, map.get(leftCh) - 1);
+                if(map.get(leftCh) == 0){
+                    map.remove(leftCh);
+                }
+                left++;
+            }
+
+            count += (right - left + 1);
+        }
+
+        return count;
+    }
+
     // Subarrays with K Different Integers
     public int atMostKdifferentIntegers(int[] nums, int k){
         int n = nums.length;
