@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.PriorityQueue;
 
 public class strings {
     // Remove Outermost Parentheses
@@ -68,6 +69,22 @@ public class strings {
 
     // Isomorphic Strings
     public boolean isIsomorphic(String s, String t) {
+        int[] mapS = new int[256];
+        int[] mapT = new int[256];
+
+        for(int i = 0; i < s.length(); i++){
+            char ch1 = s.charAt(i);
+            char ch2 = t.charAt(i);
+
+            if(mapS[ch1] != mapT[ch2]){
+                return false;
+            }
+
+            mapS[ch1] = i + 1;
+            mapT[ch2] = i + 1;
+        }
+
+        return true;
     }
 
     // Rotated Substring
@@ -101,9 +118,49 @@ public class strings {
     }
 
     // Sort Characters by Frequency
+    public String frequencySort(String s) {
+        HashMap<Character, Integer> map = new HashMap<>();
 
+        for(char c : s.toCharArray()){
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+
+        PriorityQueue<Character> pq = new PriorityQueue<>(
+            (a, b) -> map.get(b) - map.get(a)
+        );
+
+        pq.addAll(map.keySet());
+
+        StringBuilder ans = new StringBuilder();
+
+        while (!pq.isEmpty()) {
+            char ch = pq.poll();
+            int freq = map.get(ch);
+
+            for(int i = 0; i < freq; i++){
+                ans.append(ch);
+            }
+        }
+
+        return ans.toString();
+    }
 
     // Maximum Nesting Depth of the Parentheses
+    public int maxDepth(String s) {
+        int depth = 0;
+        int maxDepth = 0;
+
+        for(char ch : s.toCharArray()){
+            if(ch == '('){
+                depth++;
+                maxDepth = Math.max(maxDepth, depth);
+            } else if(ch == ')'){
+                depth--;
+            }
+        }
+
+        return maxDepth;
+    }
 
     // Roman to Integer
     public int romanToInt(String s) {
@@ -203,8 +260,63 @@ public class strings {
 
 
     // Longest Palindromic Substring
+    public String longestPalindrome(String s) {
+        if (s == null || s.length() < 1) {
+            return "";
+        }
+
+        int start = 0;
+        int end = 0;
+
+         for (int i = 0; i < s.length(); i++) {
+            int len1 = expandFromCenter(s, i, i);
+            int len2 = expandFromCenter(s, i, i + 1);
+            int len = Math.max(len1, len2);
+
+            if (len > end - start) {
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
+            }
+         }
+
+         return s.substring(start, end + 1);
+    }
+
+    private int expandFromCenter(String s, int left, int right){
+        while(left >= 0 && right < s.length() && s.charAt(right) == s.charAt(left)) {
+            left--;
+            right++;
+        }
+
+        return right - left - 1;
+    }
 
     // Sum of Beauty of All Substrings
+    public int beautySum(String s) {
+        int n = s.length();
+        int result = 0;
+
+        for(int i = 0; i < n; i++){
+            int[] freq = new int[26];
+            for(int j = i; j < n; j++){
+                freq[s.charAt(j) - 'a']++;
+
+                int maxFreq = 0;
+                int minFreq = Integer.MAX_VALUE;
+
+                for(int k = 0; k < 26; k++){
+                    if(freq[k] > 0){
+                        maxFreq = Math.max(maxFreq, freq[k]);
+                        minFreq = Math.min(minFreq, freq[k]);
+                    }
+                }
+
+                result += (maxFreq - minFreq);
+            }
+        }
+
+        return result;
+    }
 
     // Reverse every word in a string - (Repeated) : reverseWords(String s)
 }
