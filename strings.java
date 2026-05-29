@@ -318,4 +318,258 @@ public class strings {
     }
 
     // Reverse every word in a string - (Repeated) : reverseWords(String s)
+
+    //----------------
+    //  Hard Problems
+    //----------------
+
+    // Minimum number of bracket reversals to make an expression balanced
+    public int minAddToMakeValid(String s) {
+        int openNeeded = 0;
+        int closeNeeded = 0;
+
+        for(int i = 0; i < s.length(); i++){
+            char c = s.charAt(i);
+
+            if(c == '('){
+                closeNeeded++;
+            } else{
+                if (closeNeeded > 0){
+                    closeNeeded--;
+                } else{
+                    openNeeded++;
+                }
+            }
+        }
+        return openNeeded + closeNeeded;
+    }
+
+    // Count and say
+    public String countAndSay(int n) {
+        if(n <= 0) return "";
+        String current = "1";
+
+        for(int i = 1 ; i < n; i++){
+            StringBuilder nextString = new StringBuilder();
+            int len = current.length();
+            int count = 1;
+
+            for(int j = 1; j < len; j++){
+                if (current.charAt(j) == current.charAt(j - 1)){
+                    count++;
+                } else{
+                    nextString.append(count).append(current.charAt(j - 1));
+                    count = 1;
+                }
+            }
+
+            nextString.append(count).append(current.charAt(len - 1));
+            current = nextString.toString();
+        }
+
+        return current;
+    }
+
+    // Rabin Karp Algorithm - Repeated String Match
+    public int repeatedStringMatch(String a, String b) {
+        int n = a.length();
+        int m = b.length();
+        
+        int[] lps = computeLPS(b);
+        
+        int i = 0;
+        int j = 0;
+
+        while (i < n + m) {
+            if (a.charAt(i % n) == b.charAt(j)) {
+                i++;
+                j++;
+            }
+            
+            if (j == m) {
+                return (i - 1)/n + 1;
+            }
+
+            if (i < n + m && a.charAt(i % n) != b.charAt(j)) {
+                if (j != 0) {
+                    j = lps[j - 1];
+                } else {
+                    i++;
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    private int[] computeLPS(String pattern) {
+        int m = pattern.length();
+        int[] lps = new int[m];
+        int len = 0;
+        int i = 1;
+        
+        while (i < m) {
+            if (pattern.charAt(i) == pattern.charAt(len)) {
+                len++;
+                lps[i] = len;
+                i++;
+            } else {
+                if (len != 0) {
+                    len = lps[len - 1];
+                } else {
+                    lps[i] = 0;
+                    i++;
+                }
+            }
+        }
+        return lps;
+    }
+
+    // Z function + Revision
+    public int[] zFunction(String s) {
+        int n = s.length();
+        int[] z = new int[n];
+
+        int left = 0;
+        int right = 0;
+
+        for (int i = 1; i < n; i++) {
+            if (i <= right) {
+                z[i] = Math.min(right - i + 1, z[i - left]);
+            }
+
+            while (i + z[i] < n && s.charAt(z[i]) == s.charAt(i + z[i])) {
+                z[i]++;
+            }
+
+            if (i + z[i] - 1 > right) {
+                left = i;
+                right = i + z[i] - 1;
+            }
+        }
+
+        return z;
+    }
+
+    // KMP Algorithm or LPS array
+    public int strStr(String haystack, String needle) {
+        int n = haystack.length();
+        int m = needle.length();
+
+        if(m > n) return -1;
+
+        int d = 256; // Base value for the rolling hash (number of characters in the alphabet)
+        int q = 101; // A prime number for modulo operations to prevent overflow
+
+        int needleHash = 0; // Hash value for needle
+        int hayHash = 0;    // Hash value for haystack window
+        int h = 1;          // The value of d^(m-1) % q
+
+        for(int i = 0; i < m - 1; i++){
+            h = (h * d) % q;
+        }
+
+        for (int i = 0; i < m; i++) {
+            needleHash = (d * needleHash + needle.charAt(i)) % q;
+            hayHash = (d * hayHash + haystack.charAt(i)) % q;
+        }
+
+        for (int i = 0; i <= n - m; i++) {
+            if (needleHash == hayHash) {
+                int j;
+                for(j = 0; j < m; j++){
+                    if(haystack.charAt(i + j) != needle.charAt(j)){
+                        break;
+                    }
+                }
+                if(j == m) return i;
+            }
+
+            if (i < n - m) {
+                hayHash = (d * (hayHash - haystack.charAt(i) * h) + haystack.charAt(i + m)) % q;
+
+                if(hayHash < 0) {
+                    hayHash = (hayHash + q);
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    // Shortest Palindrome + Revision
+    public String shortestPalindrome(String s) {
+        String reversed = new StringBuilder(s).reverse().toString();
+        String combined = s + "#" + reversed;
+
+        int[] lps = new int[combined.length()];
+
+        for (int i = 1; i < combined.length(); i++) {
+            int length = lps[i - 1];
+
+            while (length > 0 && combined.charAt(i) != combined.charAt(length)) {
+                length = lps[length - 1];
+            }
+
+            if (combined.charAt(i) == combined.charAt(length)) {
+                length++;
+            }
+
+            lps[i] = length;
+        }
+
+        int palindromeLength = lps[combined.length() - 1];
+        String suffix = s.substring(palindromeLength);
+
+        return new StringBuilder(suffix).reverse().toString() + s;
+    }
+
+    // Longest happy prefix
+    public String longestPrefix(String s) {
+        int n = s.length();
+        int[] lps = new int[n];
+
+        int len = 0;
+        int i = 1;
+
+        while (i < n) {
+            if(s.charAt(i) == s.charAt(len)) {
+                len++;
+                lps[i] = len;
+                i++;
+            } else{
+                if(len != 0){
+                    len = lps[len - 1];
+                } else{
+                    lps[i] = 0;
+                    i++;
+                }
+            }
+        }
+        int longestHappyPrefixLength = lps[n - 1];
+        return s.substring(0, longestHappyPrefixLength);
+    }
+
+    // Count Palindromic Subsequences
+    private int expandFromCenterHelper(String s, int left, int right) {
+        int count = 0;
+        while(left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)){
+            count++;
+            left--;
+            right++;
+        }
+        return count;
+    }
+    
+     public int countSubstrings(String s) {
+        if(s == null || s.length() == 0) return 0;
+        int totalPalindromes = 0;
+
+        for(int i = 0; i < s.length(); i++){
+            totalPalindromes += expandFromCenterHelper(s, i, i);
+            totalPalindromes += expandFromCenterHelper(s, i, i + 1);
+        }
+
+        return totalPalindromes;
+     }
 }
