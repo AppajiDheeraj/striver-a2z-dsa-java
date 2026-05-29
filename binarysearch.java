@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class binarysearch {
     public int search(int[] nums, int target) {
         int left = 0;
@@ -303,8 +306,459 @@ public class binarysearch {
         return -1;
     }
 
-    //
+    // Koko eating bananas
+    private long totalHours(int[] piles, int speed) {
+        long hours = 0;
+
+        for(int i = 0; i < piles.length; i++){
+            hours += (piles[i] + speed - 1)/ speed; // ceil(pile/speed)
+        }
+
+        return hours;
+    }
+    public int minEatingSpeed(int[] piles, int h) {
+        int low = 1;
+        int high = 0;
+
+        for (int pile : piles) {
+            high = Math.max(high, pile);
+        }
+
+        int ans = high;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if(totalHours(piles, mid) <= h){
+                ans = mid;
+                high = mid - 1;
+            } else{
+                low = mid + 1;
+            }
+        }
+
+        return ans;
+    }
+
+    // Minimum days to make M bouquets
+    private boolean canMakeBouquets(int[] bloomDay, int m, int k, int day) {
+        int bouquets = 0;
+        int consecutiveFlowers = 0;
+
+        for(int bDay : bloomDay) {
+            if(bDay <= day){
+                consecutiveFlowers++;
+                if(consecutiveFlowers == k){
+                    bouquets++;
+                    consecutiveFlowers = 0;
+                }
+            } else{
+                consecutiveFlowers = 0;
+            }
+
+            if (bouquets >= m) {
+                return true;
+            }
+        }
+        return bouquets >= m;
+    }
     
+    public int minDays(int[] bloomDay, int m, int k) {
+        if ((long) m * k > bloomDay.length) {
+            return -1;
+        }
+
+        int low = Integer.MAX_VALUE;
+        int high = Integer.MIN_VALUE;
+        for (int day : bloomDay) {
+            low = Math.min(low, day);
+            high = Math.max(high, day);
+        }
+
+        int ans = -1;
+
+        while (low <= high) {
+            int mid = low + (high - low)/2;
+
+            if(canMakeBouquets(bloomDay, m, k, mid)) {
+                ans = mid;
+                high = mid - 1;
+            } else{
+                low = mid + 1;
+            }
+        }
+
+        return ans;
+    }
+
+    // Find the smallest divisor
+    private int computeSum(int[] nums, int divisor) {
+        int sum = 0;
+        for (int num : nums) {
+            sum += (num + divisor - 1) / divisor;
+        }
+        return sum;
+    }
+
+    public int smallestDivisor(int[] nums, int threshold) {
+        int low = 1;
+        int high = 0;
+
+        for(int num : nums){
+            high = Math.max(num, high);
+        }
+
+        int ans = high;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if(computeSum(nums, mid) <= threshold){
+                ans = mid;
+                high = mid - 1;
+            } else{
+                low = mid + 1;
+            }
+        }
+
+        return ans;
+    }
+
+    // Capacity to Ship Packages Within D Days
+    private boolean canShip(int[] weights, int maxDays, int capacity) {
+        int daysNeeded = 1;
+        int currentLoad = 0;
+        
+        for (int i = 0; i < weights.length; i++) {
+            if (currentLoad + weights[i] > capacity) {
+                daysNeeded++;
+                currentLoad = 0;
+            }
+            currentLoad += weights[i];
+            
+            if (daysNeeded > maxDays) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+    public int shipWithinDays(int[] weights, int days) {
+        int low = 0;
+        int high = 0;
+        
+        for (int i = 0; i < weights.length; i++) {
+            low = Math.max(low, weights[i]);
+            high += weights[i];
+        }
+        
+        int ans = high;
+        
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            
+            if (canShip(weights, days, mid)) {
+                ans = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }        
+        return ans;
+    }
+
+    // Kth Missing Positive Number
+    public int findKthPositive(int[] arr, int k) {
+        int low = 0;
+        int high = arr.length - 1;
+
+        while(low <= high){
+            int mid = low + (high - low) / 2;
+            int missingCount = arr[mid] - (mid + 1);
+
+            if(missingCount < k){
+                low = mid + 1;
+            } else{
+                high = mid - 1;
+            }
+        }
+
+        return k + low;
+    }
+
+    // Aggressive Cows
+    private static boolean canPlaceCows(int[] stalls, int cows, int dist){
+        int cowsPlaced = 1;
+        int lastPlacedPosition = stalls[0];
+
+        for(int i = 1; i < stalls.length; i++){
+            if(stalls[i] - lastPlacedPosition >= dist) {
+                cowsPlaced++;
+                lastPlacedPosition = stalls[i];
+            }
+
+            if(cowsPlaced >= cows){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static int aggressiveCows(int[] stalls, int k) {
+        Arrays.sort(stalls);
+
+        int n = stalls.length;
+        int low = 1;
+        int high = stalls[n-1] - stalls[0];
+        int ans = 0;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if(canPlaceCows(stalls, k, mid)){
+                ans = mid;
+                low = mid + 1;
+            } else{
+                high = mid - 1;
+            }
+        }
+
+        return ans;
+    }
+
+    // Book Allocation Problem
+    private static int countStudents(int[] arr, int maxPagesAllowed) {
+        int students = 1;
+        int currentStudentPages = 0;
+
+        for (int pages : arr) {
+            if (currentStudentPages + pages <= maxPagesAllowed) {
+                currentStudentPages += pages;
+            } else {
+                students++;
+                currentStudentPages = pages;
+            }
+        }
+
+        return students;
+    }
+
+    public static int findPages(int[] arr, int n, int m) {
+        if(m > n) return -1;
+
+        int low = 0;
+        int high = 0;
+
+        for(int pages : arr){
+            low = Math.max(low, pages);
+            high += pages;
+        }
+
+        int ans = low;
+        while(low <= high){
+            int mid = low + (high - low) / 2;
+
+            if(countStudents(arr, mid) <= m){
+                ans = mid;
+                high = mid - 1;
+            } else{
+                low = mid + 1;
+            }
+        }
+        return ans;
+    }
+
+    // Split array - largest sum
+    private int countSubarrays(int[] nums, int maxTargetSum) {
+        int subarrays = 1;
+        int currentSubarraySum = 0;
+        
+        for (int num : nums) {
+            if (currentSubarraySum + num <= maxTargetSum) {
+                currentSubarraySum += num;
+            } else {
+                subarrays++;
+                currentSubarraySum = num;
+            }
+        }
+        
+        return subarrays;
+    }
+
+    public int splitArray(int[] nums, int k) {
+        int low = 0;
+        int high = 0;
+        
+        for (int num : nums) {
+            low = Math.max(low, num);
+            high += num;
+        }
+        
+        int ans = low;
+        
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            
+            if (countSubarrays(nums, mid) <= k) {
+                ans = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        
+        return ans;
+    }
+
+    // Painter's Partition
+    private static int countPainters(ArrayList<Integer> boards, int maxTimeAllowed) {
+        int painters = 1;
+        int currentTimeUnits = 0;
+
+        for (int board : boards) {
+            if (currentTimeUnits + board <= maxTimeAllowed) {
+                currentTimeUnits += board;
+            } else {
+                painters++;
+                currentTimeUnits = board;
+            }
+        }
+
+        return painters;
+    }
+
+    public static int findLargestMinDistance(ArrayList<Integer> boards, int k) {
+        int low = 0;
+        int high = 0;
+
+        for (int board : boards) {
+            low = Math.max(low, board);
+            high += board;
+        }
+
+        int ans = low;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (countPainters(boards, mid) <= k) {
+                ans = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        return ans;
+    }
+
+    // Minimize Max Distance to Gas Station
+    public static int numberOfGasStationsRequired(double dist, int[] arr){
+        int count = 0;
+        for(int i = 1; i < arr.length; i++){
+            int numberInBetween = (int)((arr[i] - arr[i - 1]) / dist);
+            if ((arr[i] - arr[i - 1]) == (dist * numberInBetween)) {
+                numberInBetween--;
+            }
+            count += numberInBetween;
+        }
+        return count;
+    }
+
+    public static double minimiseMaxDistance(int[] arr, int k) {
+        double low = 0;
+        double high = 0;
+
+        for(int i = 0; i < arr.length - 1; i++){
+            high = Math.max(high, arr[i + 1] - arr[i]);
+        }
+
+        while (high - low > 1e-6) {
+            double mid = (low + high) / 2.0;
+            int count = numberOfGasStationsRequired(mid, arr);
+
+            if (count > k) {
+                low = mid;
+            } else {
+                high = mid;
+            }
+        }
+
+        return high;
+    }
+
+    // Median of 2 sorted arrays
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        if (nums1.length > nums2.length) {
+            return findMedianSortedArrays(nums2, nums1);
+        }
+
+        int m = nums1.length;
+        int n = nums2.length;
+
+        int low = 0;
+        int high = m;
+
+        while (low <= high) {
+            int mid1 = low + (high - low)/2;
+            int mid2 = (m + n + 1)/2 - mid1;
+
+            int l1 = (mid1 == 0) ? Integer.MIN_VALUE : nums1[mid1 - 1];
+            int r1 = (mid1 == m) ? Integer.MAX_VALUE : nums1[mid1];
+            
+            int l2 = (mid2 == 0) ? Integer.MIN_VALUE : nums2[mid2 - 1];
+            int r2 = (mid2 == n) ? Integer.MAX_VALUE : nums2[mid2];
+
+            if (l1 <= r2 && l2 <= r1) {
+                if((m + n) % 2 != 0){
+                    return Math.max(l1, l2);
+                }else {
+                    return (Math.max(l1, l2) + Math.min(r1, r2)) / 2.0; 
+                }
+            }else if(l1 > r2) {
+                high = mid1 - 1;
+            }else {
+                low = mid1 + 1;
+            }
+        }
+
+         return 0.0;
+    }
+
+    // Kth element of 2 sorted arrays
+    public long kthElement(int[] arr1, int[] arr2, int k) {
+        int n1 = arr1.length;
+        int n2 = arr2.length;
+        
+        if (n1 > n2) {
+            return kthElement(arr2, arr1, k);
+        }
+        
+        int low = Math.max(0, k - n2);
+        int high = Math.min(k, n1);
+        
+        while (low <= high) {
+            int mid1 = low + (high - low) / 2;
+            int mid2 = k - mid1;
+            
+            int l1 = (mid1 == 0) ? Integer.MIN_VALUE : arr1[mid1 - 1];
+            int r1 = (mid1 == n1) ? Integer.MAX_VALUE : arr1[mid1];
+            
+            int l2 = (mid2 == 0) ? Integer.MIN_VALUE : arr2[mid2 - 1];
+            int r2 = (mid2 == n2) ? Integer.MAX_VALUE : arr2[mid2];
+            
+            if (l1 <= r2 && l2 <= r1) {
+                return Math.max(l1, l2);
+            }
+            else if (l1 > r2) {
+                high = mid1 - 1;
+            }
+            else {
+                low = mid1 + 1;
+            }
+        }
+        
+        return -1;
+    }
 
     // ---------------
     // BS on 2D Arrays
