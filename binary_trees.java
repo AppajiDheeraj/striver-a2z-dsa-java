@@ -848,8 +848,56 @@ public class binary_trees {
      */
 
     // Construct a BT from Preorder and Inorder
+    Map<Integer, Integer> map = new HashMap<>();
+
+    public TreeNode buildTreePre(int[] preorder, int[] inorder) {
+        for(int i = 0; i < inorder.length; i++) {
+            map.put(inorder[i], i);
+        }
+
+        return buildPre(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
+    }
+
+    private TreeNode buildPre(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd){
+        if(preStart > preEnd || inStart > inEnd) {
+            return null;
+        }
+
+        TreeNode root = new TreeNode(preorder[preStart]);
+
+        int inRoot = map.get(root.val);
+        int numsLeft = inRoot - inStart;
+
+        root.left = buildPre(preorder, preStart + 1, preStart + numsLeft, inorder, inStart, inRoot - 1);
+        root.right = buildPre(preorder, preStart + numsLeft + 1, preEnd, inorder, inRoot + 1, inEnd);
+
+        return root;
+    }
 
     // Construct the Binary Tree from Postorder and Inorder Traversal
+    public TreeNode buildTreePost(int[] inorder, int[] postorder) {
+        for(int i = 0; i < inorder.length; i++) {
+            map.put(inorder[i], i);
+        }
+
+        return buildPost(postorder, 0, postorder.length - 1, inorder, 0, inorder.length - 1);
+    }
+
+    private TreeNode buildPost(int[] postorder, int postStart, int postEnd, int[] inorder, int inStart, int inEnd){
+        if(postStart > postEnd || inStart > inEnd) {
+            return null;
+        }
+
+        TreeNode root = new TreeNode(postorder[postEnd]);
+
+        int inRoot = map.get(root.val);
+        int numsLeft = inRoot - inStart;
+
+        root.left = buildPost(postorder, postStart, postStart + numsLeft - 1, inorder, inStart, inRoot - 1);
+        root.right = buildPost(postorder, postStart + numsLeft, postEnd - 1, inorder, inRoot + 1, inEnd);
+
+        return root;
+    }
 
     // Serialize and De-serialize BT
     public class Codec {
