@@ -1,4 +1,5 @@
 import java.util.*;
+@SuppressWarnings("unchecked")
 
 public class graph {
     // Breadth First Search Traversal
@@ -497,7 +498,6 @@ public class graph {
         
         int r = board.length;
         int c = board[0].length;
-        Queue<int[]> queue = new LinkedList<>();
 
         for (int i = 0; i < r; i++) {
             if (board[i][0] == 'O') dfs(i, 0, board, r, c);
@@ -718,5 +718,207 @@ public class graph {
 
         return true;
     }
-    
+
+    // Function to perform DFS-based topological sort
+    private void dfs(int node, ArrayList<ArrayList<Integer>> adj, int[] vis, Stack<Integer> st) {
+        vis[node] = 1;
+
+        for(int neighbor : adj.get(node)){
+            if (vis[neighbor] == 0) {
+                dfs(neighbor, adj, vis, st);
+            }
+        }
+
+        st.push(node);
+    }
+
+    public ArrayList<Integer> topoSortDFS(int V, ArrayList<ArrayList<Integer>> adj) {
+        int[] vis = new int[V];
+        Stack<Integer> st = new Stack<>();
+
+        for (int i = 0; i < V; i++) {
+            if (vis[i] == 0) {
+                dfs(i, adj, vis, st);
+            }
+        }
+
+        ArrayList<Integer> ans = new ArrayList<>();
+        while (!st.isEmpty()) {
+            ans.add(st.pop());
+        }
+
+        return ans;
+    }
+
+    // Function to perform BFS-based topological sort (Kahn's Algorithm)
+    public int[] topologicalSortBFS(int V, ArrayList<ArrayList<Integer>> adj) {
+        int[] indegree = new int[V];
+        for (int i = 0; i < V; i++) {
+            for (int neighbor : adj.get(i)) {
+                indegree[neighbor]++;
+            }
+        }
+
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < V; i++) {
+            if (indegree[i] == 0) {
+                q.add(i);
+            }
+        }
+
+        int[] topo = new int[V];
+        int idx = 0;
+
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            topo[idx++] = node;
+
+            for (int neighbor : adj.get(node)) {
+                indegree[neighbor]--;
+                
+                if (indegree[neighbor] == 0) {
+                    q.add(neighbor);
+                }
+            }
+        }
+
+        return topo;
+    }
+
+    // Find Eventual Safe States
+    public List<Integer> eventualSafeNodes(int[][] graph) {
+        int n = graph.length;
+
+        List<Integer>[] reverseGraph = new ArrayList[n];
+        int[] inDegree = new int[n];
+
+        for(int i = 0; i < n; i++){
+            reverseGraph[i] = new ArrayList<>();
+        }
+
+        for (int i = 0; i < n; i++) {
+            for(int neighbor : graph[i]){
+                reverseGraph[neighbor].add(i);
+                inDegree[i]++;
+            }
+        }
+
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            if (inDegree[i] == 0) {
+                queue.offer(i);
+            }
+        }
+
+        List<Integer> safeNodes = new ArrayList<>();
+
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+            safeNodes.add(node);
+
+            for(int parent : reverseGraph[node]){
+                inDegree[parent]--;
+                if (inDegree[parent] == 0) {
+                    queue.offer(parent);
+                }
+            }
+        }
+
+        Collections.sort(safeNodes);
+        return safeNodes;
+    }
+
+
+    // Find Eventual Safe States (DFS)
+    public List<Integer> eventualSafeNodesDFS(int[][] graph) {
+        int n = graph.length;
+
+        int[] state = new int[n];
+        List<Integer> result = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            if (dfsSafe(graph, state, i)) {
+                result.add(i);
+            }
+        }
+
+        return result;
+    }
+
+    private boolean dfsSafe(int[][] graph, int[] state, int node) {
+        if (state[node] != 0) {
+            return state[node] == 2;
+        }
+
+        state[node] = 1;
+
+        for (int neighbor : graph[node]) {
+            if (state[neighbor] == 1) {
+                return false;
+            }
+
+            if (!dfsSafe(graph, state, neighbor)) {
+                return false;
+            }
+        }
+
+        state[node] = 2;
+        return true;
+    }
+
+    // Alien Dictionary
+    public String alienDictionary(String[] dict, int K) {
+        List<Integer>[] adj = new ArrayList[K];
+
+        for (int i = 0; i < K; i++) {
+            adj[i] = new ArrayList<>();
+        }
+
+        for (int i = 0; i < dict.length - 1; i++) {
+            String s1 = dict[i];
+            String s2 = dict[i + 1];
+
+            int len = Math.min(s1.length(), s2.length());
+
+            for (int j = 0; j < len; j++) {
+                if (s1.charAt(j) != s2.charAt(j)) {
+                    int u = s1.charAt(j) - 'a';
+                    int v = s2.charAt(j) - 'a';
+
+                    adj[u].add(v);
+                    break;
+                }
+            }
+        }
+
+        int[] indegree = new int[K];
+
+        for (int i = 0; i < K; i++) {
+            for (int neighbor : adj[i]) {
+                indegree[neighbor]++;
+            }
+        }
+
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < K; i++) {
+            if (indegree[i] == 0) {
+                q.offer(i);
+            }
+        }
+
+        StringBuilder ans = new StringBuilder();
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            ans.append((char)(node + 'a'));
+
+            for (int neighbor : adj[node]) {
+                indegree[neighbor]--;
+                if (indegree[neighbor] == 0) {
+                    q.offer(neighbor);
+                }
+            }
+        }
+
+        return ans.toString();
+    }
 }
