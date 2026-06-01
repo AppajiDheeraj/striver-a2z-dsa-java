@@ -1,5 +1,24 @@
 import java.util.*;
-@SuppressWarnings("unchecked")
+
+class Edge {
+    int node;
+    int wt;
+
+    Edge(int node, int wt) {
+        this.node = node;
+        this.wt = wt;
+    }
+}
+
+class NodeParent {
+    int node;
+    int parent;
+
+    NodeParent(int node, int parent) {
+        this.node = node;
+        this.parent = parent;
+    }
+}
 
 public class graph {
     // Breadth First Search Traversal
@@ -212,24 +231,14 @@ public class graph {
     }
     
     // ================= UNDIRECTED CYCLE DETECTION (BFS) =================
-    static class Pair {
-        int node;
-        int parent;
-
-        Pair(int node, int parent) {
-            this.node = node;
-            this.parent = parent;
-        }
-    }
-
     public boolean bfsCycle(int start, List<Integer>[] adj, boolean[] vis) {
-        Queue<Pair> q = new LinkedList<>();
+        Queue<NodeParent> q = new LinkedList<>();
 
-        q.offer(new Pair(start, -1));
+        q.offer(new NodeParent(start, -1));
         vis[start] = true;
 
         while (!q.isEmpty()) {
-            Pair curr = q.poll();
+            NodeParent curr = q.poll();
 
             int node = curr.node;
             int parent = curr.parent;
@@ -237,7 +246,7 @@ public class graph {
             for (int neighbour : adj[node]) {
                 if (!vis[neighbour]) {
                     vis[neighbour] = true;
-                    q.offer(new Pair(neighbour, node));
+                    q.offer(new NodeParent(neighbour, node));
                 } else if (neighbour != parent) {
                     return true;
                 }
@@ -788,7 +797,7 @@ public class graph {
     // Find Eventual Safe States
     public List<Integer> eventualSafeNodes(int[][] graph) {
         int n = graph.length;
-
+        
         List<Integer>[] reverseGraph = new ArrayList[n];
         int[] inDegree = new int[n];
 
@@ -920,5 +929,173 @@ public class graph {
         }
 
         return ans.toString();
+    }
+
+    // BFS Shortest Path (Undirected Graph, Unit Weight)
+    public int[] shortestPath(int[][] edges, int N, int M, int src) {
+        List<List<Integer>> adj = new ArrayList<>();
+
+        for (int i = 0; i < N; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        for (int[] edge : edges) {
+            int u = edge[0];
+            int v = edge[1];
+            adj.get(u).add(v);
+            adj.get(v).add(u);
+        }
+
+        int[] dist = new int[N];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+
+        Queue<Integer> q = new LinkedList<>();
+        dist[src] = 0;
+        q.offer(src);
+
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            for (int neighbour : adj.get(node)) {
+                if (dist[node] + 1 < dist[neighbour]) {
+                    dist[neighbour] = dist[node] + 1;
+                    q.offer(neighbour);
+                }
+            }
+        }
+
+        for (int i = 0; i < N; i++) {
+            if (dist[i] == Integer.MAX_VALUE){
+                dist[i] = -1;
+            }
+        }
+
+        return dist;
+    }
+
+    // DAG Shortest Path (Topological Sort + Relaxation)
+    private void topoSort(int node, ArrayList<ArrayList<Edge>> adj, boolean[] vis, Stack<Integer> st) {
+        vis[node] = true;
+        for (Edge edge : adj.get(node)) {
+            if (!vis[edge.node]) {
+                topoSort(edge.node, adj, vis, st);
+            }
+        }
+        st.push(node);
+    }
+
+    public int[] shortestPath(int N, int M, int[][] edges) {
+        ArrayList<ArrayList<Edge>> adj = new ArrayList<>();
+        for (int i = 0; i < N; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        for (int[] edge : edges) {
+            int u = edge[0];
+            int v = edge[1];
+            int wt = edge[2];
+            adj.get(u).add(new Edge(v, wt));
+        }
+
+        boolean[] vis = new boolean[N];
+        Stack<Integer> st = new Stack<>();
+
+        for (int i = 0; i < N; i++) {
+            if (!vis[i]) {
+                topoSort(i, adj, vis, st);
+            }
+        }
+
+        int[] dist = new int[N];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[0] = 0;
+
+        while (!st.isEmpty()) {
+            int node = st.pop();
+            if (dist[node] == Integer.MAX_VALUE) {
+                continue;
+            }
+
+            for (Edge edge : adj.get(node)) {
+                int adjNode = edge.node;
+                int wt = edge.wt;
+
+                if(dist[node] + wt < dist[adjNode]){
+                    dist[adjNode] = dist[node] + wt;
+                }
+            }
+        }
+
+        for (int i = 0; i < N; i++) {
+            if (dist[i] == Integer.MAX_VALUE) {
+                dist[i] = -1;
+            }
+        }
+
+        return dist;
+    }
+
+    // Dijkstra (Priority Queue)
+    public int[] dijkstra(int V, ArrayList<ArrayList<int[]>> adj, int src) {
+        int[] dist = new int[V];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+        dist[src] = 0;
+
+        pq.offer(new int[]{0, src});
+
+        while (!pq.isEmpty()) {
+            int[] curr = pq.poll();
+
+            int d = curr[0];
+            int node = curr[1];
+
+            if (d > dist[node]){
+                continue;
+            }
+
+            for (int[] edge : adj.get(node)) {
+                int adjNode = edge[0];
+                int wt = edge[1];
+
+                if (dist[node] + wt < dist[adjNode]) {
+                    dist[adjNode] = dist[node] + wt;
+                    pq.offer(new int[]{ dist[adjNode], adjNode });
+                }
+            }
+        }
+
+        return dist;
+    }
+
+    // Bellman Ford (Negative Weights Allowed)
+    public int[] bellmanFord(int V, ArrayList<ArrayList<Integer>> edges, int src) {
+        int[] dist = new int[V];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+
+        dist[src] = 0;
+        for (int i = 0; i < V - 1; i++) {
+            for (ArrayList<Integer> edge : edges) {
+                int u = edge.get(0);
+                int v = edge.get(1);
+                int wt = edge.get(2);
+
+                if (dist[u] != Integer.MAX_VALUE && dist[u] + wt < dist[v]) {
+                    dist[v] = dist[u] + wt;
+                }
+            }
+        }
+
+        for (ArrayList<Integer> edge : edges) {
+            int u = edge.get(0);
+            int v = edge.get(1);
+            int wt = edge.get(2);
+
+            if (dist[u] != Integer.MAX_VALUE && dist[u] + wt < dist[v]) {
+                return new int[]{-1};
+            }
+        }
+
+        return dist;
     }
 }
