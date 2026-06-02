@@ -1098,4 +1098,376 @@ public class graph {
 
         return dist;
     }
+
+    //  Shortest Path in Binary Matrix
+    public int shortestPathBinaryMatrix(int[][] grid) {
+        int n = grid.length;
+        if (grid[0][0] == 1 || grid[n - 1][n - 1] == 1) return -1;
+        if(n == 1) return 1;
+
+        int[][] directions = {
+            {-1,-1}, {0,-1}, {1,-1},
+            {-1,0},           {1,0},
+            {-1,1},  {0,1},  {1,1}
+        };
+
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{0, 0, 1});  // (row, col, distance)
+        grid[0][0] = 1;
+
+        while (!queue.isEmpty()) {
+            int[] curr = queue.poll();
+            int r = curr[0], c = curr[1], d = curr[2];
+
+            for (int[] dir : directions) {
+                int nr = r + dir[0];
+                int nc = c + dir[1];
+
+                if(nr >= 0 && nr < n && nc >= 0 && nc < n && grid[nr][nc] == 0){
+                    if (nr == n - 1 && nc == n - 1) return d + 1;
+
+                    grid[nr][nc] = 1;
+                    queue.offer(new int[]{nr, nc, d + 1});
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    // Path With Minimum Effort
+    public int minimumEffortPath(int[][] heights) {
+        int m = heights.length;
+        int n = heights[0].length;
+
+        int[][] dist = new int[m][n];
+        for (int[] row : dist) {
+            Arrays.fill(row, Integer.MAX_VALUE);
+        }
+
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> Integer.compare(a[0], b[0]));
+        pq.offer(new int[]{0, 0, 0}); //{ effort, row, col }
+
+        dist[0][0] = 0;
+
+        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+        while (!pq.isEmpty()) {
+            int[] curr = pq.poll();
+            int currentEffort = curr[0];
+            int r = curr[1];
+            int c = curr[2];
+
+            if (r == m - 1 && c == n - 1) {
+                return currentEffort;
+            }
+
+            if (currentEffort > dist[r][c]) {
+                continue;
+            }
+
+            for (int[] dir : directions) {
+                int nr = r + dir[0];
+                int nc = c + dir[1];
+
+                if (nr >= 0 && nr < m && nc >= 0 && nc < n) {
+                    int absoluteDifference = Math.abs(heights[r][c] - heights[nr][nc]);
+                    int nextEffort = Math.max(currentEffort, absoluteDifference);
+
+                    if (nextEffort < dist[nr][nc]) {
+                        dist[nr][nc] = nextEffort;
+                        pq.offer(new int[]{nextEffort, nr, nc});
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
+    // Cheapest Flights Within K Stops
+    class Pair {
+        int node, price;
+        Pair(int d, int p) { 
+            this.node = d; 
+            this.price = p;
+        }
+    }
+
+    class State {
+        int node, cost, stops;
+        State(int n, int c, int s) { 
+            this.node = n; 
+            this.cost = c; 
+            this.stops = s; 
+        }
+    }
+
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+        ArrayList<ArrayList<Pair>> adj = new ArrayList<>();
+        
+        for (int i = 0; i < n; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        for (int[] flight : flights) {
+            int from = flight[0];
+            int to = flight[1];
+            int price = flight[2];
+
+            adj.get(from).add(new Pair(to, price));
+        }
+
+        int[] dist = new int[n];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[src] = 0;
+
+        Queue<State> q = new LinkedList<>();
+        q.offer(new State(src, 0, 0));
+
+        while (!q.isEmpty()) {
+            State curr = q.poll();
+
+            int node = curr.node;
+            int cost = curr.cost;
+            int stops = curr.stops;
+
+            if (stops > k) continue;
+
+            for (Pair neighbor : adj.get(node)) {
+                int adjNode = neighbor.node;
+                int edgePrice = neighbor.price;
+
+                int newCost = cost + edgePrice;
+                if (newCost < dist[adjNode]) {
+                    dist[adjNode] = newCost;
+                    q.offer(new State(adjNode, newCost, stops + 1));
+                }
+            }
+        }
+
+        return dist[dst] == Integer.MAX_VALUE ? -1 : dist[dst];
+    }
+
+    // Network Delay Time
+    public int networkDelayTime(int[][] times, int n, int k) {
+        List<List<int[]>> adj = new ArrayList<>();
+        for (int i = 0; i <= n; i++) {
+            adj.add(new ArrayList<>());
+        }
+        
+        for (int[] time : times) {
+            int u = time[0];
+            int v = time[1];
+            int w = time[2];
+            adj.get(u).add(new int[]{v, w}); // {neighbor, travel_time}
+        }
+        
+        int[] dist = new int[n + 1];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[k] = 0;
+
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+        pq.offer(new int[]{0, k}); // {current_time, node} 
+
+        while (!pq.isEmpty()) {
+            int[] curr = pq.poll();
+            int currentWeight = curr[0];
+            int node = curr[1];
+
+            if (currentWeight > dist[node]) {
+                continue;
+            }
+
+            for (int[] edge : adj.get(node)) {
+                int neighbor = edge[0];
+                int weight = edge[1];
+                
+                if (dist[node] + weight < dist[neighbor]) {
+                    dist[neighbor] = dist[node] + weight;
+                    pq.offer(new int[]{dist[neighbor], neighbor});
+                }
+            }
+        }
+
+        int maxDelay = 0;
+        for (int i = 1; i <= n; i++) {
+            if (dist[i] == Integer.MAX_VALUE) {
+                return -1; // A node is unreachable, so not all nodes get the signal
+            }
+            maxDelay = Math.max(maxDelay, dist[i]);
+        }
+        
+        return maxDelay;
+    }
+
+    // Number of Ways to Arrive at Destination
+    public int countPaths(int n, int[][] roads) {
+        int MOD = 1_000_000_007;
+
+        List<List<long[]>> adj = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        for (int[] road : roads) {
+            int u = road[0];
+            int v = road[1];
+            long time = road[2];
+            adj.get(u).add(new long[]{v, time});
+            adj.get(v).add(new long[]{u, time});
+        }
+
+        long[] dist = new long[n];
+        long[] ways = new long[n];
+        Arrays.fill(dist, Long.MAX_VALUE);
+        
+        dist[0] = 0;
+        ways[0] = 1;
+
+        PriorityQueue<long[]> pq = new PriorityQueue<>((a, b) -> Long.compare(a[0], b[0]));
+        pq.offer(new long[]{0, 0});
+
+        while (!pq.isEmpty()) {
+            long[] curr = pq.poll();
+            long currentTime = curr[0];
+            int node = (int) curr[1];
+
+            if (currentTime > dist[node]) {
+                continue;
+            }
+
+            for (long[] edge : adj.get(node)) {
+                int neighbor = (int) edge[0];
+                long time = edge[1];
+
+                if (dist[node] + time < dist[neighbor]) {
+                    dist[neighbor] = dist[node] + time;
+                    ways[neighbor] = ways[node];
+                    pq.offer(new long[]{dist[neighbor], neighbor});
+                } else if(dist[node] + time == dist[neighbor]){
+                    ways[neighbor] = (ways[neighbor] + ways[node]) % MOD;
+                }
+            }
+        }
+
+        return (int)ways[n - 1];
+    }
+
+    // Minimum multiplications to reach end
+    public int minimumMultiplications(int[] arr, int start, int end) {
+        if (start == end) return 0;
+
+        int MOD = 100000;
+        int[] dist = new int[MOD];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        Queue<int[]> q = new LinkedList<>();
+        
+        dist[start] = 0;
+        q.offer(new int[]{start, 0});
+
+        while (!q.isEmpty()) {
+            int[] curr = q.poll();
+            int node = curr[0];
+            int steps = curr[1];
+
+            for (int factor : arr) {
+                int nextNode = (node * factor) % MOD;
+                if (steps + 1 < dist[nextNode]) {
+                    dist[nextNode] = steps + 1;
+                    
+                    if (nextNode == end) {
+                        return steps + 1;
+                    }
+                    
+                    q.offer(new int[]{nextNode, steps + 1});
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    // Floyd Warshall Algorithm (All-Pairs Shortest Path) -- {O}(V^3) time
+    public void shortest_distance(int[][] matrix) {
+        int n = matrix.length;
+        int INF = (int) 1e9;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == -1) {
+                    matrix[i][j] = INF;
+                }
+                if (i == j) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+        for (int k = 0; k < n; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    matrix[i][j] = Math.min(matrix[i][j], matrix[i][k] + matrix[k][j]);
+                }
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] >= INF) {
+                    matrix[i][j] = -1;
+                }
+            }
+        }
+    }
+
+    // Find the city with the smallest number of neighbors
+    public int findTheCity(int n, int[][] edges, int distanceThreshold) {
+        int INF = (int) 1e9;
+        int[][] dist = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i == j) {
+                    dist[i][j] = 0;
+                } else {
+                    dist[i][j] = INF;
+                }
+            }
+        }
+
+        for (int[] edge : edges) {
+            int u = edge[0];
+            int v = edge[1];
+            int weight = edge[2];
+            dist[u][v] = weight;
+            dist[v][u] = weight;
+        }
+
+        for (int k = 0; k < n; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);
+                }
+            }
+        }
+
+        int minNeighbors = n;
+        int resultCity = -1;
+
+        for (int i = 0; i < n; i++) {
+            int currentCityNeighbors = 0;
+            for (int j = 0; j < n; j++) {
+                if (i != j && dist[i][j] <= distanceThreshold) {
+                    currentCityNeighbors++;
+                }
+            }
+
+            if (currentCityNeighbors <= minNeighbors) {
+                minNeighbors = currentCityNeighbors;
+                resultCity = i;
+            }
+        }
+
+        return resultCity;
+    }
 }
