@@ -576,11 +576,139 @@ public class graph {
     }
 
     // Word ladder I
+    class WordNode {
+        String word;
+        int steps;
+
+        WordNode(String word, int steps) {
+            this.word = word;
+            this.steps = steps;
+        }
+    }
+
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        Set<String> set = new HashSet<>(wordList);
+
+        if (!set.contains(endWord)) {
+            return 0;
+        }
+
+        Queue<WordNode> q = new LinkedList<>();
+        q.offer(new WordNode(beginWord, 1));
+
+        set.remove(beginWord);
+
+        while (!q.isEmpty()) {
+            WordNode curr = q.poll();
+
+            String word = curr.word;
+            int steps = curr.steps;
+
+            if (word.equals(endWord)) {
+                return steps;
+            }
+
+            char[] arr = word.toCharArray();
+            for (int i = 0; i < arr.length; i++) {
+                char original = arr[i];
+
+                for(char ch = 'a'; ch <= 'z'; ch++){
+                    arr[i] = ch;
+                    String newWord = new String(arr);
+                    if (set.contains(newWord)) {
+                        q.offer(new WordNode(newWord, steps + 1));
+                        set.remove(newWord);
+                    }
+                }
+
+                arr[i] = original;
+            }
+        }
+
+        return 0;
     }
 
     // Word ladder II
     public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        Set<String> set = new HashSet<>(wordList);
+        List<List<String>> ans = new ArrayList<>();
+
+        if (!set.contains(endWord)) {
+            return ans;
+        }
+
+        // BFS queue stores the ENTIRE path till current word.
+        // Unlike Word Ladder I, we need to return all shortest paths,
+        // so we cannot store only the current word.
+        Queue<List<String>> q = new LinkedList<>();
+
+        List<String> start = new ArrayList<>();
+        start.add(beginWord);
+        q.offer(start);
+
+        // Stores words used in the current BFS level.
+        // We remove them from the dictionary only after the level finishes.
+        // This allows multiple shortest paths in the same level to use the same word.
+        List<String> usedOnLevel = new ArrayList<>();
+        usedOnLevel.add(beginWord);
+        int level = 1;
+
+        while (!q.isEmpty()) {
+            List<String> path = q.poll();
+            // We have moved to the next BFS level.
+            // Remove all words that were used in the previous level.
+            // This guarantees shortest-path BFS behaviour.
+            if (path.size() > level) {
+                level = path.size();
+
+                for (String word : usedOnLevel) {
+                    set.remove(word);
+                }
+
+                usedOnLevel.clear();
+            }
+
+            // Last word of the current transformation sequence.
+            String word = path.get(path.size() - 1);
+
+            // Reached destination.
+            // First path found is guaranteed to be shortest because BFS is used.
+            // Add every other path having the same length.
+            if (word.equals(endWord)) {
+                if (ans.isEmpty()) {
+                    ans.add(path);
+                }else if (path.size() == ans.get(0).size()) {
+                    ans.add(path);
+                }
+                continue;
+            }
+
+            // Generate all possible one-letter transformations.
+            char[] arr = word.toCharArray();
+            for (int i = 0; i < arr.length; i++) {
+                char original = arr[i];
+
+                for(char ch = 'a'; ch <= 'z'; ch++){
+                    arr[i] = ch;
+                    String newWord = new String(arr);
+                    if (set.contains(newWord)) {
+                        // Create a fresh copy of the current path.
+                        // Then append the newly generated word.
+                        List<String> newPath = new ArrayList<>(path);
+                        newPath.add(newWord);
+                        q.offer(newPath);
+                        // Mark this word as used in the current level.
+                        // It will be removed from the dictionary when the level ends.
+                        usedOnLevel.add(newWord);
+                    }
+                }
+
+                // Restore original character before moving to next position.
+                arr[i] = original;
+            }
+        }
+
+        return ans;
     }
 
     // Number of islands
@@ -1800,7 +1928,7 @@ public class graph {
             if (currentEffort > dist[r][c]) continue;
 
             if (r == n - 1 && c == n - 1) return currentEffort;
-            
+
             for (int i = 0; i < 4; i++) {
                 int nr = r + dr[i];
                 int nc = c + dc[i];
@@ -1819,4 +1947,180 @@ public class graph {
         return dist[n - 1][n - 1];
     }
 
+    // Bridges in graph
+    private int timer = 1;
+    private void dfs(int node, int parent, boolean[] vis, int[] tin, int[] low, List<Integer>[] adj, List<List<Integer>> bridges) {
+        vis[node] = true;
+        tin[node] = low[node] = timer++;
+
+        for (int adjNode : adj[node]) {
+            if (adjNode == parent) continue;
+
+            if (!vis[adjNode]) {
+                dfs(adjNode, node, vis, tin, low, adj, bridges);
+                low[node] = Math.min(low[node], low[adjNode]);
+
+                // Bridge Condition
+                if (low[adjNode] > tin[node]) {
+                    bridges.add(Arrays.asList(node, adjNode));
+                }
+            } else {
+                low[node] = Math.min(low[node], tin[adjNode]);
+            }
+        }
+    }
+
+    public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
+        List<Integer>[] adj = new ArrayList[n];
+
+        for (int i = 0; i < n; i++) {
+            adj[i] = new ArrayList<>();
+        }
+
+        for (List<Integer> edge : connections) {
+            int u = edge.get(0);
+            int v = edge.get(1);
+            adj[u].add(v);
+            adj[v].add(u);
+        }
+
+        boolean[] vis = new boolean[n];
+        int[] tin = new int[n];
+        int[] low = new int[n];
+
+        List<List<Integer>> bridges = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            if (!vis[i]) {
+                dfs(i, -1, vis, tin, low, adj, bridges);
+            }
+        }
+        return bridges;
+    }
+
+    // Articulation point in graph
+    private void dfs(int node, int parent, int[] tin, int[] low, boolean[] vis, boolean[] isArticulation, List<List<Integer>> adj) {
+        vis[node] = true;
+        tin[node] = low[node] = timer++;
+
+        int children = 0;
+
+        for (int neighbor : adj.get(node)) {
+            if (neighbor == parent) {
+                continue;
+            }
+
+            // Tree Edge
+            if (!vis[neighbor]) {
+                dfs(neighbor, node, tin, low, vis, isArticulation, adj);
+                low[node] = Math.min(low[node], low[neighbor]);
+
+                // Articulation Point Condition
+                if (low[neighbor] >= tin[node] && parent != -1) {
+                    isArticulation[node] = true;
+                }
+                children++;
+            }
+
+            // Back Edge
+            else {
+                low[node] = Math.min(low[node], tin[neighbor]);
+            }
+        }
+
+        // Special case for root node
+        if (parent == -1 && children > 1) {
+            isArticulation[node] = true;
+        }
+    }
+
+    public List<Integer> articulationPoints(int n, List<List<Integer>> adj) {
+        int[] tin = new int[n];
+        int[] low = new int[n];
+        boolean[] vis = new boolean[n];
+        boolean[] isArticulation = new boolean[n];
+
+        for (int i = 0; i < n; i++) {
+            if (!vis[i]) {
+                dfs(i, -1, tin, low, vis, isArticulation, adj);
+            }
+        }
+
+        List<Integer> ans = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            if (isArticulation[i]) {
+                ans.add(i);
+            }
+        }
+
+        if (ans.size() == 0) {
+            ans.add(-1);
+        }
+
+        return ans;
+    }
+
+    // Kosaraju's algorithm
+    private void dfsKosaraju(int node, boolean[] vis, ArrayList<ArrayList<Integer>> adj, Stack<Integer> st) {
+        vis[node] = true;
+
+        for (int it : adj.get(node)) {
+            if (!vis[it]) {
+                dfsKosaraju(it, vis, adj, st);
+            }
+        }
+
+        st.push(node);
+    }
+
+    private void dfsTranspose(int node, boolean[] vis, ArrayList<ArrayList<Integer>> adjT) {
+        vis[node] = true;
+
+        for (int it : adjT.get(node)) {
+            if (!vis[it]) {
+                dfsTranspose(it, vis, adjT);
+            }
+        }
+    }
+
+    public int kosaraju(int V, ArrayList<ArrayList<Integer>> adj) {
+        boolean[] vis = new boolean[V];
+        Stack<Integer> st = new Stack<>();
+
+        // Step 1: Sort nodes according to finishing time
+        for (int i = 0; i < V; i++) {
+            if (!vis[i]) {
+                dfsKosaraju(i, vis, adj, st);
+            }
+        }
+
+        // Step 2: Create transpose graph
+        ArrayList<ArrayList<Integer>> adjT = new ArrayList<>();
+
+        for (int i = 0; i < V; i++) {
+            adjT.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < V; i++) {
+            vis[i] = false;
+
+            for (int it : adj.get(i)) {
+                adjT.get(it).add(i);
+            }
+        }
+
+        // Step 3: DFS on transpose graph
+        int scc = 0;
+
+        while (!st.isEmpty()) {
+            int node = st.pop();
+
+            if (!vis[node]) {
+                scc++;
+                dfsTranspose(node, vis, adjT);
+            }
+        }
+
+        return scc;
+    }
+    
 }
