@@ -1470,4 +1470,353 @@ public class graph {
 
         return resultCity;
     }
+
+    // Prim's Algorithm - O(E log E) time +  MST Weight
+    class PrimPair {
+        int node;
+        int weight;
+
+        PrimPair(int weight, int node) {
+            this.weight = weight;
+            this.node = node;
+        }
+    }
+
+    public int spanningTree(int V, List<List<int[]>> adj) {
+        PriorityQueue<PrimPair> pq = new PriorityQueue<>((a, b) -> Integer.compare(a.weight, b.weight));
+        boolean[] vis = new boolean[V];
+
+        pq.offer(new PrimPair(0, 0));
+        int mstSum = 0;
+
+        while (!pq.isEmpty()) {
+            PrimPair curr = pq.poll();
+            int node = curr.node;
+            int weight = curr.weight;
+
+            if (vis[node]) {
+                continue;
+            }
+
+            vis[node] = true;
+            mstSum += weight;
+
+            for (int[] edge : adj.get(node)) {
+                int neighbor = edge[0];
+                int edgeWeight = edge[1];
+
+                if (!vis[neighbor]) {
+                    pq.offer(new PrimPair(edgeWeight, neighbor));
+                }
+            }
+        }
+
+        return mstSum;
+    }
+
+    // Disjoint Set
+    public class DisjointSet {
+        private int[] rank;
+        private int[] parent;
+        private int[] size;
+
+        public DisjointSet(int n) {
+            rank = new int[n + 1];
+            parent = new int[n + 1];
+            size = new int[n + 1];
+            
+            for (int i = 0; i <= n; i++) {
+                parent[i] = i; // Every node is initially its own ultimate parent
+                size[i] = 1;   // Initial size of each component is 1
+                rank[i] = 0;   // Initial rank of each component is 0
+            }
+        }
+
+        public int findUPar(int node) {
+            if (node == parent[node]) {
+                return node;
+            }
+
+            return parent[node] = findUPar(parent[node]);
+        }
+
+        public void unionByRank(int u, int v) {
+            int ulp_u = findUPar(u);
+            int ulp_v = findUPar(v);
+
+            if (ulp_u == ulp_v) return;
+
+            if (rank[ulp_u] < rank[ulp_v]) {
+                parent[ulp_u] = ulp_v;
+            } else if (rank[ulp_v] < rank[ulp_u]) {
+                parent[ulp_v] = ulp_u;
+            } else {
+                parent[ulp_v] = ulp_u;
+                rank[ulp_u]++;
+            }
+        }
+
+        public void unionBySize(int u, int v) {
+            int ulp_u = findUPar(u);
+            int ulp_v = findUPar(v);
+
+            if (ulp_u == ulp_v) return;
+            
+            if (size[ulp_u] < size[ulp_v]) {
+                parent[ulp_u] = ulp_v;
+                size[ulp_v] += size[ulp_u];
+            } else {
+                parent[ulp_v] = ulp_u;
+                size[ulp_u] += size[ulp_v];
+            }
+        }
+    }
+
+    // Number of operations to make network connected
+    public int makeConnected(int n, int[][] connections) {
+        if (connections.length < n - 1) return -1;
+        DisjointSet ds = new DisjointSet(n);
+
+        for (int[] connection : connections) {
+            ds.unionBySize(connection[0], connection[1]);
+        }
+
+        int components = 0;
+        for (int i = 0; i < n; i++) {
+            if (ds.parent[i] == i) {
+                components++;
+            }
+        }
+
+        return components - 1;
+    }
+
+    // Most stones removed with same row or column
+    public int removeStones(int[][] stones) {
+        int maxRow = 0, maxCol = 0;
+        for (int[] s : stones) {
+            maxRow = Math.max(maxRow, s[0]);
+            maxCol = Math.max(maxCol, s[1]);
+        }
+
+        DisjointSet ds = new DisjointSet(maxRow + maxCol + 2);
+        Set<Integer> stoneNodes = new HashSet<>();
+
+        for (int[] s : stones) {
+            int rowNode = s[0];
+            int colNode = s[1] + maxRow + 1;
+            ds.unionBySize(rowNode, colNode);
+            stoneNodes.add(rowNode);
+            stoneNodes.add(colNode);
+        }
+
+        int components = 0;
+        for (int node : stoneNodes) {
+            if (ds.findUPar(node) == node) {
+                components++;
+            }
+        }
+
+        return stones.length - components;
+    }
+
+    // Accounts merge
+    public List<List<String>> accountsMerge(List<List<String>> accounts) {
+        int n = accounts.size();
+        DisjointSet ds = new DisjointSet(n);
+        HashMap<String, Integer> mailToIndex = new HashMap<>();
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 1; j < accounts.get(i).size(); j++) {
+                String mail = accounts.get(i).get(j);
+                if (!mailToIndex.containsKey(mail)) {
+                    mailToIndex.put(mail, i);
+                } else {
+                    ds.unionByRank(i, mailToIndex.get(mail));
+                }
+            }
+        }
+
+        ArrayList<String>[] mergedMail = new ArrayList[n];
+    
+        for (int i = 0; i < n; i++) {
+            mergedMail[i] = new ArrayList<>();
+        }
+
+        for (Map.Entry<String, Integer> entry : mailToIndex.entrySet()) {
+            String mail = entry.getKey();
+            int accountIndex = entry.getValue();
+            int parent = ds.findUPar(accountIndex);
+            mergedMail[parent].add(mail);
+        }
+
+        List<List<String>> result = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            if (mergedMail[i].isEmpty()) continue;
+            Collections.sort(mergedMail[i]);
+
+            List<String> temp = new ArrayList<>();
+            temp.add(accounts.get(i).get(0));
+            temp.addAll(mergedMail[i]);
+            result.add(temp);
+        }
+
+        return result;
+    }
+
+    // Number of islands II
+    public List<Integer> numOfIslands(int rows, int cols, int[][] operators) {
+        DisjointSet ds = new DisjointSet(rows * cols);
+        boolean[][] vis = new boolean[rows][cols];
+
+        List<Integer> ans = new ArrayList<>();
+        int count = 0;
+
+        int[] dr = {-1, 0, 1, 0};
+        int[] dc = {0, 1, 0, -1};
+
+        for (int[] op : operators) {
+            int row = op[0];
+            int col = op[1];
+
+            if (vis[row][col]) {
+                ans.add(count);
+                continue;
+            }
+
+            vis[row][col] = true;
+            count++;
+
+            int nodeNo = row * cols + col;
+
+            for (int i = 0; i < 4; i++) {
+                int nr = row + dr[i];
+                int nc = col + dc[i];
+
+                if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && vis[nr][nc]) {
+                    int adjNodeNo = nr * cols + nc;
+
+                    if (ds.findUPar(nodeNo) != ds.findUPar(adjNodeNo)) {
+                        count--;
+                        ds.unionBySize(nodeNo, adjNodeNo);
+                    }
+                }
+            }
+
+            ans.add(count);
+        }
+
+        return ans;
+    }
+
+    // Making a large island
+    public int largestIsland(int[][] grid) {
+        int n = grid.length;
+        DisjointSet ds = new DisjointSet(n * n);
+
+        int[] dr = {-1, 1, 0, 0};
+        int[] dc = {0, 0, -1, 1};
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    int currentId = i * n + j;
+                    for (int d = 0; d < 4; d++) {
+                        int nRow = i + dr[d];
+                        int nCol = j + dc[d];
+
+                        if (nRow >= 0 && nRow < n && nCol >= 0 && nCol < n && grid[nRow][nCol] == 1) {
+                            int neighborId = nRow * n + nCol;
+                            ds.unionBySize(currentId, neighborId);
+                        }
+                    }
+                }
+            }
+        }
+
+        int maxIsland = 0;
+        for (int i = 0; i < n * n; i++) {
+            maxIsland = Math.max(maxIsland, ds.size[ds.findUPar(i)]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 0) {
+                    Set<Integer> uniqueIslands = new HashSet<>();
+                    for (int d = 0; d < 4; d++) {
+                        int nRow = i + dr[d];
+                        int nCol = j + dc[d];
+
+                        if (nRow >= 0 && nRow < n && nCol >= 0 && nCol < n && grid[nRow][nCol] == 1) {
+                            int neighborId = nRow * n + nCol;
+                            uniqueIslands.add(ds.findUPar(neighborId));
+                        }
+                    }
+
+                    int potentialSize = 1; 
+                    for (int rootId : uniqueIslands) {
+                        potentialSize += ds.size[rootId];
+                    }
+
+                    maxIsland = Math.max(maxIsland, potentialSize);
+                }
+            }
+        }
+        return maxIsland;
+    }
+
+    // Swim in Rising Water
+    class SwimPair {
+        int effort, r, c;
+        SwimPair(int effort, int r, int c) {
+            this.effort = effort;
+            this.r = r;
+            this.c = c;
+        }
+    }
+
+    public int swimInWater(int[][] grid) {
+        int n = grid.length;
+        
+        PriorityQueue<SwimPair> pq = new PriorityQueue<>((a, b) -> Integer.compare(a.effort, b.effort));
+        int[][] dist = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(dist[i], Integer.MAX_VALUE);
+        }
+
+        dist[0][0] = grid[0][0];
+        pq.offer(new SwimPair(grid[0][0], 0, 0));
+
+        int[] dr = {-1, 1, 0, 0};
+        int[] dc = {0, 0, -1, 1};
+
+        while (!pq.isEmpty()) {
+            SwimPair curr = pq.poll();
+            int currentEffort = curr.effort;
+            int r = curr.r;
+            int c = curr.c;
+
+            if (currentEffort > dist[r][c]) continue;
+
+            if (r == n - 1 && c == n - 1) return currentEffort;
+            
+            for (int i = 0; i < 4; i++) {
+                int nr = r + dr[i];
+                int nc = c + dc[i];
+
+                if (nr >= 0 && nr < n && nc >= 0 && nc < n) {
+                    // The water level needed to step into the neighbor cell
+                    int nextEffort = Math.max(currentEffort, grid[nr][nc]);
+
+                    if (nextEffort < dist[nr][nc]) {
+                        dist[nr][nc] = nextEffort;
+                        pq.offer(new SwimPair(nextEffort, nr, nc));
+                    }
+                }
+            }
+        }
+        return dist[n - 1][n - 1];
+    }
+
 }
