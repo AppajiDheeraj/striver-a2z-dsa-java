@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -615,5 +616,358 @@ public class array {
         }
 
         return count;
+    }
+
+    // Pascal's Triangle I
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> ans = new ArrayList<>();
+
+        for(int i = 0; i < numRows; i++){
+            List<Integer> row = new ArrayList<>();
+
+            for(int j = 0; j <= i; j++){
+                if (j == 0 || j == i) row.add(1);
+                else row.add(ans.get(i - 1).get(j - 1) + ans.get(i - 1).get(j));
+            }
+
+            ans.add(row);
+        }
+
+        return ans;
+    }
+
+    // Majority Element-II
+    public List<Integer> majorityElementII(int[] nums) {
+        int count1 = 0, count2 = 0;
+        int candidate1 = 0, candidate2 = 0;
+
+        for (int num : nums) {
+            if (count1 == 0 && num != candidate2) {
+                candidate1 = num;
+                count1 = 1;
+            } else if (count2 == 0 && num != candidate1) {
+                candidate2 = num;
+                count2 = 1;
+            } else if (num == candidate1) {
+                count1++;
+            } else if (num == candidate2) {
+                count2++;
+            } else {
+                count1--;
+                count2--;
+            }
+        }
+
+        count1 = 0;
+        count2 = 0;
+
+        for (int num : nums) {
+            if (num == candidate1) count1++;
+            else if (num == candidate2) count2++;
+        }
+
+        List<Integer> ans = new ArrayList<>();
+        int n = nums.length;
+
+        if (count1 > n / 3) ans.add(candidate1);
+        if (count2 > n / 3) ans.add(candidate2);
+
+        return ans;
+    }
+
+    // 3 Sum
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        int n = nums.length;
+        List<List<Integer>> ans = new ArrayList<>();
+
+        for (int i = 0; i < n - 2; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            int left = i + 1, right = n - 1;
+            while (left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
+                if (sum == 0) {
+                    ans.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                    left++;
+                    right--;
+                    while (left < right && nums[left] == nums[left - 1]) left++;
+                    while (left < right && nums[right] == nums[right + 1]) right--;
+                } else if (sum < 0) {
+                    left++;
+                } else {
+                    right--;
+                }
+            }
+        }
+
+        return ans;
+    }
+
+    // 4 Sum
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        Arrays.sort(nums);
+        int n = nums.length;
+        List<List<Integer>> ans = new ArrayList<>();
+
+        for (int i = 0; i < n - 3; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+
+            for (int j = i + 1; j < n - 2; j++) {
+                if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+                int left = j + 1, right = n - 1;
+                while (left < right) {
+                    long sum = (long) nums[i] + nums[j] + nums[left] + nums[right];
+                    if (sum == target) {
+                        ans.add(Arrays.asList(nums[i], nums[j], nums[left], nums[right]));
+                        left++;
+                        right--;
+
+                        while (left < right && nums[left] == nums[left - 1]) left++;
+                        while (left < right && nums[right] == nums[right + 1]) right--;
+                    } else if (sum < target) {
+                        left++;
+                    } else {
+                        right--;
+                    }
+                }
+            }
+        }
+
+        return ans;
+    }
+
+
+    // Largest Subarray with Sum 0
+    public int maxLen(int[] nums, int n) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int sum = 0;
+        int maxLen = 0;
+
+        for (int i = 0; i < n; i++) {
+            sum += nums[i];
+
+            if (sum == 0) {
+                maxLen = i + 1;
+            }
+
+            if (map.containsKey(sum)) {
+                maxLen = Math.max(maxLen, i - map.get(sum));
+            } else {
+                map.put(sum, i);
+            }
+        }
+
+        return maxLen;
+    }
+    
+
+    // Count subarrays with given xor K
+    public int countSubarraysWithXorK(int[] nums, int k) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+
+        int prefixXor = 0;
+        int count = 0;
+
+        for (int num : nums) {
+            prefixXor ^= num;
+
+            int required = prefixXor ^ k;
+            count += map.getOrDefault(required, 0);
+
+            map.put(prefixXor, map.getOrDefault(prefixXor, 0) + 1);
+        }
+
+        return count;
+    }
+
+    // Merge Overlapping Subintervals
+    public int[][] merge(int[][] intervals) {
+        if(intervals.length == 0) return new int[0][];
+
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+
+        List<int[]> merged = new ArrayList<>();
+        int[] curr = intervals[0];
+
+        for(int i = 1; i < intervals.length; i++){
+            if(intervals[i][0] <= curr[1]){
+                curr[1] = Math.max(curr[1], intervals[i][1]);
+            } else {
+                merged.add(curr);
+                curr = intervals[i];
+            }
+        }
+
+        merged.add(curr);
+        return merged.toArray(new int[merged.size()][]);
+    }
+    
+
+    // Merge two sorted arrays without extra space
+    public void mergeSortedArrays(int[] nums1, int m, int[] nums2, int n) {
+        int i = m - 1;
+        int j = n - 1;
+        int k = m + n - 1;
+
+        while (i >= 0 && j >= 0) {
+            if (nums1[i] > nums2[j]) {
+                nums1[k] = nums1[i];
+                i--;
+            } else {
+                nums1[k] = nums2[j];
+                j--;
+            }
+            k--;
+        }
+
+        while (j >= 0) {
+            nums1[k] = nums2[j];
+            j--;
+            k--;
+        }
+    }
+
+    // Find the repeating and missing number
+    public int[] findMissingRepeatingNumbers(int[] nums) {
+        long n = nums.length;
+
+        long sumN = n * (n + 1) / 2;
+        long sumSqN = n * (n + 1) * (2 * n + 1) / 6;
+
+        long sum = 0;
+        long sumSq = 0;
+
+        for (int num : nums) {
+            sum += num;
+            sumSq += (long) num * num;
+        }
+
+        long diff = sum - sumN; // r - m
+        long sqDiff = sumSq - sumSqN;  // (r- m)(r + m)
+
+        long sumRM = sqDiff / diff; // r + m
+
+        long repeating = (diff + sumRM) / 2;
+        long missing = sumRM - repeating;
+
+        return new int[]{(int) repeating, (int) missing};
+    }
+
+    // Count Inversions
+    private static int mergeInversions(int[] nums, int low, int mid, int high) {
+        int[] temp = new int[high - low + 1];
+        int left = low;
+        int right = mid + 1;
+        int index = 0;
+        int count = 0;
+
+        while (left <= mid && right <= high) {
+            if (nums[left] <= nums[right]) {
+                temp[index++] = nums[left++];
+            } else {
+                temp[index++] = nums[right++];
+                count += mid - left + 1;
+            }
+        }
+
+        while (left <= mid) {
+            temp[index++] = nums[left++];
+        }
+
+        while (right <= high) {
+            temp[index++] = nums[right++];
+        }
+
+        System.arraycopy(temp, 0, nums, low, temp.length);
+        return count;
+    }
+
+    private static int mergeSortInversions(int[] nums, int low, int high) {
+        if (low >= high) return 0;
+
+        int mid = low + (high - low) / 2;
+
+        int count = 0;
+        count += mergeSortInversions(nums, low, mid);
+        count += mergeSortInversions(nums, mid + 1, high);
+        count += mergeInversions(nums, low, mid, high);
+
+        return count;
+    }
+
+    public static int countInversions(int[] nums) {
+        return mergeSortInversions(nums, 0, nums.length - 1);
+    }
+
+    // Reverse Pairs
+    private static int mergeReversePairs(int[] nums, int low, int mid, int high) {
+        int[] temp = new int[high - low + 1];
+        int left = low;
+        int right = mid + 1;
+        int index = 0;
+
+        while (left <= mid && right <= high) {
+            if (nums[left] <= nums[right]) {
+                temp[index++] = nums[left++];
+            } else {
+                temp[index++] = nums[right++];
+            }
+        }
+
+        while (left <= mid) {
+            temp[index++] = nums[left++];
+        }
+
+        while (right <= high) {
+            temp[index++] = nums[right++];
+        }
+
+        System.arraycopy(temp, 0, nums, low, temp.length);
+        return 0;
+    }
+
+    private static int mergeSortReversePairs(int[] nums, int low, int high) {
+        if (low >= high) return 0;
+
+        int mid = low + (high - low) / 2;
+
+        int count = 0;
+        count += mergeSortReversePairs(nums, low, mid);
+        count += mergeSortReversePairs(nums, mid + 1, high);
+
+        int right = mid + 1;
+        for (int i = low; i <= mid; i++) {
+            while (right <= high && (long) nums[i] > 2L * nums[right]) {
+                right++;
+            }
+            count += right - (mid + 1);
+        }
+
+        mergeReversePairs(nums, low, mid, high);
+        return count;
+    }
+
+    public int reversePairs(int[] nums) {
+        return mergeSortReversePairs(nums, 0, nums.length - 1);
+    }
+
+    // Maximum Product Subarray in an Array
+    public int maxProduct(int[] nums) {
+        int pre = 1, suf = 1;
+        int res = Integer.MIN_VALUE;
+        int n = nums.length;
+
+        for(int i = 0; i < n; i++){
+            pre *= nums[i];
+            res = Math.max(res, pre);
+            if (pre == 0) pre = 1;
+
+            suf *= nums[n - 1 - i];
+            res = Math.max(res, suf);
+            if (suf == 0) suf = 1;
+        }
+
+        return res;
     }
 }
