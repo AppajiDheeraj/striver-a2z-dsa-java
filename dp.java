@@ -443,25 +443,283 @@ public class dp {
     // =========================
 
     // Matrix Chain Multiplication
+    private int mcmSolve(int i, int j, int[] arr, int[][] dp) {
+        if (i == j) {
+            return 0;
+        }
+
+        if (dp[i][j] != -1) {
+            return dp[i][j];
+        }
+
+        int minCost = Integer.MAX_VALUE;
+
+        for (int k = i; k < j; k++) {
+            int leftCost = mcmSolve(i, k, arr, dp);
+            int rightCost = mcmSolve(k + 1, j, arr, dp);
+            int multiplyCost = arr[i - 1] * arr[k] * arr[j];
+
+            int totalCost = leftCost + rightCost + multiplyCost;
+            minCost = Math.min(minCost, totalCost);
+        }
+
+        return dp[i][j] = minCost;
+    }
+
+    public int matrixMultiplication(int[] arr) {
+        int n = arr.length;
+        int[][] dp = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            java.util.Arrays.fill(dp[i], -1);
+        }
+
+        return mcmSolve(1, n - 1, arr, dp);
+    }
 
     // Matrix Chain Multiplication - Bottom Up
 
-    // Minimum Cost to Cut the Stick
+    // Minimum Cost to Cut the Stick -- HARD
+    private int cutStickSolve(int i, int j, int[] cuts, int[][] dp) {
+        if (i > j) {
+            return 0;
+        }
+
+        if (dp[i][j] != -1) {
+            return dp[i][j];
+        }
+
+        int minCost = Integer.MAX_VALUE;
+
+        for (int ind = i; ind <= j; ind++) {
+            int currentCutCost = cuts[j + 1] - cuts[i - 1];
+            int leftCost = cutStickSolve(i, ind - 1, cuts, dp);
+            int rightCost = cutStickSolve(ind + 1, j, cuts, dp);
+
+            int totalCost = currentCutCost + leftCost + rightCost;
+            minCost = Math.min(minCost, totalCost);
+        }
+
+        return dp[i][j] = minCost;
+    }
+
+    public int minCostToCutStick(int n, int[] cutsInput) {
+        int c = cutsInput.length;
+        int[] cuts = new int[c + 2];
+
+        cuts[0] = 0;
+        cuts[c + 1] = n;
+
+        for (int i = 0; i < c; i++) {
+            cuts[i + 1] = cutsInput[i];
+        }
+
+        java.util.Arrays.sort(cuts);
+
+        int[][] dp = new int[c + 1][c + 1];
+        for (int i = 0; i <= c; i++) {
+            java.util.Arrays.fill(dp[i], -1);
+        }
+
+        return cutStickSolve(1, c, cuts, dp);
+    }
 
     // Burst Balloons
+    public int maxCoins(int[] nums) {
+        int n = nums.length;
 
-    // Different Ways to Evaluate a Boolean Expression
+        int[] arr = new int[n + 2];
+        arr[0] = 1;
+        arr[n + 1] = 1;
 
-    // Palindrome Partitioning II
+        for (int i = 0; i < n; i++) {
+            arr[i + 1] = nums[i];
+        }
 
-    // Partition Array for Maximum Sum
+        int[][] dp = new int[n + 2][n + 2];
+
+        for (int i = n; i >= 1; i--) {
+            for (int j = i; j <= n; j++) {
+                int maxCoins = 0;
+
+                for (int ind = i; ind <= j; ind++) {
+                    int coins = arr[i - 1] * arr[ind] * arr[j + 1] + dp[i][ind - 1] + dp[ind + 1][j];
+                    maxCoins = Math.max(maxCoins, coins);
+                }
+
+                dp[i][j] = maxCoins;
+            }
+        }
+
+        return dp[1][n];
+    }
+
+    // Different Ways to Evaluate a Boolean Expression -- HARD
+    private int solve(int i, int j, int isTrue, String exp, int[][][] dp) {
+        if (i > j) {
+            return 0;
+        }
+
+        if (i == j) {
+            if (isTrue == 1) {
+                return exp.charAt(i) == 'T' ? 1 : 0;
+            } else {
+                return exp.charAt(i) == 'F' ? 1 : 0;
+            }
+        }
+
+        if (dp[i][j][isTrue] != -1) {
+            return dp[i][j][isTrue];
+        }
+
+        int mod = 1003;
+        long ways = 0;
+
+        for (int ind = i + 1; ind <= j - 1; ind += 2) {
+
+            long leftTrue = solve(i, ind - 1, 1, exp, dp);
+            long leftFalse = solve(i, ind - 1, 0, exp, dp);
+            long rightTrue = solve(ind + 1, j, 1, exp, dp);
+            long rightFalse = solve(ind + 1, j, 0, exp, dp);
+
+            char op = exp.charAt(ind);
+
+            if (op == '&') {
+                if (isTrue == 1)
+                    ways += leftTrue * rightTrue;
+                else
+                    ways += leftTrue * rightFalse + leftFalse * rightTrue + leftFalse * rightFalse;
+            } else if (op == '|') {
+                if (isTrue == 1)
+                    ways += leftTrue * rightTrue + leftTrue * rightFalse + leftFalse * rightTrue;
+                else
+                    ways += leftFalse * rightFalse;
+            } else { // ^
+                if (isTrue == 1)
+                    ways += leftTrue * rightFalse + leftFalse * rightTrue;
+                else
+                    ways += leftTrue * rightTrue + leftFalse * rightFalse;
+            }
+
+            ways %= mod;
+        }
+
+        return dp[i][j][isTrue] = (int) ways;
+    }
+
+    public int evaluateExp(String exp) {
+        int n = exp.length();
+
+        int[][][] dp = new int[n][n][2];
+
+        for (int[][] mat : dp) {
+            for (int[] row : mat) {
+                java.util.Arrays.fill(row, -1);
+            }
+        }
+
+        return solve(0, n - 1, 1, exp, dp);
+    }
+
+    // Palindrome Partitioning II -- HARD
+    private boolean isPalindrome(String s, int left, int right) {
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+
+    public int minCut(String s) {
+        int n = s.length();
+
+        // dp[i] = minimum cuts needed for substring s[i...n-1]
+        int[] dp = new int[n + 1];
+
+        // Base case:
+        // When we reach after the last index, no string is left.
+        // We keep this as -1 so that the last palindrome part adds 0 cuts.
+        dp[n] = -1;
+
+        for (int i = n - 1; i >= 0; i--) {
+            int minCuts = Integer.MAX_VALUE;
+
+            for (int j = i; j < n; j++) {
+                if (isPalindrome(s, i, j)) {
+                    int cuts = 1 + dp[j + 1];
+                    minCuts = Math.min(minCuts, cuts);
+                }
+            }
+
+            dp[i] = minCuts;
+        }
+
+        return dp[0];
+    }
+
+    // Partition Array for Maximum Sum -- HARD
+    public int maxSumAfterPartitioning(int[] arr, int k) {
+        int n = arr.length;
+
+        // dp[i] = maximum sum possible from index i to n - 1
+        int[] dp = new int[n + 1];
+
+        // Base case: no elements left after index n
+        dp[n] = 0;
+
+        for (int i = n - 1; i >= 0; i--) {
+            int maxElement = Integer.MIN_VALUE;
+            int maxSum = Integer.MIN_VALUE;
+
+            for (int j = i; j < Math.min(n, i + k); j++) {
+                int length = j - i + 1;
+                maxElement = Math.max(maxElement, arr[j]);
+
+                int currentSum = (maxElement * length) + dp[j + 1];
+                maxSum = Math.max(maxSum, currentSum);
+            }
+
+            dp[i] = maxSum;
+        }
+
+        return dp[0];
+    }
 
 
     // =========================
     // DP on Squares
     // =========================
 
-    // Maximum Rectangle Area With All 1's
+    // Maximum Rectangle Area With All 1's -- HARD (Skip)
 
     // Count Square Submatrices With All Ones
+    public int countSquares(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        int[][] dp = new int[m][n];
+        int totalSquares = 0;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == 0) {
+                    dp[i][j] = 0;
+                } else if (i == 0 || j == 0) {
+                    dp[i][j] = 1;
+                } else {
+                    dp[i][j] = 1 + Math.min(
+                        dp[i - 1][j],
+                        Math.min(dp[i][j - 1], dp[i - 1][j - 1])
+                    );
+                }
+
+                totalSquares += dp[i][j];
+            }
+        }
+
+        return totalSquares;
+    }
 }
