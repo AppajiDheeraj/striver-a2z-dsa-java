@@ -315,16 +315,108 @@ public class dp {
     // =========================
 
     // Best Time to Buy and Sell Stock
+    public int maxProfit(int[] prices) {
+        int minPrice = Integer.MAX_VALUE;
+        int maxProfit = 0;
 
+        for (int price : prices) {
+            minPrice = Math.min(minPrice, price);
+            int profit = price - minPrice;
+            maxProfit = Math.max(maxProfit, profit);
+        }
+
+        return maxProfit;
+    }
+    
     // Best Time to Buy and Sell Stock II
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        int[][] dp = new int[n + 1][2];
+
+        for (int i = n - 1; i >= 0; i--) {
+
+            // Can Buy
+            dp[i][1] = Math.max(
+                    -prices[i] + dp[i + 1][0],   // Buy
+                    dp[i + 1][1]                 // Skip
+            );
+
+            // Must Sell / Holding Stock
+            dp[i][0] = Math.max(
+                    prices[i] + dp[i + 1][1],    // Sell
+                    dp[i + 1][0]                 // Skip
+            );
+        }
+
+        return dp[0][1];
+    }
 
     // Best Time to Buy and Sell Stock III
 
-    // Best Time to Buy and Sell Stock IV
+    /*
+     * IDEA:
+     *
+     * State = (day, buy, transactionsLeft)
+     *
+     * day              -> Current index in the prices array.
+     * buy              -> 1 means we are allowed to buy.
+     *                     0 means we are currently holding a stock and must
+     *                     either sell it or skip.
+     * transactionsLeft -> Number of complete transactions (Buy + Sell)
+     *                     still available.
+     *
+     * Transitions:
+     *
+     * If buy == 1:
+     *   1. Buy the stock
+     *        profit = -prices[day] + next state (buy = 0)
+     *   2. Skip the day
+     *        profit = next state (buy = 1)
+     *
+     * If buy == 0:
+     *   1. Sell the stock
+     *        profit = prices[day] + next state (buy = 1,
+     *                 transactionsLeft - 1)
+     *   2. Skip the day
+     *        profit = next state (buy = 0)
+     *
+     * Base Cases:
+     *   - If day == n, no days are left -> profit = 0.
+     *   - If transactionsLeft == 0, no transactions remain -> profit = 0.
+     *
+     * DP Dimensions:
+     *   dp[day][buy][transactionsLeft]
+     *
+     * Initial Answer:
+     *   dp[0][1][2]
+     *   (Start at day 0, allowed to buy, with 2 transactions available.)
+     */
 
-    // Best Time to Buy and Sell Stock with Cooldown
+    // Best Time to Buy and Sell Stock IV -- SKIP
+
+    // Best Time to Buy and Sell Stock with Cooldown -- SKIP
 
     // Best Time to Buy and Sell Stock with Transaction Fees
+    public int maxProfitWithFee(int[] prices, int fee) {
+        int n = prices.length;
+        int[][] dp = new int[n + 1][2];
+
+        for (int i = n - 1; i >= 0; i--) {
+            // Can Buy
+            dp[i][1] = Math.max(
+                    -prices[i] + dp[i + 1][0],   // Buy
+                    dp[i + 1][1]                  // Skip
+            );
+
+            // Must Sell / Holding Stock
+            dp[i][0] = Math.max(
+                    prices[i] - fee + dp[i + 1][1], // Sell and pay fee
+                    dp[i + 1][0]                    // Skip
+            );
+        }
+
+        return dp[0][1];
+    }
 
 
     // =========================
