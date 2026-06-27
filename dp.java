@@ -252,26 +252,265 @@ public class dp {
     // =========================
 
     // Subset Sum Equal to Target
+    public boolean subsetSumToK(int[] arr, int k) {
+        int n = arr.length;
+        boolean[][] dp = new boolean[n][k + 1];
+
+        for (int i = 0; i < n; i++) {
+            dp[i][0] = true;
+        }
+
+        if (arr[0] <= k) {
+            dp[0][arr[0]] = true;
+        }
+
+        for (int i = 1; i < n; i++) {
+            for (int target = 1; target <= k; target++) {
+                boolean notPick = dp[i - 1][target];
+                boolean pick = false;
+
+                if (arr[i] <= target) {
+                    pick = dp[i - 1][target - arr[i]];
+                }
+
+                dp[i][target] = pick || notPick;
+            }
+        }
+
+        return dp[n - 1][k];
+    }
 
     // Partition Equal Subset Sum
+    public boolean canPartition(int[] nums) {
+        int totalSum = 0;
+        for (int num : nums) {
+            totalSum += num;
+        }
+
+        if (totalSum % 2 != 0) {
+            return false;
+        }
+
+        return subsetSumToK(nums, totalSum / 2);
+    }
 
     // Partition a Set Into Two Subsets With Minimum Absolute Sum Difference
+    public int minimumDifference(int[] arr) {
+        int n = arr.length;
+        int totalSum = 0;
+
+        for (int num : arr) {
+            totalSum += num;
+        }
+
+        boolean[][] dp = new boolean[n][totalSum + 1];
+
+        for (int i = 0; i < n; i++) {
+            dp[i][0] = true;
+        }
+
+        if (arr[0] <= totalSum) {
+            dp[0][arr[0]] = true;
+        }
+
+        for (int i = 1; i < n; i++) {
+            for (int target = 1; target <= totalSum; target++) {
+                boolean notPick = dp[i - 1][target];
+                boolean pick = false;
+
+                if (arr[i] <= target) {
+                    pick = dp[i - 1][target - arr[i]];
+                }
+
+                dp[i][target] = pick || notPick;
+            }
+        }
+
+        int minDiff = Integer.MAX_VALUE;
+
+        for (int sum1 = 0; sum1 <= totalSum / 2; sum1++) {
+            if (dp[n - 1][sum1]) {
+                int sum2 = totalSum - sum1;
+                minDiff = Math.min(minDiff, Math.abs(sum2 - sum1));
+            }
+        }
+
+        return minDiff;
+    }
 
     // Count Subsets With Sum K
+    public int countSubsetsWithSumK(int[] arr, int k) {
+        int n = arr.length;
+        int[][] dp = new int[n][k + 1];
+
+        if (arr[0] == 0) {
+            dp[0][0] = 2;
+        } else {
+            dp[0][0] = 1;
+        }
+
+        if (arr[0] != 0 && arr[0] <= k) {
+            dp[0][arr[0]] = 1;
+        }
+
+        for (int i = 1; i < n; i++) {
+            for (int target = 0; target <= k; target++) {
+                int notPick = dp[i - 1][target];
+                int pick = 0;
+
+                if (arr[i] <= target) {
+                    pick = dp[i - 1][target - arr[i]];
+                }
+
+                dp[i][target] = pick + notPick;
+            }
+        }
+
+        return dp[n - 1][k];
+    }
 
     // Count Partitions With Given Difference
+    public int countPartitionsWithDifference(int[] arr, int d) {
+        int totalSum = 0;
+
+        for (int num : arr) {
+            totalSum += num;
+        }
+
+        if (totalSum - d < 0 || (totalSum - d) % 2 != 0) {
+            return 0;
+        }
+
+        int target = (totalSum - d) / 2;
+        return countSubsetsWithSumK(arr, target);
+    }
 
     // Assign Cookies
+    public int findContentChildren(int[] greed, int[] cookies) {
+        Arrays.sort(greed);
+        Arrays.sort(cookies);
+
+        int child = 0;
+        int cookie = 0;
+
+        while (child < greed.length && cookie < cookies.length) {
+            if (cookies[cookie] >= greed[child]) {
+                child++;
+            }
+            cookie++;
+        }
+
+        return child;
+    }
 
     // Minimum Coins
+    public int minimumCoins(int[] coins, int amount) {
+        int n = coins.length;
+        int[][] dp = new int[n][amount + 1];
+
+        for (int target = 0; target <= amount; target++) {
+            if (target % coins[0] == 0) {
+                dp[0][target] = target / coins[0];
+            } else {
+                dp[0][target] = 1000000000;
+            }
+        }
+
+        for (int i = 1; i < n; i++) {
+            for (int target = 0; target <= amount; target++) {
+                int notPick = dp[i - 1][target];
+                int pick = 1000000000;
+
+                if (coins[i] <= target) {
+                    pick = 1 + dp[i][target - coins[i]];
+                }
+
+                dp[i][target] = Math.min(pick, notPick);
+            }
+        }
+
+        int ans = dp[n - 1][amount];
+        return ans >= 1000000000 ? -1 : ans;
+    }
 
     // Target Sum
+    public int targetSum(int[] nums, int target) {
+        int totalSum = 0;
+
+        for (int num : nums) {
+            totalSum += num;
+        }
+
+        if (totalSum - target < 0 || (totalSum - target) % 2 != 0) {
+            return 0;
+        }
+
+        int subsetTarget = (totalSum - target) / 2;
+        return countSubsetsWithSumK(nums, subsetTarget);
+    }
 
     // Coin Change 2
+    public int change(int amount, int[] coins) {
+        int n = coins.length;
+        int[][] dp = new int[n][amount + 1];
+
+        for (int target = 0; target <= amount; target++) {
+            if (target % coins[0] == 0) {
+                dp[0][target] = 1;
+            }
+        }
+
+        for (int i = 1; i < n; i++) {
+            for (int target = 0; target <= amount; target++) {
+                int notPick = dp[i - 1][target];
+                int pick = 0;
+
+                if (coins[i] <= target) {
+                    pick = dp[i][target - coins[i]];
+                }
+
+                dp[i][target] = pick + notPick;
+            }
+        }
+
+        return dp[n - 1][amount];
+    }
 
     // Unbounded Knapsack
+    public int unboundedKnapsack(int[] weights, int[] values, int capacity) {
+        int n = weights.length;
+        int[][] dp = new int[n][capacity + 1];
+
+        for (int weight = 0; weight <= capacity; weight++) {
+            dp[0][weight] = (weight / weights[0]) * values[0];
+        }
+
+        for (int i = 1; i < n; i++) {
+            for (int weight = 0; weight <= capacity; weight++) {
+                int notPick = dp[i - 1][weight];
+                int pick = Integer.MIN_VALUE;
+
+                if (weights[i] <= weight) {
+                    pick = values[i] + dp[i][weight - weights[i]];
+                }
+
+                dp[i][weight] = Math.max(pick, notPick);
+            }
+        }
+
+        return dp[n - 1][capacity];
+    }
 
     // Rod Cutting Problem
+    public int cutRod(int[] price, int n) {
+        int[] weights = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            weights[i] = i + 1;
+        }
+
+        return unboundedKnapsack(weights, price, n);
+    }
 
 
     // =========================
@@ -413,18 +652,257 @@ public class dp {
     // =========================
 
     // Longest Increasing Subsequence
+    public int longestIncreasingSubsequenceLength(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+
+        int maxLength = 1;
+
+        for (int i = 0; i < n; i++) {
+            for (int prev = 0; prev < i; prev++) {
+                if (nums[prev] < nums[i]) {
+                    dp[i] = Math.max(dp[i], 1 + dp[prev]);
+                }
+            }
+            maxLength = Math.max(maxLength, dp[i]);
+        }
+
+        return maxLength;
+    }
 
     // Print Longest Increasing Subsequence
+    public List<Integer> printLongestIncreasingSubsequence(int[] arr) {
+        int n = arr.length;
+
+        int[] dp = new int[n];
+        int[] parent = new int[n];
+
+        Arrays.fill(dp, 1);
+
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+
+            for (int prev = 0; prev < i; prev++) {
+                if (arr[prev] < arr[i] && dp[prev] + 1 > dp[i]) {
+                    dp[i] = dp[prev] + 1;
+                    parent[i] = prev;
+                }
+            }
+        }
+
+        int maxLength = 1;
+        int lastIndex = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (dp[i] > maxLength) {
+                maxLength = dp[i];
+                lastIndex = i;
+            }
+        }
+
+        List<Integer> lis = new ArrayList<>();
+
+        while (parent[lastIndex] != lastIndex) {
+            lis.add(arr[lastIndex]);
+            lastIndex = parent[lastIndex];
+        }
+
+        lis.add(arr[lastIndex]);
+        Collections.reverse(lis);
+
+        return lis;
+    }
 
     // Longest Increasing Subsequence - Binary Search Approach
+    public int lengthOfLISBinarySearch(int[] nums) {
+
+        // temp does NOT store the actual LIS.
+        // temp[i] stores the smallest possible ending value
+        // of an increasing subsequence of length (i + 1).
+        ArrayList<Integer> temp = new ArrayList<>();
+
+        for (int num : nums) {
+
+            // Find the first position where the value is
+            // greater than or equal to the current number.
+            int index = lowerBound(temp, num);
+
+            // If num is bigger than every element in temp,
+            // it can extend the LIS length.
+            if (index == temp.size()) {
+                temp.add(num);
+            }
+            // Otherwise, replace the larger/equal value with num.
+            // This keeps the same LIS length, but gives us a smaller
+            // ending value, which is better for future numbers.
+            else {
+                temp.set(index, num);
+            }
+        }
+
+        // The size of temp is the length of the LIS.
+        return temp.size();
+    }
+
+    // Returns the index of the first element
+    // that is greater than or equal to target.
+    private int lowerBound(ArrayList<Integer> arr, int target) {
+        int low = 0;
+        int high = arr.size();
+
+        // Binary search on the temp array.
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+
+            // If arr[mid] is already big enough,
+            // target can be placed here or somewhere before this.
+            if (arr.get(mid) >= target) {
+                high = mid;
+            }
+            // If arr[mid] is smaller than target,
+            // target must go to the right side.
+            else {
+                low = mid + 1;
+            }
+        }
+
+        // low is the correct position to insert/replace target.
+        return low;
+    }
 
     // Largest Divisible Subset
+    public List<Integer> largestDivisibleSubset(int[] nums) {
+        Arrays.sort(nums);
+        int n = nums.length;
+        int[] dp = new int[n];
+        int[] parent = new int[n];
+        Arrays.fill(dp, 1);
+
+        int maxLen = 1;
+        int lastIndex = 0;
+
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+            for (int prev = 0; prev < i; prev++) {
+                if (nums[i] % nums[prev] == 0 && dp[prev] + 1 > dp[i]) {
+                    dp[i] = dp[prev] + 1;
+                    parent[i] = prev;
+                }
+            }
+            if (dp[i] > maxLen) {
+                maxLen = dp[i];
+                lastIndex = i;
+            }
+        }
+
+        List<Integer> ans = new ArrayList<>();
+        while (parent[lastIndex] != lastIndex) {
+            ans.add(nums[lastIndex]);
+            lastIndex = parent[lastIndex];
+        }
+        ans.add(nums[lastIndex]);
+        Collections.reverse(ans);
+        return ans;
+    }
 
     // Longest String Chain
+    public int longestStrChain(String[] words) {
+        Arrays.sort(words, (a, b) -> a.length() - b.length());
+        int n = words.length;
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+
+        int ans = 1;
+        for (int i = 0; i < n; i++) {
+            for (int prev = 0; prev < i; prev++) {
+                if (isPredecessor(words[prev], words[i])) {
+                    dp[i] = Math.max(dp[i], dp[prev] + 1);
+                }
+            }
+            ans = Math.max(ans, dp[i]);
+        }
+        return ans;
+    }
+
+    private boolean isPredecessor(String small, String big) {
+        if (big.length() != small.length() + 1) return false;
+
+        int i = 0;
+        int j = 0;
+
+        while (j < big.length()) {
+            if (i < small.length() && small.charAt(i) == big.charAt(j)) {
+                i++;
+            }
+            j++;
+        }
+
+        return i == small.length();
+    }
 
     // Longest Bitonic Subsequence
+    public int longestBitonicSubsequence(int[] arr) {
+        int n = arr.length;
+        int[] lis = new int[n];
+        int[] lds = new int[n];
+        Arrays.fill(lis, 1);
+        Arrays.fill(lds, 1);
+
+        for (int i = 0; i < n; i++) {
+            for (int prev = 0; prev < i; prev++) {
+                if (arr[prev] < arr[i]) {
+                    lis[i] = Math.max(lis[i], lis[prev] + 1);
+                }
+            }
+        }
+
+        for (int i = n - 1; i >= 0; i--) {
+            for (int next = n - 1; next > i; next--) {
+                if (arr[next] < arr[i]) {
+                    lds[i] = Math.max(lds[i], lds[next] + 1);
+                }
+            }
+        }
+
+        int ans = 0;
+        for (int i = 0; i < n; i++) {
+            ans = Math.max(ans, lis[i] + lds[i] - 1);
+        }
+        return ans;
+    }
 
     // Number of Longest Increasing Subsequences
+    public int findNumberOfLIS(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n];
+        int[] count = new int[n];
+        Arrays.fill(dp, 1);
+        Arrays.fill(count, 1);
+
+        int maxLen = 1;
+        for (int i = 0; i < n; i++) {
+            for (int prev = 0; prev < i; prev++) {
+                if (nums[prev] < nums[i]) {
+                    if (dp[prev] + 1 > dp[i]) {
+                        dp[i] = dp[prev] + 1;
+                        count[i] = count[prev];
+                    } else if (dp[prev] + 1 == dp[i]) {
+                        count[i] += count[prev];
+                    }
+                }
+            }
+            maxLen = Math.max(maxLen, dp[i]);
+        }
+
+        int ans = 0;
+        for (int i = 0; i < n; i++) {
+            if (dp[i] == maxLen) {
+                ans += count[i];
+            }
+        }
+        return ans;
+    }
 
 
     // =========================
