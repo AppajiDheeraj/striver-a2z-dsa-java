@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class dp {
 
     // =========================
@@ -14,19 +16,6 @@ public class dp {
             dp[i] = dp[i - 1] + dp[i - 2];
         }
         return dp[n];
-    }
-
-    // Frog Jump
-    public int frogJump(int[] height) {
-        int n = height.length;
-        if (n == 1) return 0;
-
-        int prev = 0;
-        int prev2 = 0;
-
-        for (int i = 1; i < n; i++) {
-            
-        }
     }
 
     // Frog Jump with K Distances
@@ -329,7 +318,7 @@ public class dp {
     }
     
     // Best Time to Buy and Sell Stock II
-    public int maxProfit(int[] prices) {
+    public int maxProfitII(int[] prices) {
         int n = prices.length;
         int[][] dp = new int[n + 1][2];
 
