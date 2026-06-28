@@ -518,24 +518,235 @@ public class dp {
     // =========================
 
     // Longest Common Subsequence
+    public int longestCommonSubsequence(String text1, String text2) {
+        int n = text1.length();
+        int m = text2.length();
+
+        int[][] dp = new int[n + 1][m + 1];
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
+                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+
+        return dp[n][m];
+    }
 
     // Print Longest Common Subsequence
+    public String printLongestCommonSubsequence(String s1, String s2) {
+        int n = s1.length();
+        int m = s2.length();
+
+        int[][] dp = new int[n + 1][m + 1];
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+
+        StringBuilder ans = new StringBuilder();
+        int i = n;
+        int j = m;
+
+        while (i > 0 && j > 0) {
+            if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                ans.append(s1.charAt(i - 1));
+                i--;
+                j--;
+            } else if (dp[i - 1][j] >= dp[i][j - 1]) {
+                i--;
+            } else {
+                j--;
+            }
+        }
+
+        return ans.reverse().toString();
+    }
 
     // Longest Common Substring
+    public int longestCommonSubstring(String s1, String s2) {
+        int n = s1.length();
+        int m = s2.length();
+
+        int[][] dp = new int[n + 1][m + 1];
+        int ans = 0;
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                    ans = Math.max(ans, dp[i][j]);
+                } else {
+                    dp[i][j] = 0;
+                }
+            }
+        }
+
+        return ans;
+    }
 
     // Longest Palindromic Subsequence
+    public int longestPalindromeSubseq(String s) {
+        String reversed = new StringBuilder(s).reverse().toString();
+        return longestCommonSubsequence(s, reversed);
+    }
 
     // Minimum Insertions to Make String Palindrome
+    public int minInsertions(String s) {
+        int n = s.length();
+        int longestPalindromeLength = longestPalindromeSubseq(s);
+        return n - longestPalindromeLength;
+    }
 
     // Minimum Insertions or Deletions to Convert String A to B
+    public int minInsertionsDeletionsToConvert(String s1, String s2) {
+        int lcs = longestCommonSubsequence(s1, s2);
+        int deletions = s1.length() - lcs;
+        int insertions = s2.length() - lcs;
+        return insertions + deletions;
+    }
 
     // Shortest Common Supersequence
+    public String shortestCommonSupersequence(String str1, String str2) {
+        int n = str1.length();
+        int m = str2.length();
+
+        int[][] dp = new int[n + 1][m + 1];
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (str1.charAt(i - 1) == str2.charAt(j - 1)) {
+                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+
+        StringBuilder ans = new StringBuilder();
+        int i = n;
+        int j = m;
+
+        while (i > 0 && j > 0) {
+            if (str1.charAt(i - 1) == str2.charAt(j - 1)) {
+                ans.append(str1.charAt(i - 1));
+                i--;
+                j--;
+            } else if (dp[i - 1][j] >= dp[i][j - 1]) {
+                ans.append(str1.charAt(i - 1));
+                i--;
+            } else {
+                ans.append(str2.charAt(j - 1));
+                j--;
+            }
+        }
+
+        while (i > 0) {
+            ans.append(str1.charAt(i - 1));
+            i--;
+        }
+
+        while (j > 0) {
+            ans.append(str2.charAt(j - 1));
+            j--;
+        }
+
+        return ans.reverse().toString();
+    }
 
     // Distinct Subsequences
+    public int numDistinct(String s, String t) {
+        int n = s.length();
+        int m = t.length();
+
+        double[][] dp = new double[n + 1][m + 1];
+
+        for (int i = 0; i <= n; i++) {
+            dp[i][0] = 1;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (s.charAt(i - 1) == t.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+
+        return (int) dp[n][m];
+    }
 
     // Edit Distance
+    public int minDistance(String word1, String word2) {
+        int n = word1.length();
+        int m = word2.length();
+
+        int[][] dp = new int[n + 1][m + 1];
+
+        for (int i = 0; i <= n; i++) {
+            dp[i][0] = i;
+        }
+
+        for (int j = 0; j <= m; j++) {
+            dp[0][j] = j;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    int insert = dp[i][j - 1];
+                    int delete = dp[i - 1][j];
+                    int replace = dp[i - 1][j - 1];
+                    dp[i][j] = 1 + Math.min(insert, Math.min(delete, replace));
+                }
+            }
+        }
+
+        return dp[n][m];
+    }
 
     // Wildcard Matching
+    public boolean isMatch(String s, String p) {
+        int n = s.length();
+        int m = p.length();
+
+        boolean[][] dp = new boolean[n + 1][m + 1];
+        dp[0][0] = true;
+
+        for (int j = 1; j <= m; j++) {
+            if (p.charAt(j - 1) == '*') {
+                dp[0][j] = dp[0][j - 1];
+            }
+        }
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (s.charAt(i - 1) == p.charAt(j - 1) || p.charAt(j - 1) == '?') {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else if (p.charAt(j - 1) == '*') {
+                    dp[i][j] = dp[i - 1][j] || dp[i][j - 1];
+                } else {
+                    dp[i][j] = false;
+                }
+            }
+        }
+
+        return dp[n][m];
+    }
 
 
     // =========================
