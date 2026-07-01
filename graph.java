@@ -4,6 +4,8 @@ class Edge {
     int node;
     int wt;
 
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     Edge(int node, int wt) {
         this.node = node;
         this.wt = wt;
@@ -14,6 +16,8 @@ class NodeParent {
     int node;
     int parent;
 
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     NodeParent(int node, int parent) {
         this.node = node;
         this.parent = parent;
@@ -22,6 +26,8 @@ class NodeParent {
 
 public class graph {
     // Breadth First Search Traversal
+    // Time Complexity: O(V + E)
+    // Space Complexity: O(V + E)
     static List<Integer> bfsOfGraph(int V, List<List<Integer>> edges) {
         List<List<Integer>> adj = new ArrayList<>();
 
@@ -60,6 +66,8 @@ public class graph {
     }
 
     // DFS Traversal
+    // Time Complexity: O(V + E)
+    // Space Complexity: O(V + E)
     static void dfs(int node, List<List<Integer>> adj, boolean[] vis, List<Integer> dfsAns){
         vis[node] = true;
         dfsAns.add(node);
@@ -71,6 +79,8 @@ public class graph {
         }
     }
 
+    // Time Complexity: O(V + E)
+    // Space Complexity: O(V + E)
     static List<Integer> dfsOfGraph(int V, List<List<Integer>> edges) {
         List<List<Integer>> adj = new ArrayList<>();
 
@@ -94,6 +104,8 @@ public class graph {
     }
 
     // Count Connected Components
+    // Time Complexity: O(V + E)
+    // Space Complexity: O(V + E)
     static int countComponents(int V, List<List<Integer>> edges) {
         List<List<Integer>> adj = new ArrayList<>();
 
@@ -123,6 +135,8 @@ public class graph {
     }
 
     // Number of provinces
+    // Time Complexity: O(n^2)
+    // Space Complexity: O(n) recursion stack
     private void dfs(int city, int[][] isConnected, boolean[] vis){
         vis[city] = true;
         for(int neighbour = 0; neighbour < isConnected.length; neighbour++){
@@ -132,6 +146,8 @@ public class graph {
         }
     }
 
+    // Time Complexity: O(n^2)
+    // Space Complexity: O(n)
     public int findCircleNum(int[][] isConnected) {
         int n = isConnected.length;
         boolean[] vis = new boolean[n];
@@ -149,6 +165,8 @@ public class graph {
     // Connected Components Problem in Matrix - Refer above line 76
 
     // Rotten Oranges
+    // Time Complexity: O(rows * cols)
+    // Space Complexity: O(rows * cols)
     public int orangesRotting(int[][] grid) {
         int rows = grid.length;
         int cols = grid[0].length;
@@ -204,6 +222,8 @@ public class graph {
     }
 
     // Flood fill algorithm
+    // Time Complexity: O(rows * cols)
+    // Space Complexity: O(rows * cols)
     private void dfsHelper(int row, int col, int[][] image, int original, int color){
         image[row][col] = color;
 
@@ -221,6 +241,8 @@ public class graph {
 
     }
 
+    // Time Complexity: O(rows * cols)
+    // Space Complexity: O(rows * cols)
     public int[][] floodFill(int[][] image, int sr, int sc, int color) {
         int original = image[sr][sc];
         if(original == color) return image;
@@ -231,6 +253,8 @@ public class graph {
     }
     
     // ================= UNDIRECTED CYCLE DETECTION (BFS) =================
+    // Time Complexity: O(V + E)
+    // Space Complexity: O(V + E)
     public boolean bfsCycle(int start, List<Integer>[] adj, boolean[] vis) {
         Queue<NodeParent> q = new LinkedList<>();
 
@@ -257,6 +281,8 @@ public class graph {
     }
 
     // ================= UNDIRECTED CYCLE DETECTION (DFS) =================
+    // Time Complexity: O(V + E)
+    // Space Complexity: O(V + E)
     public boolean dfsCycle(int node, int parent, List<Integer>[] adj, boolean[] vis) {
         vis[node] = true;
 
@@ -276,6 +302,8 @@ public class graph {
     }
 
     // ================= DIRECTED CYCLE DETECTION (DFS) =================
+    // Time Complexity: O(V + E)
+    // Space Complexity: O(V + E)
     public boolean dfsDirectedCycle(int node, List<Integer>[] adj, boolean[] vis, boolean[] pathVis) {
 
         vis[node] = true;
@@ -299,6 +327,8 @@ public class graph {
     }
 
     // Course Schedule - 1
+    // Time Complexity: O(V + E)
+    // Space Complexity: O(V + E)
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         List<List<Integer>> adj = new ArrayList<>();
         int[] inDegree = new int[numCourses];
@@ -339,6 +369,8 @@ public class graph {
     }
 
     // Course Schedule - 2
+    // Time Complexity: O(V + E)
+    // Space Complexity: O(V + E)
     public int[] findOrder(int numCourses, int[][] prerequisites) {
         List<List<Integer>> adj = new ArrayList<>();
         int[] inDegree = new int[numCourses];
@@ -385,6 +417,8 @@ public class graph {
     }
 
     // Distance of nearest cell having one - 01 Matrix
+    // Time Complexity: O(rows * cols)
+    // Space Complexity: O(rows * cols)
     public int[][] updateMatrix(int[][] mat) {
         int m = mat.length;
         int n = mat[0].length;
@@ -425,6 +459,8 @@ public class graph {
     }
 
     // Surrounded Regions
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public void solve(char[][] board) {
         if (board == null || board.length == 0) return;
         
@@ -485,6 +521,8 @@ public class graph {
     }
 
     // Surrounded Regions - DFS
+    // Time Complexity: O(V + E)
+    // Space Complexity: O(V + E)
     private void dfs(int i, int j, char[][] board, int r, int c) {
         if (i < 0 || i >= r || j < 0 || j >= c) {
             return;
@@ -502,6 +540,8 @@ public class graph {
         dfs(i, j + 1, board, r, c);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public void solveDFS(char[][] board) {
         if (board == null || board.length == 0) return;
         
@@ -530,6 +570,8 @@ public class graph {
     }
     
     // Number of enclaves
+    // Time Complexity: O(V + E)
+    // Space Complexity: O(V + E)
     private void dfs(int i, int j, int[][] grid, int r, int c) {
         if (i < 0 || i >= r || j < 0 || j >= c) {
             return;
@@ -547,6 +589,8 @@ public class graph {
         dfs(i, j + 1, grid, r, c);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int numEnclaves(int[][] grid) {
         if (grid == null || grid.length == 0) return 0;
 
@@ -580,12 +624,16 @@ public class graph {
         String word;
         int steps;
 
+        // Time Complexity: O(n)
+        // Space Complexity: O(1)
         WordNode(String word, int steps) {
             this.word = word;
             this.steps = steps;
         }
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
         Set<String> set = new HashSet<>(wordList);
 
@@ -629,6 +677,8 @@ public class graph {
     }
 
     // Word ladder II
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
         Set<String> set = new HashSet<>(wordList);
         List<List<String>> ans = new ArrayList<>();
@@ -712,6 +762,8 @@ public class graph {
     }
 
     // Number of islands
+    // Time Complexity: O(V + E)
+    // Space Complexity: O(V + E)
     private void dfs(char[][] grid, int r, int c, int m, int n){
         if (r < 0 || r >= m || c < 0 || c >= n || grid[r][c] == '0') {
             return;
@@ -725,6 +777,8 @@ public class graph {
         dfs(grid, r, c + 1, m, n); // Right
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int numIslands(char[][] grid) {
         if (grid == null || grid.length == 0) {
             return 0;
@@ -760,6 +814,8 @@ public class graph {
     // Space: O(M*N) (DFS recursion stack worst case)
 
     // Closed Islands
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int numClosedIslands(char[][] grid) {
         if (grid == null || grid.length == 0) return 0;
 
@@ -790,6 +846,8 @@ public class graph {
     
 
     // Bipartite Graph (DFS) -- 1 -> Red + -1 -> Blue
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public boolean isBipartite(int[][] graph) {
         int n = graph.length;
         int[] colors = new int[n];
@@ -823,6 +881,8 @@ public class graph {
     }
 
     // Bipartite Graph (DFS - Recursive)
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public boolean isBipartiteDFS(int[][] graph) {
         int n = graph.length;
         int[] colors = new int[n];
@@ -838,6 +898,8 @@ public class graph {
         return true;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private boolean dfsBipartite(int[][] graph, int[] colors, int node, int color) {
         colors[node] = color;
 
@@ -857,6 +919,8 @@ public class graph {
     }
 
     // Function to perform DFS-based topological sort
+    // Time Complexity: O(V + E)
+    // Space Complexity: O(V + E)
     private void dfs(int node, ArrayList<ArrayList<Integer>> adj, int[] vis, Stack<Integer> st) {
         vis[node] = 1;
 
@@ -869,6 +933,8 @@ public class graph {
         st.push(node);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public ArrayList<Integer> topoSortDFS(int V, ArrayList<ArrayList<Integer>> adj) {
         int[] vis = new int[V];
         Stack<Integer> st = new Stack<>();
@@ -888,6 +954,8 @@ public class graph {
     }
 
     // Function to perform BFS-based topological sort (Kahn's Algorithm)
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int[] topologicalSortBFS(int V, ArrayList<ArrayList<Integer>> adj) {
         int[] indegree = new int[V];
         for (int i = 0; i < V; i++) {
@@ -923,6 +991,8 @@ public class graph {
     }
 
     // Find Eventual Safe States
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public List<Integer> eventualSafeNodes(int[][] graph) {
         int n = graph.length;
         
@@ -967,6 +1037,8 @@ public class graph {
 
 
     // Find Eventual Safe States (DFS)
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public List<Integer> eventualSafeNodesDFS(int[][] graph) {
         int n = graph.length;
 
@@ -982,6 +1054,8 @@ public class graph {
         return result;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private boolean dfsSafe(int[][] graph, int[] state, int node) {
         if (state[node] != 0) {
             return state[node] == 2;
@@ -1004,6 +1078,8 @@ public class graph {
     }
 
     // Alien Dictionary
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public String alienDictionary(String[] dict, int K) {
         List<Integer>[] adj = new ArrayList[K];
 
@@ -1060,6 +1136,8 @@ public class graph {
     }
 
     // BFS Shortest Path (Undirected Graph, Unit Weight)
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int[] shortestPath(int[][] edges, int N, int M, int src) {
         List<List<Integer>> adj = new ArrayList<>();
 
@@ -1101,6 +1179,8 @@ public class graph {
     }
 
     // DAG Shortest Path (Topological Sort + Relaxation)
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private void topoSort(int node, ArrayList<ArrayList<Edge>> adj, boolean[] vis, Stack<Integer> st) {
         vis[node] = true;
         for (Edge edge : adj.get(node)) {
@@ -1111,6 +1191,8 @@ public class graph {
         st.push(node);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int[] shortestPath(int N, int M, int[][] edges) {
         ArrayList<ArrayList<Edge>> adj = new ArrayList<>();
         for (int i = 0; i < N; i++) {
@@ -1163,6 +1245,8 @@ public class graph {
     }
 
     // Dijkstra (Priority Queue)
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int[] dijkstra(int V, ArrayList<ArrayList<int[]>> adj, int src) {
         int[] dist = new int[V];
         Arrays.fill(dist, Integer.MAX_VALUE);
@@ -1197,6 +1281,8 @@ public class graph {
     }
 
     // Bellman Ford (Negative Weights Allowed)
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int[] bellmanFord(int V, ArrayList<ArrayList<Integer>> edges, int src) {
         int[] dist = new int[V];
         Arrays.fill(dist, Integer.MAX_VALUE);
@@ -1228,6 +1314,8 @@ public class graph {
     }
 
     //  Shortest Path in Binary Matrix
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int shortestPathBinaryMatrix(int[][] grid) {
         int n = grid.length;
         if (grid[0][0] == 1 || grid[n - 1][n - 1] == 1) return -1;
@@ -1264,6 +1352,8 @@ public class graph {
     }
 
     // Path With Minimum Effort
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int minimumEffortPath(int[][] heights) {
         int m = heights.length;
         int n = heights[0].length;
@@ -1315,6 +1405,8 @@ public class graph {
     // Cheapest Flights Within K Stops
     class Pair {
         int node, price;
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         Pair(int d, int p) { 
             this.node = d; 
             this.price = p;
@@ -1323,6 +1415,8 @@ public class graph {
 
     class State {
         int node, cost, stops;
+        // Time Complexity: O(n)
+        // Space Complexity: O(1)
         State(int n, int c, int s) { 
             this.node = n; 
             this.cost = c; 
@@ -1330,6 +1424,8 @@ public class graph {
         }
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
         ArrayList<ArrayList<Pair>> adj = new ArrayList<>();
         
@@ -1377,6 +1473,8 @@ public class graph {
     }
 
     // Network Delay Time
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int networkDelayTime(int[][] times, int n, int k) {
         List<List<int[]>> adj = new ArrayList<>();
         for (int i = 0; i <= n; i++) {
@@ -1429,6 +1527,8 @@ public class graph {
     }
 
     // Number of Ways to Arrive at Destination
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int countPaths(int n, int[][] roads) {
         int MOD = 1_000_000_007;
 
@@ -1482,6 +1582,8 @@ public class graph {
     }
 
     // Minimum multiplications to reach end
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int minimumMultiplications(int[] arr, int start, int end) {
         if (start == end) return 0;
 
@@ -1516,6 +1618,8 @@ public class graph {
     }
 
     // Floyd Warshall Algorithm (All-Pairs Shortest Path) -- {O}(V^3) time
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public void shortest_distance(int[][] matrix) {
         int n = matrix.length;
         int INF = (int) 1e9;
@@ -1549,6 +1653,8 @@ public class graph {
     }
 
     // Find the city with the smallest number of neighbors
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int findTheCity(int n, int[][] edges, int distanceThreshold) {
         int INF = (int) 1e9;
         int[][] dist = new int[n][n];
@@ -1604,12 +1710,16 @@ public class graph {
         int node;
         int weight;
 
+        // Time Complexity: O(n)
+        // Space Complexity: O(1)
         PrimPair(int weight, int node) {
             this.weight = weight;
             this.node = node;
         }
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int spanningTree(int V, List<List<int[]>> adj) {
         PriorityQueue<PrimPair> pq = new PriorityQueue<>((a, b) -> Integer.compare(a.weight, b.weight));
         boolean[] vis = new boolean[V];
@@ -1648,6 +1758,8 @@ public class graph {
         private int[] parent;
         private int[] size;
 
+        // Time Complexity: O(n)
+        // Space Complexity: O(1)
         public DisjointSet(int n) {
             rank = new int[n + 1];
             parent = new int[n + 1];
@@ -1660,6 +1772,8 @@ public class graph {
             }
         }
 
+        // Time Complexity: O(n)
+        // Space Complexity: O(1)
         public int findUPar(int node) {
             if (node == parent[node]) {
                 return node;
@@ -1668,6 +1782,8 @@ public class graph {
             return parent[node] = findUPar(parent[node]);
         }
 
+        // Time Complexity: O(n)
+        // Space Complexity: O(1)
         public void unionByRank(int u, int v) {
             int ulp_u = findUPar(u);
             int ulp_v = findUPar(v);
@@ -1684,6 +1800,8 @@ public class graph {
             }
         }
 
+        // Time Complexity: O(n)
+        // Space Complexity: O(1)
         public void unionBySize(int u, int v) {
             int ulp_u = findUPar(u);
             int ulp_v = findUPar(v);
@@ -1701,6 +1819,8 @@ public class graph {
     }
 
     // Number of operations to make network connected
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int makeConnected(int n, int[][] connections) {
         if (connections.length < n - 1) return -1;
         DisjointSet ds = new DisjointSet(n);
@@ -1720,6 +1840,8 @@ public class graph {
     }
 
     // Most stones removed with same row or column
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int removeStones(int[][] stones) {
         int maxRow = 0, maxCol = 0;
         for (int[] s : stones) {
@@ -1749,6 +1871,8 @@ public class graph {
     }
 
     // Accounts merge
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public List<List<String>> accountsMerge(List<List<String>> accounts) {
         int n = accounts.size();
         DisjointSet ds = new DisjointSet(n);
@@ -1793,6 +1917,8 @@ public class graph {
     }
 
     // Number of islands II
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public List<Integer> numOfIslands(int rows, int cols, int[][] operators) {
         DisjointSet ds = new DisjointSet(rows * cols);
         boolean[][] vis = new boolean[rows][cols];
@@ -1838,6 +1964,8 @@ public class graph {
     }
 
     // Making a large island
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int largestIsland(int[][] grid) {
         int n = grid.length;
         DisjointSet ds = new DisjointSet(n * n);
@@ -1896,6 +2024,8 @@ public class graph {
     // Swim in Rising Water
     class SwimPair {
         int effort, r, c;
+        // Time Complexity: O(n)
+        // Space Complexity: O(1)
         SwimPair(int effort, int r, int c) {
             this.effort = effort;
             this.r = r;
@@ -1903,6 +2033,8 @@ public class graph {
         }
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int swimInWater(int[][] grid) {
         int n = grid.length;
         
@@ -1949,6 +2081,8 @@ public class graph {
 
     // Bridges in graph
     private int timer = 1;
+    // Time Complexity: O(V + E)
+    // Space Complexity: O(V + E)
     private void dfs(int node, int parent, boolean[] vis, int[] tin, int[] low, List<Integer>[] adj, List<List<Integer>> bridges) {
         vis[node] = true;
         tin[node] = low[node] = timer++;
@@ -1970,6 +2104,8 @@ public class graph {
         }
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
         List<Integer>[] adj = new ArrayList[n];
 
@@ -1998,6 +2134,8 @@ public class graph {
     }
 
     // Articulation point in graph
+    // Time Complexity: O(V + E)
+    // Space Complexity: O(V + E)
     private void dfs(int node, int parent, int[] tin, int[] low, boolean[] vis, boolean[] isArticulation, List<List<Integer>> adj) {
         vis[node] = true;
         tin[node] = low[node] = timer++;
@@ -2033,6 +2171,8 @@ public class graph {
         }
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public List<Integer> articulationPoints(int n, List<List<Integer>> adj) {
         int[] tin = new int[n];
         int[] low = new int[n];
@@ -2060,6 +2200,8 @@ public class graph {
     }
 
     // Kosaraju's algorithm
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private void dfsKosaraju(int node, boolean[] vis, ArrayList<ArrayList<Integer>> adj, Stack<Integer> st) {
         vis[node] = true;
 
@@ -2072,6 +2214,8 @@ public class graph {
         st.push(node);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private void dfsTranspose(int node, boolean[] vis, ArrayList<ArrayList<Integer>> adjT) {
         vis[node] = true;
 
@@ -2082,6 +2226,8 @@ public class graph {
         }
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int kosaraju(int V, ArrayList<ArrayList<Integer>> adj) {
         boolean[] vis = new boolean[V];
         Stack<Integer> st = new Stack<>();

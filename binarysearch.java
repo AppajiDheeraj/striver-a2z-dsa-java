@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class binarysearch {
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
     public int search(int[] nums, int target) {
         int left = 0;
         int right = nums.length - 1;
@@ -15,6 +17,8 @@ public class binarysearch {
     }
 
     // Lower bound of x
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
     public int lowerbound(int[] nums, int x){
         int left = 0;
         int right = nums.length - 1;
@@ -32,6 +36,8 @@ public class binarysearch {
     }
 
     // Upper bound of x
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
     public int upperbound(int[] nums, int x){
         int left = 0;
         int right = nums.length - 1;
@@ -50,6 +56,8 @@ public class binarysearch {
     }
 
     // Search Insert Position
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
     public int searchInsert(int[] nums, int target) {
         int left = 0;
         int right = nums.length - 1;
@@ -63,18 +71,24 @@ public class binarysearch {
     }
 
     // Ceil = smallest element >= x
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
     public int ceil(int[] nums, int x){
         int idx = lowerbound(nums, x);
         return idx == nums.length ? -1 : nums[idx];
     }
 
     // Floor = largest element <= x
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
     public int floor(int[] nums, int x){
         int idx = upperbound(nums, x);
         return idx == 0 ? -1 : nums[idx - 1];
     }
 
     // Find First and Last Position of Element in Sorted Array
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
     public int firstOccurence(int[] nums, int target){
         int left = 0;
         int right = nums.length - 1;
@@ -91,6 +105,8 @@ public class binarysearch {
         return ans;
     }
 
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
     public int lastOccurence(int[] nums, int target){
         int left = 0;
         int right = nums.length - 1;
@@ -107,6 +123,8 @@ public class binarysearch {
         return ans;
     } 
 
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
     public int[] findRange(int[] nums, int target){
 
         int[] ans = new int[2];
@@ -117,6 +135,8 @@ public class binarysearch {
     }
 
     // Count Occurrences in Sorted Array
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
     public int findOccurences(int[] nums, int x){
         int first = firstOccurence(nums, x);
         if(first == -1) return 0;
@@ -125,6 +145,8 @@ public class binarysearch {
     }
 
     // Search Element in a Rotated Sorted Array
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
     public int searchSortedRotatedArray(int[] nums, int target) {
         int left = 0;
         int right = nums.length - 1;
@@ -151,6 +173,8 @@ public class binarysearch {
     }
 
     // Search Element in a Rotated Sorted Array II
+    // Time Complexity: O(log n) average, O(n) worst case with duplicates
+    // Space Complexity: O(1)
     public boolean searchSortedRotatedArrayII(int[] nums, int target){
         int left = 0;
         int right = nums.length - 1;
@@ -184,6 +208,8 @@ public class binarysearch {
     }
 
     // Minimum element in a rotated Sorted Array
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
     public int findMin(int[] nums) {
         int left = 0;
         int right = nums.length - 1;
@@ -200,6 +226,8 @@ public class binarysearch {
     }
 
     // Number of Array rotations - (Index of the minimum element)
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
     public int arrayRotations(int[] nums){
         int left = 0;
         int right = nums.length - 1;
@@ -216,6 +244,8 @@ public class binarysearch {
     }
 
     // Single Element in a Sorted Array
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
     public int singleNonDuplicate(int[] nums) {
         int left = 0;
         int right = nums.length - 1;
@@ -234,6 +264,8 @@ public class binarysearch {
     }
 
     // Peak Element I
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
     public int findPeakElement(int[] nums) {
         int left = 0;
         int right = nums.length - 1;
@@ -255,6 +287,8 @@ public class binarysearch {
     // ---------------
 
     // Find square root of a number
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
     public int floorSqrt(int n){
         int left = 0;
         int right = n;
@@ -276,6 +310,8 @@ public class binarysearch {
 
     // Nth Root of a number
     // Find x such that x^n = m
+    // Time Complexity: O(n log m)
+    // Space Complexity: O(1)
     public int NthRoot(int n, int m) {
         int left = 1;
         int right = m;
@@ -307,6 +343,8 @@ public class binarysearch {
     }
 
     // Koko eating bananas
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private long totalHours(int[] piles, int speed) {
         long hours = 0;
 
@@ -316,6 +354,8 @@ public class binarysearch {
 
         return hours;
     }
+    // Time Complexity: O(n log R), where R is the binary-search range
+    // Space Complexity: O(1)
     public int minEatingSpeed(int[] piles, int h) {
         int low = 1;
         int high = 0;
@@ -341,6 +381,8 @@ public class binarysearch {
     }
 
     // Minimum days to make M bouquets
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private boolean canMakeBouquets(int[] bloomDay, int m, int k, int day) {
         int bouquets = 0;
         int consecutiveFlowers = 0;
@@ -363,6 +405,8 @@ public class binarysearch {
         return bouquets >= m;
     }
     
+    // Time Complexity: O(n log R), where R is the binary-search range
+    // Space Complexity: O(1)
     public int minDays(int[] bloomDay, int m, int k) {
         if ((long) m * k > bloomDay.length) {
             return -1;
@@ -392,6 +436,8 @@ public class binarysearch {
     }
 
     // Find the smallest divisor
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private int computeSum(int[] nums, int divisor) {
         int sum = 0;
         for (int num : nums) {
@@ -400,6 +446,8 @@ public class binarysearch {
         return sum;
     }
 
+    // Time Complexity: O(n log R), where R is the binary-search range
+    // Space Complexity: O(1)
     public int smallestDivisor(int[] nums, int threshold) {
         int low = 1;
         int high = 0;
@@ -424,6 +472,8 @@ public class binarysearch {
     }
 
     // Capacity to Ship Packages Within D Days
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private boolean canShip(int[] weights, int maxDays, int capacity) {
         int daysNeeded = 1;
         int currentLoad = 0;
@@ -443,6 +493,8 @@ public class binarysearch {
         return true;
     }
 
+    // Time Complexity: O(n log R), where R is the binary-search range
+    // Space Complexity: O(1)
     public int shipWithinDays(int[] weights, int days) {
         int low = 0;
         int high = 0;
@@ -468,6 +520,8 @@ public class binarysearch {
     }
 
     // Kth Missing Positive Number
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
     public int findKthPositive(int[] arr, int k) {
         int low = 0;
         int high = arr.length - 1;
@@ -487,6 +541,8 @@ public class binarysearch {
     }
 
     // Aggressive Cows
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private static boolean canPlaceCows(int[] stalls, int cows, int dist){
         int cowsPlaced = 1;
         int lastPlacedPosition = stalls[0];
@@ -504,6 +560,8 @@ public class binarysearch {
         return false;
     }
 
+    // Time Complexity: O(n log n + n log R), where R is the distance range
+    // Space Complexity: O(1)
     public static int aggressiveCows(int[] stalls, int k) {
         Arrays.sort(stalls);
 
@@ -526,6 +584,8 @@ public class binarysearch {
     }
 
     // Book Allocation Problem
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private static int countStudents(int[] arr, int maxPagesAllowed) {
         int students = 1;
         int currentStudentPages = 0;
@@ -542,6 +602,8 @@ public class binarysearch {
         return students;
     }
 
+    // Time Complexity: O(n log R), where R is the binary-search range
+    // Space Complexity: O(1)
     public static int findPages(int[] arr, int n, int m) {
         if(m > n) return -1;
 
@@ -568,6 +630,8 @@ public class binarysearch {
     }
 
     // Split array - largest sum
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private int countSubarrays(int[] nums, int maxTargetSum) {
         int subarrays = 1;
         int currentSubarraySum = 0;
@@ -584,6 +648,8 @@ public class binarysearch {
         return subarrays;
     }
 
+    // Time Complexity: O(n log R), where R is the binary-search range
+    // Space Complexity: O(1)
     public int splitArray(int[] nums, int k) {
         int low = 0;
         int high = 0;
@@ -610,6 +676,8 @@ public class binarysearch {
     }
 
     // Painter's Partition
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private static int countPainters(ArrayList<Integer> boards, int maxTimeAllowed) {
         int painters = 1;
         int currentTimeUnits = 0;
@@ -626,6 +694,8 @@ public class binarysearch {
         return painters;
     }
 
+    // Time Complexity: O(n log R), where R is the binary-search range
+    // Space Complexity: O(1)
     public static int findLargestMinDistance(ArrayList<Integer> boards, int k) {
         int low = 0;
         int high = 0;
@@ -652,6 +722,8 @@ public class binarysearch {
     }
 
     // Minimize Max Distance to Gas Station
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public static int numberOfGasStationsRequired(double dist, int[] arr){
         int count = 0;
         for(int i = 1; i < arr.length; i++){
@@ -664,6 +736,8 @@ public class binarysearch {
         return count;
     }
 
+    // Time Complexity: O(n log(R / 1e-6))
+    // Space Complexity: O(1)
     public static double minimiseMaxDistance(int[] arr, int k) {
         double low = 0;
         double high = 0;
@@ -687,6 +761,8 @@ public class binarysearch {
     }
 
     // Median of 2 sorted arrays
+    // Time Complexity: O(log(min(n, m)))
+    // Space Complexity: O(1)
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         if (nums1.length > nums2.length) {
             return findMedianSortedArrays(nums2, nums1);
@@ -725,6 +801,8 @@ public class binarysearch {
     }
 
     // Kth element of 2 sorted arrays
+    // Time Complexity: O(log(min(n, m)))
+    // Space Complexity: O(1)
     public long kthElement(int[] arr1, int[] arr2, int k) {
         int n1 = arr1.length;
         int n2 = arr2.length;
@@ -765,6 +843,8 @@ public class binarysearch {
     // ---------------
 
     // Row with maximum One's
+    // Time Complexity: O(n + m)
+    // Space Complexity: O(1)
     public int rowwithMax1s(int[][] mat, int n, int m){
         int row = 0;
         int col = m-1;
@@ -788,6 +868,8 @@ public class binarysearch {
     // [7 8 9]
     // Entire matrix behaves like one sorted array.
     // Optimal Approach: Binary Search on flattened matrix -> O(log(n*m))
+    // Time Complexity: O(log(n * m))
+    // Space Complexity: O(1)
     public boolean searchMatrix(int[][] matrix, int target) {
         int m = matrix[0].length;
         int n = matrix.length;
@@ -819,6 +901,8 @@ public class binarysearch {
     // [2 5 8]
     // [3 6 9]
     // Matrix is NOT globally sorted, so staircase search is used -> O(n+m)
+    // Time Complexity: O(n + m)
+    // Space Complexity: O(1)
     public boolean searchMatrixII(int[][] matrix, int target) {
         int row = 0;
         int col = matrix[0].length-1;
@@ -837,6 +921,8 @@ public class binarysearch {
     }
 
     // Peak Element
+    // Time Complexity: O(n log m)
+    // Space Complexity: O(1)
     public int[] findPeakGrid(int[][] mat){
         int n = mat.length;
         int m = mat[0].length;
@@ -867,6 +953,8 @@ public class binarysearch {
     }
 
     // Matrix Median
+    // Time Complexity: O(n log m log R), where R is the value range
+    // Space Complexity: O(1)
     public int matrixMedian(int[][] matrix){
         int n = matrix.length;
         int m = matrix[0].length;

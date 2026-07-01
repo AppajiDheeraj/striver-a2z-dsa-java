@@ -8,6 +8,8 @@ import java.util.Map;
 
 public class array {
     // Largest element in an array
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public static int findLargestElement(int[] arr, int n) {
         int max = arr[0];
 
@@ -21,6 +23,8 @@ public class array {
     }
 
     // Function to find the second smallest element in the array
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public static int secondSmallest(int[] arr, int n) {
         if (n < 2)
             return -1;
@@ -41,6 +45,8 @@ public class array {
     }
 
     // Function to find the second largest element in the array
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public static int secondLargest(int[] arr, int n) {
         if (n < 2)
             return -1;
@@ -60,6 +66,8 @@ public class array {
     }
 
     // Function to check if the array is sorted
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public boolean isSorted(int[] arr, int n) {
         for (int i = 1; i < n; i++) {
             if (arr[i] < arr[i - 1])
@@ -69,6 +77,8 @@ public class array {
     }
 
     // Check if Array Is Sorted and Rotated
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public boolean check(int[] nums) {
         int count = 0;
         int n = nums.length;
@@ -84,6 +94,8 @@ public class array {
     }
 
     // Remove Duplicates from Sorted Array
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int removeDuplicates(int[] nums) {
         int j = 0;
         for(int i = 1; i < nums.length; i++){
@@ -97,6 +109,8 @@ public class array {
     }
 
     // Rotate Array
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private void reverse(int[] nums, int l, int r) {
         while (l < r) {
             int temp = nums[l];
@@ -107,6 +121,8 @@ public class array {
         }
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public void rotate(int[] nums, int k) {
         int n = nums.length;
         k = k % n;
@@ -117,6 +133,8 @@ public class array {
     }
 
     // Move Zeroes
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public void moveZeroes(int[] nums) {
         int j = 0;
 
@@ -134,6 +152,8 @@ public class array {
     }
 
     // Linear Search
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     int search(int arr[], int n, int num){
         for(int i = 0; i < n; i++){
             if(arr[i] == num) return i;
@@ -143,6 +163,8 @@ public class array {
 
 
     // Union of Two Sorted Arrays
+    // Time Complexity: O(n + m)
+    // Space Complexity: O(n + m) for the result
     public List<Integer> findUnion(int[] arr1, int[] arr2, int n, int m) {
         List<Integer> union = new ArrayList<>();
         int i = 0, j = 0;
@@ -178,6 +200,8 @@ public class array {
     }
 
     // Find the Missing Number
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public static int missingNum(int[] arr) {
         long n = arr.length + 1;
     
@@ -193,6 +217,8 @@ public class array {
 
 
     // Max Consecutive Ones
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int findMaxConsecutiveOnes(int[] nums) {
         int count = 0;
         int maxCount = 0;
@@ -210,6 +236,8 @@ public class array {
     }
 
     // Single number
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int singleNumber(int[] nums) {
         int ans = 0;
         for(int i=0; i<nums.length; i++){
@@ -219,6 +247,8 @@ public class array {
     }
 
     // Longest Subarray with Sum = K
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int longestSubarraySumK(int[] nums, int k) {
         int n = nums.length;
         int left = 0, right = 0;
@@ -244,6 +274,8 @@ public class array {
     }
 
     // Longest Subarray with Sum = 0
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int longestZeroSumSubarray(int[] nums) {
         Map<Integer, Integer> map = new HashMap<>();
         int sum = 0;
@@ -267,6 +299,8 @@ public class array {
     }
 
     // Two Sum
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int[] twoSum(int[] nums, int target) {
         HashMap<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
@@ -280,12 +314,16 @@ public class array {
     }
 
     // Sort an array of 0's 1's and 2's -- Dutch National Flag Algorithm
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private void swap(int[] nums, int i, int j) {
         int temp = nums[i];
         nums[i] = nums[j];
         nums[j] = temp;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public void sortColors(int[] nums) {
         if (nums == null || nums.length <= 1) return;
 
@@ -308,6 +346,8 @@ public class array {
     }
 
     // Majority Element-I : Moore’s Voting Algorithm
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int majorityElement(int[] nums) {
         int n = nums.length;
         int cnt = 0;
@@ -341,6 +381,8 @@ public class array {
     }
 
     // Kadane's Algorithm
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int maxSubArray(int[] nums) {
         int maxSum = nums[0];
         int currentSum = 0;
@@ -356,6 +398,8 @@ public class array {
     }
 
     // Print subarray with maximum subarray sum (extended version of above problem)
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int maxSubArrayExtended(int[] nums) {
         int maxSum = Integer.MIN_VALUE;
         int sum = 0;
@@ -384,6 +428,8 @@ public class array {
     }
 
     // Stock Buy and Sell
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int maxProfit(int[] prices) {
         int minPrice = prices[0];
         int maxProfit = 0;
@@ -396,6 +442,8 @@ public class array {
     }
 
     // Rearrange array elements by sign
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int[] rearrangeArray(int[] nums) {
         int n = nums.length;
         int[] ans = new int[n];
@@ -415,6 +463,8 @@ public class array {
     }
 
     // Next Permutation
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public void nextPermutation(int[] nums) {
         if (nums == null || nums.length <= 1) return;
 
@@ -438,6 +488,8 @@ public class array {
     }
 
     // Previous Permutation
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public void previousPermutation(int[] nums) {
         if (nums == null || nums.length <= 1) return;
 
@@ -461,6 +513,8 @@ public class array {
     }
 
     // Leaders in an Array
+     // Time Complexity: O(n)
+     // Space Complexity: O(n)
      public ArrayList<Integer> leaders(int[] nums) {
         ArrayList<Integer> ans = new ArrayList<>();
         int max = nums[nums.length - 1];
@@ -478,6 +532,8 @@ public class array {
     }
 
     // Longest Consecutive Sequence in an Array
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int longestConsecutive(int[] nums) {
         HashSet<Integer> set = new HashSet<>();
 
@@ -504,6 +560,8 @@ public class array {
     }
 
     // Set Matrix Zeroes
+    // Time Complexity: O(rows * cols)
+    // Space Complexity: O(1)
     public void setZeroes(int[][] matrix) {
         int rows = matrix.length;
         int cols = matrix[0].length;
@@ -537,6 +595,8 @@ public class array {
     }
 
     // Rotate matrix by 90 degrees
+    // Time Complexity: O(n^2)
+    // Space Complexity: O(1)
     public void rotate(int[][] matrix) {
         int n = matrix.length;
 
@@ -563,6 +623,8 @@ public class array {
     }
 
     // Print the matrix in spiral manner
+    // Time Complexity: O(rows * cols)
+    // Space Complexity: O(rows * cols) for the result
     public List<Integer> spiralOrder(int[][] matrix) {
         List<Integer> ans = new ArrayList<>();
 
@@ -602,6 +664,8 @@ public class array {
     }
 
     // Count subarrays with given sum
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int subarraySum(int[] nums, int k) {
         HashMap<Integer, Integer> map = new HashMap<>();
         map.put(0, 1);
@@ -619,6 +683,8 @@ public class array {
     }
 
     // Pascal's Triangle I
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public List<List<Integer>> generate(int numRows) {
         List<List<Integer>> ans = new ArrayList<>();
 
@@ -637,6 +703,8 @@ public class array {
     }
 
     // Majority Element-II
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public List<Integer> majorityElementII(int[] nums) {
         int count1 = 0, count2 = 0;
         int candidate1 = 0, candidate2 = 0;
@@ -676,6 +744,8 @@ public class array {
     }
 
     // 3 Sum
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public List<List<Integer>> threeSum(int[] nums) {
         Arrays.sort(nums);
         int n = nums.length;
@@ -704,6 +774,8 @@ public class array {
     }
 
     // 4 Sum
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public List<List<Integer>> fourSum(int[] nums, int target) {
         Arrays.sort(nums);
         int n = nums.length;
@@ -738,6 +810,8 @@ public class array {
 
 
     // Largest Subarray with Sum 0
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int maxLen(int[] nums, int n) {
         HashMap<Integer, Integer> map = new HashMap<>();
         int sum = 0;
@@ -762,6 +836,8 @@ public class array {
     
 
     // Count subarrays with given xor K
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int countSubarraysWithXorK(int[] nums, int k) {
         HashMap<Integer, Integer> map = new HashMap<>();
         map.put(0, 1);
@@ -782,6 +858,8 @@ public class array {
     }
 
     // Merge Overlapping Subintervals
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int[][] merge(int[][] intervals) {
         if(intervals.length == 0) return new int[0][];
 
@@ -805,6 +883,8 @@ public class array {
     
 
     // Merge two sorted arrays without extra space
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public void mergeSortedArrays(int[] nums1, int m, int[] nums2, int n) {
         int i = m - 1;
         int j = n - 1;
@@ -829,6 +909,8 @@ public class array {
     }
 
     // Find the repeating and missing number
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int[] findMissingRepeatingNumbers(int[] nums) {
         long n = nums.length;
 
@@ -855,6 +937,8 @@ public class array {
     }
 
     // Count Inversions
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private static int mergeInversions(int[] nums, int low, int mid, int high) {
         int[] temp = new int[high - low + 1];
         int left = low;
@@ -883,6 +967,8 @@ public class array {
         return count;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private static int mergeSortInversions(int[] nums, int low, int high) {
         if (low >= high) return 0;
 
@@ -896,11 +982,15 @@ public class array {
         return count;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public static int countInversions(int[] nums) {
         return mergeSortInversions(nums, 0, nums.length - 1);
     }
 
     // Reverse Pairs
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private static int mergeReversePairs(int[] nums, int low, int mid, int high) {
         int[] temp = new int[high - low + 1];
         int left = low;
@@ -927,6 +1017,8 @@ public class array {
         return 0;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private static int mergeSortReversePairs(int[] nums, int low, int high) {
         if (low >= high) return 0;
 
@@ -948,11 +1040,15 @@ public class array {
         return count;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int reversePairs(int[] nums) {
         return mergeSortReversePairs(nums, 0, nums.length - 1);
     }
 
     // Maximum Product Subarray in an Array
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int maxProduct(int[] nums) {
         int pre = 1, suf = 1;
         int res = Integer.MIN_VALUE;

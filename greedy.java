@@ -5,6 +5,8 @@ import java.util.List;
 
 public class greedy {
     // Assign Cookies
+    // Time Complexity: O(n log n + m log m)
+    // Space Complexity: O(1)
     public int AssignCookies(int[] g, int[] s) {
         Arrays.sort(g);
         Arrays.sort(s);
@@ -22,6 +24,8 @@ public class greedy {
     }
 
     // Fractional Knapsack
+    // Time Complexity: O(n log n)
+    // Space Complexity: O(n)
     public double FractionalKnapsack(int[] weight, int[] values, int W){
         int n = weight.length;
 
@@ -57,6 +61,8 @@ public class greedy {
 
 
     // Lemonade Challenge
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public boolean lemonadeChange(int[] bills) {
         int n5 = 0, n10 = 0;
         for(int bill : bills){
@@ -89,6 +95,8 @@ public class greedy {
     // Check Valid Parenthesis
     // Use a range [minOpen, maxOpen] to track possible unmatched '(' counts, since '*' can be '(', ')' or empty.
     // If maxOpen ever goes negative it's invalid; if minOpen == 0 at the end, a valid interpretation exists.
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public boolean checkValidString(String s) {
         int minOpen = 0;
         int maxOpen = 0;
@@ -114,6 +122,8 @@ public class greedy {
     }
     
     // N Meetings in a room
+    // Time Complexity: O(n log n)
+    // Space Complexity: O(n)
     public List<Integer> maxMeetings(int[] start, int[] end) {
         List<int[]> meetings = new ArrayList<>();
         for(int i = 0; i < start.length; i++){
@@ -135,6 +145,8 @@ public class greedy {
     }
 
     // Jump Game - I
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public boolean canJump(int[] nums) {
         int maxReach = 0;
         for(int i=0; i<nums.length; i++){
@@ -146,6 +158,8 @@ public class greedy {
     }
 
     // Jump Game - II
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int jump(int[] nums) {
         int jumps = 0;
         // current jump boundary
@@ -165,6 +179,8 @@ public class greedy {
     }
 
     // Minimum number of platforms required for a railway
+    // Time Complexity: O(n log n)
+    // Space Complexity: O(1)
     public int countPlatforms(int n, int[] arr, int[] dep) {
         Arrays.sort(arr);
         Arrays.sort(dep);
@@ -191,6 +207,8 @@ public class greedy {
     class Job {
         int id, deadline, profit;
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         Job(int x, int y, int z) {
             id = x;
             deadline = y;
@@ -198,6 +216,8 @@ public class greedy {
         }
     }
 
+    // Time Complexity: O(n log n + n * d), where d is the maximum deadline
+    // Space Complexity: O(d)
     public int[] JobScheduling(Job arr[], int n) {
         Arrays.sort(arr, (a, b) -> b.profit - a.profit);
         int maxDeadline = 0;
@@ -226,6 +246,8 @@ public class greedy {
     }
 
     // Candy
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int candy(int[] ratings) {
         int n = ratings.length;
 
@@ -253,6 +275,8 @@ public class greedy {
     }
 
     // Shortest Job First
+    // Time Complexity: O(n log n)
+    // Space Complexity: O(1)
     public float calculateAverageWaitTime(int[] jobs) {
         Arrays.sort(jobs);
         float waitTime = 0;
@@ -271,6 +295,8 @@ public class greedy {
     // Refer /Code_DSA/stacks_queue.java
 
     // Insert Interval
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int[][] insert(int[][] intervals, int[] newInterval) {
         List<int[]> res = new ArrayList<>();
         int i = 0, n = intervals.length;
@@ -296,6 +322,8 @@ public class greedy {
     }
 
     // Merge Intervals
+    // Time Complexity: O(n log n)
+    // Space Complexity: O(n)
     public int[][] merge(int[][] intervals) {
         if(intervals.length == 0) return new int[0][];
 
@@ -318,6 +346,8 @@ public class greedy {
     }
 
     // Non-overlapping Intervals
+    // Time Complexity: O(n log n)
+    // Space Complexity: O(1)
     public int eraseOverlapIntervals(int[][] intervals) {
         if(intervals.length == 0) return 0;
 

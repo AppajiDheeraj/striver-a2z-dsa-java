@@ -3,6 +3,8 @@ class Trie {
         TrieNode[] children;
         boolean isEnd;
 
+        // Time Complexity: O(L), where L is the word length
+        // Space Complexity: O(1)
         TrieNode() {
             children = new TrieNode[26];
             isEnd = false;
@@ -11,10 +13,14 @@ class Trie {
 
     TrieNode root;
 
+    // Time Complexity: O(L), where L is the word length
+    // Space Complexity: O(1)
     public Trie() {
         root = new TrieNode();
     }
     
+    // Time Complexity: O(L), where L is the word length
+    // Space Complexity: O(L) for inserted nodes
     public void insert(String word) {
         TrieNode curr = root;
 
@@ -30,6 +36,8 @@ class Trie {
         curr.isEnd = true;
     }
     
+    // Time Complexity: O(L), where L is the word length
+    // Space Complexity: O(1)
     public boolean search(String word) {
         TrieNode curr = root;
         
@@ -44,6 +52,8 @@ class Trie {
         return curr.isEnd;
     }
     
+    // Time Complexity: O(L), where L is the word length
+    // Space Complexity: O(1)
     public boolean startsWith(String prefix) {
         TrieNode curr = root;
         

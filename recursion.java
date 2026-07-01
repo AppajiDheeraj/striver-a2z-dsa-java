@@ -1,6 +1,8 @@
 import java.util.*;
 
 public class recursion {
+    // Time Complexity: O(log n)
+    // Space Complexity: O(log n) recursion stack
     public double myPow(double x, int n) {
         long N = n;
 
@@ -11,6 +13,8 @@ public class recursion {
         return power(x, N);
     }
 
+    // Time Complexity: O(log n)
+    // Space Complexity: O(log n) recursion stack
     public double power(double x, long n) {
         if (n == 0)
             return 1;
@@ -22,6 +26,8 @@ public class recursion {
         return half * half * x;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int myAtoi(String s) {
         int i = 0;
         int n = s.length();
@@ -57,6 +63,8 @@ public class recursion {
         return (int) (sign * ans);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(n) recursion stack
     public void insert_reverse(Stack<Integer> st, int x) {
         if (st.isEmpty()) {
             st.push(x);
@@ -70,6 +78,8 @@ public class recursion {
         st.push(top);
     }
 
+    // Time Complexity: O(n^2)
+    // Space Complexity: O(n) recursion stack
     public void reverseStack(Stack<Integer> st) {
         if (st.isEmpty())
             return;
@@ -79,6 +89,8 @@ public class recursion {
         insert_reverse(st, top);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(n) recursion stack
     public void insert(Stack<Integer> st, int x) {
         if (st.isEmpty() || st.peek() <= x) {
             st.push(x);
@@ -91,6 +103,8 @@ public class recursion {
         st.push(top);
     }
 
+    // Time Complexity: O(n^2)
+    // Space Complexity: O(n) recursion stack
     public void sortStack(Stack<Integer> stack) {
         if (stack.isEmpty())
             return;
@@ -103,6 +117,8 @@ public class recursion {
     // Good Numbers
     long MOD = 1000000007;
 
+    // Time Complexity: O(log n)
+    // Space Complexity: O(log n) recursion stack
     public long power(long x, long n) {
         if (n == 0)
             return 1;
@@ -113,6 +129,8 @@ public class recursion {
         return (half * half * x) % MOD;
     }
 
+    // Time Complexity: O(log n)
+    // Space Complexity: O(log n) recursion stack
     public int countGoodNumbers(long n) {
         long even = (n + 1) / 2;
         long odd = n / 2;
@@ -123,6 +141,8 @@ public class recursion {
         return (int) ((evenWays * oddWays) % MOD);
     }
 
+    // Time Complexity: O(Cn * n), where Cn is the nth Catalan number
+    // Space Complexity: O(Cn * n) for the result and recursion stack
     public void helper(int n, List<String> ans, String temp, int open, int close) {
         if (temp.length() == 2 * n) {
             ans.add(temp);
@@ -138,6 +158,8 @@ public class recursion {
         }
     }
 
+    // Time Complexity: O(Cn * n), where Cn is the nth Catalan number
+    // Space Complexity: O(Cn * n) for the result and recursion stack
     public List<String> generateParenthesis(int n) {
         List<String> ans = new ArrayList<>();
         helper(n, ans, "", 0, 0);
@@ -146,6 +168,8 @@ public class recursion {
 
     // Generate all binary strings that do not contain consecutive 1s
     // (lexicographical)
+    // Time Complexity: O(2^n * n)
+    // Space Complexity: O(2^n * n) for the result and recursion stack
     public void helperBinaryStrings(List<String> ans, String temp, int n) {
         if (temp.length() == n) {
             ans.add(temp);
@@ -159,6 +183,8 @@ public class recursion {
 
     }
 
+    // Time Complexity: O(2^n * n)
+    // Space Complexity: O(2^n * n) for the result and recursion stack
     public List<String> generateBinaryStrings(int n) {
         List<String> ans = new ArrayList<>();
         helperBinaryStrings(ans, "", n);
@@ -166,6 +192,8 @@ public class recursion {
     }
 
     // Generate all sunsequences
+    // Time Complexity: O(2^n)
+    // Space Complexity: O(n) recursion stack
     public void helperSubsequenceGenerator(String s, int index, String temp, List<String> ans) {
         if (index == s.length()) {
             ans.add(temp);
@@ -176,6 +204,8 @@ public class recursion {
         helperSubsequenceGenerator(s, index + 1, temp, ans);
     }
 
+    // Time Complexity: O(2^n)
+    // Space Complexity: O(n) recursion stack
     public List<String> generateSubsequences(String s) {
         List<String> ans = new ArrayList<>();
         helperSubsequenceGenerator(s, 0, "", ans);
@@ -183,6 +213,8 @@ public class recursion {
     }
 
     // Count subsequences having sum = k
+    // Time Complexity: O(2^n)
+    // Space Complexity: O(n) recursion stack
     public int helperCountSubseqWithSumK(int[] nums, int k, int sum, int i) {
         if (i == nums.length) {
             return sum == k ? 1 : 0;
@@ -192,12 +224,16 @@ public class recursion {
         return takeIt + dontTakeIt;
     }
 
+    // Time Complexity: O(2^n)
+    // Space Complexity: O(n) recursion stack
     public int countSubseqWithSumK(int[] num, int k) {
         int count = helperCountSubseqWithSumK(num, k, 0, 0);
         return count;
     }
 
     // Check if there exists a subsequence with sum K
+    // Time Complexity: O(2^n)
+    // Space Complexity: O(n) recursion stack
     public boolean helperVerifySubseqWithSumK(int[] nums, int k, int sum, int i) {
         if (i == nums.length) {
             return sum == k;
@@ -207,6 +243,8 @@ public class recursion {
         return takeIt || dontTakeIt;
     }
 
+    // Time Complexity: O(2^n)
+    // Space Complexity: O(n) recursion stack
     public boolean verifySubseqWithSumK(int[] num, int k) {
         boolean exists = helperVerifySubseqWithSumK(num, k, 0, 0);
         return exists;
@@ -231,6 +269,8 @@ public class recursion {
         combinationSumHelper(ans, candidates, target, idx + 1, temp);
     }
 
+    // Time Complexity: O(2^t * k), where t depends on target/candidates
+    // Space Complexity: O(k) recursion stack plus output
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> ans = new ArrayList<>();
         combinationSumHelper(ans, candidates, target, 0, new ArrayList<>());
@@ -260,6 +300,8 @@ public class recursion {
         }
     }
 
+    // Time Complexity: O(2^n * n)
+    // Space Complexity: O(n) recursion stack plus output
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         Arrays.sort(candidates);
         List<List<Integer>> ans = new ArrayList<>();
@@ -268,6 +310,8 @@ public class recursion {
     }
 
     // Combination Sum III
+    // Time Complexity: O(2^9 * k)
+    // Space Complexity: O(k) recursion stack plus output
     public void combinationSum3Helper(List<List<Integer>> ans, List<Integer> temp, int k, int n, int sum, int start) {
         if (temp.size() == k) {
             if (sum == n) {
@@ -283,6 +327,8 @@ public class recursion {
         }
     }
 
+    // Time Complexity: O(2^9 * k)
+    // Space Complexity: O(k) recursion stack plus output
     public List<List<Integer>> combinationSum3(int k, int n) {
         List<List<Integer>> ans = new ArrayList<>();
         combinationSum3Helper(ans, new ArrayList<>(), k, n, 0, 1);
@@ -290,6 +336,8 @@ public class recursion {
     }
 
     // Subset Sum
+    // Time Complexity: O(2^n log(2^n))
+    // Space Complexity: O(2^n) for the result
     public void SubsetSumHelper(List<Integer> ans, int[] arr, int idx, int sum) {
         if (idx == arr.length) {
             ans.add(sum);
@@ -299,6 +347,8 @@ public class recursion {
         SubsetSumHelper(ans, arr, idx + 1, sum);
     }
 
+    // Time Complexity: O(2^n log(2^n))
+    // Space Complexity: O(2^n) for the result
     public List<Integer> SubsetSum(int[] arr) {
         List<Integer> ans = new ArrayList<>();
         SubsetSumHelper(ans, arr, 0, 0);
@@ -307,6 +357,8 @@ public class recursion {
     }
 
     // Subset Sum II
+    // Time Complexity: O(2^n * n)
+    // Space Complexity: O(2^n * n) for the result
     public void SubsetSumIIHelper(List<List<Integer>> ans, List<Integer> temp, int[] arr, int idx) {
         ans.add(new ArrayList<>(temp));
 
@@ -321,6 +373,8 @@ public class recursion {
 
     }
 
+    // Time Complexity: O(2^n * n)
+    // Space Complexity: O(2^n * n) for the result
     public List<List<Integer>> SubsetSumII(int[] arr) {
         Arrays.sort(arr);
         List<List<Integer>> ans = new ArrayList<>();
@@ -329,6 +383,8 @@ public class recursion {
     }
 
     // Letter Combinations of a Phone Number
+    // Time Complexity: O(4^n * n)
+    // Space Complexity: O(4^n * n) for the result
     public void letterCombinationsHelper(List<String> ans, StringBuilder temp, String digits, int idx, String[] map) {
         if(idx == digits.length()){
             ans.add(temp.toString());
@@ -344,6 +400,8 @@ public class recursion {
         }
     }
 
+    // Time Complexity: O(4^n * n)
+    // Space Complexity: O(4^n * n) for the result
     public List<String> letterCombinations(String digits) {
         List<String> ans = new ArrayList<>();
         if (digits.length() == 0)
@@ -358,12 +416,16 @@ public class recursion {
     }
 
     //Palindrome Partitioning
+    // Time Complexity: O(2^n * n)
+    // Space Complexity: O(2^n * n) for the result and recursion stack
     public List<List<String>> partition(String s){
         List<List<String>> ans = new ArrayList<>();
         backtrack(0, s, new ArrayList<>(), ans); 
         return ans;
     }
 
+    // Time Complexity: O(2^n * n)
+    // Space Complexity: O(2^n * n) for the result and recursion stack
     private void backtrack(int index, String s, List<String> path,  List<List<String>> ans){
         if(index == s.length()){
             ans.add(new ArrayList<>(path));
@@ -379,6 +441,8 @@ public class recursion {
         }
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private boolean isPalindrome(String s, int left, int right){
         while(left < right){
             if(s.charAt(left) != s.charAt(right)){
@@ -391,6 +455,8 @@ public class recursion {
     }
 
     // Word Search
+    // Time Complexity: O(rows * cols * 4^L), where L is word length
+    // Space Complexity: O(L) recursion stack
     public boolean exist(char[][] board, String word){
         int rows = board.length;
         int cols = board[0].length;
@@ -407,6 +473,8 @@ public class recursion {
         return false;
     }
 
+    // Time Complexity: O(rows * cols * 4^L), where L is word length
+    // Space Complexity: O(L) recursion stack
     private boolean dfs(int row, int col, int index, char[][] board, String word){
         if (index == word.length()) return true;
 
@@ -435,6 +503,8 @@ public class recursion {
     // N Queen
     List<List<String>> ansNqueens = new ArrayList<>();
 
+    // Time Complexity: O(n!)
+    // Space Complexity: O(n^2) board space plus output
     public List<List<String>> NQueens(int n){
         char[][] board = new char[n][n];
         for(int i=0; i<n; i++){
@@ -448,6 +518,8 @@ public class recursion {
         return ansNqueens;
     }
 
+    // Time Complexity: O(n!)
+    // Space Complexity: O(n^2) board space plus output
     private void solveNQueens(int col, char[][] board, int n, int[] leftRow, int[] lowerDiagonal, int[] upperDiagonal){
         if(col==n) {
             List<String> temp = new ArrayList<>();
@@ -477,6 +549,8 @@ public class recursion {
         }
     }
 
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     private boolean isSafeNQueens(int row, int col, int n,int[] leftRow, int[] lowerDiagonal, int[] upperDiagonal){
         // Row Occupied
         if(leftRow[row] == 1) return false;
@@ -493,6 +567,8 @@ public class recursion {
     int[] dCol = {0, -1, 1, 0};
     char[] move = {'D', 'L', 'R', 'U'};
 
+    // Time Complexity: O(4^(n*n))
+    // Space Complexity: O(n^2) visited space plus recursion stack
     public ArrayList<String> findPath(int[][] maze, int n){
         ArrayList<String> ans = new ArrayList<>();
 
@@ -503,6 +579,8 @@ public class recursion {
         return ans;
     }
 
+    // Time Complexity: O(4^(n*n))
+    // Space Complexity: O(n^2) visited space plus recursion stack
     private void solveRatInMaze(int row, int col, int[][] maze, int n, boolean[][] visited, String path, ArrayList<String> ans){
         if (row == n - 1 && col == n - 1) {
             ans.add(path);
@@ -522,6 +600,8 @@ public class recursion {
         visited[row][col] = false;
     }
 
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     private boolean isValidRatInMaze(int row, int col, int[][] maze, int n, boolean[][] visited){
         if(row < 0 || col < 0 || row >= n || col >= n){
             return false;
@@ -535,6 +615,8 @@ public class recursion {
     }
 
     // Word break
+    // Time Complexity: O(n^3)
+    // Space Complexity: O(n + d), where d is dictionary size
     public boolean wordBreak(String s, List<String> wordDict) {
         Set<String> set = new HashSet<>(wordDict);
         boolean[] dp = new boolean[s.length()+1];
@@ -552,6 +634,8 @@ public class recursion {
     }
 
     // M Coloring Problem
+    // Time Complexity: O(m^n * n)
+    // Space Complexity: O(n) recursion stack
     private boolean solveMColoringProblem(int node, int[] color, int m, int n, boolean[][] graph) {
         if (node == n) {
             return true;
@@ -569,6 +653,8 @@ public class recursion {
         return false;
     }
 
+    // Time Complexity: O(m^n * n)
+    // Space Complexity: O(n) recursion stack
     private boolean isSafe(int node, int[] color, boolean[][] graph, int n, int currColor){
         for(int k=0; k<n; k++){
             if(graph[node][k] && color[k] == currColor) {
@@ -578,6 +664,8 @@ public class recursion {
         return true;
     }
 
+    // Time Complexity: O(m^n * n)
+    // Space Complexity: O(n) recursion stack
     public boolean graphColoring(boolean[][] graph, int m, int n) {
         int[] color = new int[n];
         Arrays.fill(color, 0);
@@ -585,6 +673,8 @@ public class recursion {
     }
 
     // Sudoku Solver
+    // Time Complexity: O(9^e), where e is the number of empty cells
+    // Space Complexity: O(e) recursion stack
     private boolean solve(char[][] board) {
         for(int row = 0; row < 9; row++){
             for(int col = 0; col < 9; col++){
@@ -605,6 +695,8 @@ public class recursion {
         return true;
     }
 
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     private boolean isValid(char[][] board, int row, int col, char num){
         for(int j=0; j<9; j++){
             if(board[row][j] == num){
@@ -630,17 +722,23 @@ public class recursion {
         return true;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public void solveSudoku(char[][] board) {
         solve(board);
     }
 
     // Expression Add Operators
     List<String> ans = new ArrayList<>();
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public List<String> addOperators(String num, int target) {
         dfs(num, target, 0, "", 0, 0);
         return ans;
     }
 
+    // Time Complexity: O(rows * cols * 4^L), where L is word length
+    // Space Complexity: O(L) recursion stack
     private void dfs(String num, int target, int index,String path, long value, long prev){
 
         if(index == num.length()){

@@ -5,6 +5,8 @@ class Pair<K, V> {
     private K key;
     private V value;
 
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     public Pair(K key, V value) {
         this.key = key;
         this.value = value;
@@ -24,6 +26,8 @@ public class binary_trees {
         TreeNode right;
         TreeNode() {}
         TreeNode(int val) { this.val = val; }
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         TreeNode(int val, TreeNode left, TreeNode right) {
             this.val = val;
             this.left = left;
@@ -33,6 +37,8 @@ public class binary_trees {
 
     List<Integer> ans = new ArrayList<>();
     // Recursive preorder traversal (Root -> Left -> Right)
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public List<Integer> preorderTraversal(TreeNode root) {
         if(root == null) return ans;
         ans.add(root.val);
@@ -42,6 +48,8 @@ public class binary_trees {
     }
 
     // Iterative preorder traversal using stack
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public List<Integer> preorderTraversalIterative(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
         if(root == null) return ans;
@@ -67,6 +75,8 @@ public class binary_trees {
     }
 
     // Recursive inorder traversal (Left -> Root -> Right)
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public List<Integer> inorderTraversal(TreeNode root) {
         if(root == null) return ans;
 
@@ -79,6 +89,8 @@ public class binary_trees {
 
 
     // Iterative inorder traversal using stack
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public List<Integer> inorderTraversalIterative(TreeNode root) {
         if(root == null) return ans;
 
@@ -103,6 +115,8 @@ public class binary_trees {
 
 
     // Recursive postorder traversal (Left -> Right -> Root)
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public List<Integer> postorderTraversal(TreeNode root) {
         if(root == null) return ans;
 
@@ -114,6 +128,8 @@ public class binary_trees {
     }
 
     // Level order traversal using queue (BFS)
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> ans = new ArrayList<>();
         if (root == null) {
@@ -145,6 +161,8 @@ public class binary_trees {
     }
 
     // Preorder, inorder and postorder traversal in one traversal
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public List<List<Integer>> preInPostTraversal(TreeNode root) {
 
         List<Integer> pre = new ArrayList<>();
@@ -200,6 +218,8 @@ public class binary_trees {
     }
 
     // Post-order Traversal of Binary Tree using 2 stack
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public static List<Integer> postOrder2Stack(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
 
@@ -233,6 +253,8 @@ public class binary_trees {
     }
 
     // Post-order Traversal of Binary Tree using 1 stack
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public static List<Integer> postOrder1Stack(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
 
@@ -263,6 +285,8 @@ public class binary_trees {
     }
 
     // Find maximum depth/height of binary tree
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public int maxDepth(TreeNode root) {
         if (root == null) {
             return 0;
@@ -271,11 +295,15 @@ public class binary_trees {
     }
     
     // Check whether binary tree is height balanced
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public boolean isBalanced(TreeNode root) {
         return height(root) != -1;
     }
 
     // Helper function to calculate height of tree
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public int height(TreeNode root){
         if(root == null) return 0;
 
@@ -290,6 +318,8 @@ public class binary_trees {
 
     int diameter = 0;
     // Helper function to calculate diameter of binary tree
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public int diameterOfBinaryTreeHelper(TreeNode root){
         if(root == null) return 0;
 
@@ -301,6 +331,8 @@ public class binary_trees {
     }
 
     // Find diameter of binary tree
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public int diameterOfBinaryTree(TreeNode root) {
         diameterOfBinaryTreeHelper(root);
         return diameter;
@@ -309,11 +341,15 @@ public class binary_trees {
     // Maximum Path Sum
     int globalMaxSum = Integer.MIN_VALUE;
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public int maxPathSum(TreeNode root) {
         calculateGain(root);
         return globalMaxSum;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public int calculateGain(TreeNode node) {
         if(node == null) return 0;
         int leftGain = Math.max(calculateGain(node.left), 0);
@@ -327,6 +363,8 @@ public class binary_trees {
     }
 
     // Check if two trees are identical or not
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public boolean isSameTree(TreeNode p, TreeNode q) {
         if(p == null && q == null) return true;
         if(p == null || q == null) return false;
@@ -336,6 +374,8 @@ public class binary_trees {
     }
 
     // Zig Zag or Spiral Traversal
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         List<List<Integer>> ans = new ArrayList<>();
         if (root == null) {
@@ -372,10 +412,14 @@ public class binary_trees {
     }
 
     // Boundary Traversal
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     static boolean isLeaf(TreeNode node){
         return node.left == null && node.right == null;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     static void addLeftBoundary(TreeNode root, List<Integer> ans){
         TreeNode curr = root.left;
 
@@ -392,6 +436,8 @@ public class binary_trees {
         }
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     static void addRightBoundary(TreeNode root, List<Integer> ans){
         TreeNode curr = root.right;
         Stack<Integer> st = new Stack<>();
@@ -413,6 +459,8 @@ public class binary_trees {
         }
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     static void addLeaves(TreeNode root, List<Integer> ans){
         if(root == null) return;
 
@@ -425,6 +473,8 @@ public class binary_trees {
         addLeaves(root.right, ans);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public List<Integer> boundaryTraversal(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
         if(root == null) return ans;
@@ -440,6 +490,8 @@ public class binary_trees {
     }
     
     // Vertical Order Traversal
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public void dfs(TreeNode node, int row, int col, List<int[]> nodes){
         if(node == null) return;
 
@@ -448,6 +500,8 @@ public class binary_trees {
         dfs(node.right, row + 1, col + 1, nodes);
     }
 
+    // Time Complexity: O(n log n)
+    // Space Complexity: O(n)
     public List<List<Integer>> verticalTraversal(TreeNode root) {
         List<int[]> nodes = new ArrayList<>();
         dfs(root, 0, 0, nodes);
@@ -482,6 +536,8 @@ public class binary_trees {
     }
 
     // Find top view of binary tree
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public List<Integer> TopView(TreeNode root) {
         List<Integer> ans= new ArrayList<>();
 
@@ -517,6 +573,8 @@ public class binary_trees {
     }
 
     // Find bottom view of binary tree
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public List<Integer> BottomView(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
 
@@ -549,6 +607,8 @@ public class binary_trees {
     }
 
     // Find right side view of binary tree
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
 
@@ -578,12 +638,16 @@ public class binary_trees {
     }
 
     // Check whether binary tree is symmetric
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public boolean isSymmetric(TreeNode root) {
         if(root == null) return true;
         return isMirror(root.left, root.right);
     }
 
     // Helper function to check mirror symmetry
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public boolean isMirror(TreeNode left, TreeNode right){
         if(left == null && right == null) {
             return true;
@@ -601,6 +665,8 @@ public class binary_trees {
     }
 
     // Print root to leaf path in BT
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public boolean getPath(TreeNode root, List<Integer> path, int x){
         if(root == null) return false;
 
@@ -614,6 +680,8 @@ public class binary_trees {
         return false;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public List<Integer> solve(TreeNode root, int x) {
         List<Integer> path = new ArrayList<>();
         getPath(root, path, x);
@@ -621,6 +689,8 @@ public class binary_trees {
     }
 
     // LCA in BT
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if(root == null || root == p || root == q){
             return root;
@@ -643,12 +713,16 @@ public class binary_trees {
             TreeNode node;
             long index;
 
+            // Time Complexity: O(1)
+            // Space Complexity: O(1)
             Pair(TreeNode node, long index) {
                 this.node = node;
                 this.index = index;
             }
         }
 
+        // Time Complexity: O(n)
+        // Space Complexity: O(n)
         public int widthOfBinaryTree(TreeNode root) {
             if(root == null) return 0;
 
@@ -687,6 +761,8 @@ public class binary_trees {
     }
 
     // Children Sum Property in Binary Tree
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public void changeTree(TreeNode root) {
         if(root == null) return;
 
@@ -716,6 +792,8 @@ public class binary_trees {
 
     // Print all nodes at a distance of K in BT
     Map<TreeNode, TreeNode> parentMap = new HashMap<>();
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
         markParents(root, null);
 
@@ -763,6 +841,8 @@ public class binary_trees {
         return ans;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public void markParents(TreeNode node, TreeNode parent) {
         if(node == null) return;
         parentMap.put(node, parent);
@@ -772,6 +852,8 @@ public class binary_trees {
     }
 
     // Minimum time taken to burn the BT from a given Node
+     // Time Complexity: O(n)
+     // Space Complexity: O(n)
      public int minTime(TreeNode root, TreeNode target) {
         markParents(root, null);
 
@@ -812,11 +894,15 @@ public class binary_trees {
     }
 
     // Count total nodes in a complete BT
+    // Time Complexity: O(log n)
+    // Space Complexity: O(log n) recursion stack
     public int height_countNodes(TreeNode root) {
         if(root == null) return -1;
         return 1 + height_countNodes(root.left);
     }
 
+    // Time Complexity: O(log^2 n)
+    // Space Complexity: O(log n) recursion stack
     public int countNodes(TreeNode root) {
         int h = height_countNodes(root);
 
@@ -850,6 +936,8 @@ public class binary_trees {
     // Construct a BT from Preorder and Inorder
     Map<Integer, Integer> map = new HashMap<>();
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public TreeNode buildTreePre(int[] preorder, int[] inorder) {
         for(int i = 0; i < inorder.length; i++) {
             map.put(inorder[i], i);
@@ -858,6 +946,8 @@ public class binary_trees {
         return buildPre(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     private TreeNode buildPre(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd){
         if(preStart > preEnd || inStart > inEnd) {
             return null;
@@ -875,6 +965,8 @@ public class binary_trees {
     }
 
     // Construct the Binary Tree from Postorder and Inorder Traversal
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public TreeNode buildTreePost(int[] inorder, int[] postorder) {
         for(int i = 0; i < inorder.length; i++) {
             map.put(inorder[i], i);
@@ -883,6 +975,8 @@ public class binary_trees {
         return buildPost(postorder, 0, postorder.length - 1, inorder, 0, inorder.length - 1);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     private TreeNode buildPost(int[] postorder, int postStart, int postEnd, int[] inorder, int inStart, int inEnd){
         if(postStart > postEnd || inStart > inEnd) {
             return null;
@@ -902,6 +996,8 @@ public class binary_trees {
     // Serialize and De-serialize BT
     public class Codec {
         // Encodes a tree to a single string.
+        // Time Complexity: O(n)
+        // Space Complexity: O(n)
         public String serialize(TreeNode root) {
             if(root == null) return "";
 
@@ -927,6 +1023,8 @@ public class binary_trees {
         }
 
         // Decodes your encoded data to tree.
+        // Time Complexity: O(n)
+        // Space Complexity: O(n)
         public TreeNode deserialize(String data) {
             if(data.isEmpty()) return null;
 
@@ -959,6 +1057,8 @@ public class binary_trees {
     }
 
     // Morris Preorder Traversal of a Binary Tree
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public List<Integer> MorrisPreOrderTraversal(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
         TreeNode curr = root;
@@ -989,6 +1089,8 @@ public class binary_trees {
     }
 
     // Morris Inorder Traversal of a Binary Tree
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public List<Integer> MorrisInorderTraversal(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
         TreeNode curr = root;
@@ -1019,6 +1121,8 @@ public class binary_trees {
     }
 
     // Flatten Binary Tree to Linked List
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public void flatten(TreeNode root) {
         TreeNode curr = root;
         while (curr != null) {

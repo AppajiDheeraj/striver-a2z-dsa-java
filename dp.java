@@ -7,6 +7,8 @@ public class dp {
     // =========================
 
     // Climbing Stairs - 
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int countWays(int n) {
         if (n <= 1) return 1;
         int[] dp = new int[n + 1];
@@ -19,6 +21,8 @@ public class dp {
     }
 
     // Frog Jump with K Distances
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     private int solve(int ind, int[] height, int[] dp) {
         if (ind == 0)
             return 0;
@@ -36,6 +40,8 @@ public class dp {
         return dp[ind] = Math.min(jumpOne, jumpTwo);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int frogJump(int[] height) {
         int n = height.length;
         int[] dp = new int[n];
@@ -44,6 +50,8 @@ public class dp {
     }
 
     // Maximum Sum of Non-Adjacent Elements
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public static int maximumNonAdjacentSum(int[] arr) {
         int n = arr.length;
         if (n == 0) return 0;
@@ -62,12 +70,16 @@ public class dp {
         return dp[n - 1];
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public static void main(String[] args) {
         int[] arr = {2, 1, 4, 9};
         System.out.println(maximumNonAdjacentSum(arr));
     }
 
     // House Robber
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     private int solve(int[] arr, int start, int end) {
         int len = end - start + 1;
         int[] dp = new int[len];
@@ -89,6 +101,8 @@ public class dp {
         return dp[len - 1];
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int rob(int[] nums) {
         int n = nums.length;
         if (n == 1) {
@@ -105,6 +119,8 @@ public class dp {
     // =========================
 
     // Ninja's Training
+    // Time Complexity: O(n * 4 * 3)
+    // Space Complexity: O(n * 4)
     public int ninjaTraining(int n, int[][] points) {
 
         int[][] dp = new int[n][4];
@@ -133,6 +149,8 @@ public class dp {
     }
 
     // Grid Unique Paths
+    // Time Complexity: O(m * n)
+    // Space Complexity: O(m * n)
     public int uniquePaths(int m, int n) {
         int[][] dp = new int[m][n];
 
@@ -158,6 +176,8 @@ public class dp {
     }
     
     // Unique Paths II
+    // Time Complexity: O(m * n)
+    // Space Complexity: O(m * n)
     public int uniquePathsWithObstacles(int[][] matrix) {
         int m = matrix.length;
         int n = matrix[0].length;
@@ -192,6 +212,8 @@ public class dp {
     }
     
     // Minimum Path Sum In a Grid
+    // Time Complexity: O(m * n)
+    // Space Complexity: O(m * n)
     public int minPathSum(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
@@ -224,6 +246,8 @@ public class dp {
     }
     
     // Triangle
+    // Time Complexity: O(n^2)
+    // Space Complexity: O(n^2)
     public int minimumTotal(int[][] triangle) {
         int n = triangle.length;
 
@@ -252,6 +276,8 @@ public class dp {
     // =========================
 
     // Subset Sum Equal to Target
+    // Time Complexity: O(n * k)
+    // Space Complexity: O(n * k)
     public boolean subsetSumToK(int[] arr, int k) {
         int n = arr.length;
         boolean[][] dp = new boolean[n][k + 1];
@@ -281,6 +307,8 @@ public class dp {
     }
 
     // Partition Equal Subset Sum
+    // Time Complexity: O(n * sum)
+    // Space Complexity: O(n * sum)
     public boolean canPartition(int[] nums) {
         int totalSum = 0;
         for (int num : nums) {
@@ -295,6 +323,8 @@ public class dp {
     }
 
     // Partition a Set Into Two Subsets With Minimum Absolute Sum Difference
+    // Time Complexity: O(n * sum)
+    // Space Complexity: O(n * sum)
     public int minimumDifference(int[] arr) {
         int n = arr.length;
         int totalSum = 0;
@@ -339,6 +369,8 @@ public class dp {
     }
 
     // Count Subsets With Sum K
+    // Time Complexity: O(n * k)
+    // Space Complexity: O(n * k)
     public int countSubsetsWithSumK(int[] arr, int k) {
         int n = arr.length;
         int[][] dp = new int[n][k + 1];
@@ -370,6 +402,8 @@ public class dp {
     }
 
     // Count Partitions With Given Difference
+    // Time Complexity: O(n * target)
+    // Space Complexity: O(n * target)
     public int countPartitionsWithDifference(int[] arr, int d) {
         int totalSum = 0;
 
@@ -386,6 +420,8 @@ public class dp {
     }
 
     // Assign Cookies
+    // Time Complexity: O(n log n + m log m)
+    // Space Complexity: O(1)
     public int findContentChildren(int[] greed, int[] cookies) {
         Arrays.sort(greed);
         Arrays.sort(cookies);
@@ -404,6 +440,8 @@ public class dp {
     }
 
     // Minimum Coins
+    // Time Complexity: O(n * amount)
+    // Space Complexity: O(n * amount)
     public int minimumCoins(int[] coins, int amount) {
         int n = coins.length;
         int[][] dp = new int[n][amount + 1];
@@ -434,6 +472,8 @@ public class dp {
     }
 
     // Target Sum
+    // Time Complexity: O(n * subsetTarget)
+    // Space Complexity: O(n * subsetTarget)
     public int targetSum(int[] nums, int target) {
         int totalSum = 0;
 
@@ -450,6 +490,8 @@ public class dp {
     }
 
     // Coin Change 2
+    // Time Complexity: O(n * amount)
+    // Space Complexity: O(n * amount)
     public int change(int amount, int[] coins) {
         int n = coins.length;
         int[][] dp = new int[n][amount + 1];
@@ -477,6 +519,8 @@ public class dp {
     }
 
     // Unbounded Knapsack
+    // Time Complexity: O(n * capacity)
+    // Space Complexity: O(n * capacity)
     public int unboundedKnapsack(int[] weights, int[] values, int capacity) {
         int n = weights.length;
         int[][] dp = new int[n][capacity + 1];
@@ -502,6 +546,8 @@ public class dp {
     }
 
     // Rod Cutting Problem
+    // Time Complexity: O(n^2)
+    // Space Complexity: O(n^2)
     public int cutRod(int[] price, int n) {
         int[] weights = new int[n];
 
@@ -518,6 +564,8 @@ public class dp {
     // =========================
 
     // Longest Common Subsequence
+    // Time Complexity: O(n * m)
+    // Space Complexity: O(n * m)
     public int longestCommonSubsequence(String text1, String text2) {
         int n = text1.length();
         int m = text2.length();
@@ -538,6 +586,8 @@ public class dp {
     }
 
     // Print Longest Common Subsequence
+    // Time Complexity: O(n * m)
+    // Space Complexity: O(n * m + L), where L is the LCS length
     public String printLongestCommonSubsequence(String s1, String s2) {
         int n = s1.length();
         int m = s2.length();
@@ -574,6 +624,8 @@ public class dp {
     }
 
     // Longest Common Substring
+    // Time Complexity: O(n * m)
+    // Space Complexity: O(n * m)
     public int longestCommonSubstring(String s1, String s2) {
         int n = s1.length();
         int m = s2.length();
@@ -596,12 +648,16 @@ public class dp {
     }
 
     // Longest Palindromic Subsequence
+    // Time Complexity: O(n^2)
+    // Space Complexity: O(n^2)
     public int longestPalindromeSubseq(String s) {
         String reversed = new StringBuilder(s).reverse().toString();
         return longestCommonSubsequence(s, reversed);
     }
 
     // Minimum Insertions to Make String Palindrome
+    // Time Complexity: O(n^2)
+    // Space Complexity: O(n^2)
     public int minInsertions(String s) {
         int n = s.length();
         int longestPalindromeLength = longestPalindromeSubseq(s);
@@ -609,6 +665,8 @@ public class dp {
     }
 
     // Minimum Insertions or Deletions to Convert String A to B
+    // Time Complexity: O(n * m)
+    // Space Complexity: O(n * m)
     public int minInsertionsDeletionsToConvert(String s1, String s2) {
         int lcs = longestCommonSubsequence(s1, s2);
         int deletions = s1.length() - lcs;
@@ -617,6 +675,8 @@ public class dp {
     }
 
     // Shortest Common Supersequence
+    // Time Complexity: O(n * m)
+    // Space Complexity: O(n * m + n + m) for DP and result
     public String shortestCommonSupersequence(String str1, String str2) {
         int n = str1.length();
         int m = str2.length();
@@ -665,6 +725,8 @@ public class dp {
     }
 
     // Distinct Subsequences
+    // Time Complexity: O(n * m)
+    // Space Complexity: O(n * m)
     public int numDistinct(String s, String t) {
         int n = s.length();
         int m = t.length();
@@ -689,6 +751,8 @@ public class dp {
     }
 
     // Edit Distance
+    // Time Complexity: O(n * m)
+    // Space Complexity: O(n * m)
     public int minDistance(String word1, String word2) {
         int n = word1.length();
         int m = word2.length();
@@ -720,6 +784,8 @@ public class dp {
     }
 
     // Wildcard Matching
+    // Time Complexity: O(n * m)
+    // Space Complexity: O(n * m)
     public boolean isMatch(String s, String p) {
         int n = s.length();
         int m = p.length();
@@ -754,6 +820,8 @@ public class dp {
     // =========================
 
     // Best Time to Buy and Sell Stock
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int maxProfit(int[] prices) {
         int minPrice = Integer.MAX_VALUE;
         int maxProfit = 0;
@@ -768,6 +836,8 @@ public class dp {
     }
     
     // Best Time to Buy and Sell Stock II
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int maxProfitII(int[] prices) {
         int n = prices.length;
         int[][] dp = new int[n + 1][2];
@@ -836,6 +906,8 @@ public class dp {
     // Best Time to Buy and Sell Stock with Cooldown -- SKIP
 
     // Best Time to Buy and Sell Stock with Transaction Fees
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int maxProfitWithFee(int[] prices, int fee) {
         int n = prices.length;
         int[][] dp = new int[n + 1][2];
@@ -863,6 +935,8 @@ public class dp {
     // =========================
 
     // Longest Increasing Subsequence
+    // Time Complexity: O(n^2)
+    // Space Complexity: O(n)
     public int longestIncreasingSubsequenceLength(int[] nums) {
         int n = nums.length;
         int[] dp = new int[n];
@@ -883,6 +957,8 @@ public class dp {
     }
 
     // Print Longest Increasing Subsequence
+    // Time Complexity: O(n^2)
+    // Space Complexity: O(n)
     public List<Integer> printLongestIncreasingSubsequence(int[] arr) {
         int n = arr.length;
 
@@ -926,6 +1002,8 @@ public class dp {
     }
 
     // Longest Increasing Subsequence - Binary Search Approach
+    // Time Complexity: O(n log n)
+    // Space Complexity: O(n)
     public int lengthOfLISBinarySearch(int[] nums) {
 
         // temp does NOT store the actual LIS.
@@ -958,6 +1036,8 @@ public class dp {
 
     // Returns the index of the first element
     // that is greater than or equal to target.
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
     private int lowerBound(ArrayList<Integer> arr, int target) {
         int low = 0;
         int high = arr.size();
@@ -983,6 +1063,8 @@ public class dp {
     }
 
     // Largest Divisible Subset
+    // Time Complexity: O(n^2 + n log n)
+    // Space Complexity: O(n)
     public List<Integer> largestDivisibleSubset(int[] nums) {
         Arrays.sort(nums);
         int n = nums.length;
@@ -1018,6 +1100,8 @@ public class dp {
     }
 
     // Longest String Chain
+    // Time Complexity: O(n^2 * L + n log n)
+    // Space Complexity: O(n)
     public int longestStrChain(String[] words) {
         Arrays.sort(words, (a, b) -> a.length() - b.length());
         int n = words.length;
@@ -1036,6 +1120,8 @@ public class dp {
         return ans;
     }
 
+    // Time Complexity: O(L)
+    // Space Complexity: O(1)
     private boolean isPredecessor(String small, String big) {
         if (big.length() != small.length() + 1) return false;
 
@@ -1053,6 +1139,8 @@ public class dp {
     }
 
     // Longest Bitonic Subsequence
+    // Time Complexity: O(n^2)
+    // Space Complexity: O(n)
     public int longestBitonicSubsequence(int[] arr) {
         int n = arr.length;
         int[] lis = new int[n];
@@ -1084,6 +1172,8 @@ public class dp {
     }
 
     // Number of Longest Increasing Subsequences
+    // Time Complexity: O(n^2)
+    // Space Complexity: O(n)
     public int findNumberOfLIS(int[] nums) {
         int n = nums.length;
         int[] dp = new int[n];
@@ -1121,6 +1211,8 @@ public class dp {
     // =========================
 
     // Matrix Chain Multiplication
+    // Time Complexity: O(n^3)
+    // Space Complexity: O(n^2) DP plus O(n) recursion stack
     private int mcmSolve(int i, int j, int[] arr, int[][] dp) {
         if (i == j) {
             return 0;
@@ -1144,6 +1236,8 @@ public class dp {
         return dp[i][j] = minCost;
     }
 
+    // Time Complexity: O(n^3)
+    // Space Complexity: O(n^2)
     public int matrixMultiplication(int[] arr) {
         int n = arr.length;
         int[][] dp = new int[n][n];
@@ -1158,6 +1252,8 @@ public class dp {
     // Matrix Chain Multiplication - Bottom Up
 
     // Minimum Cost to Cut the Stick -- HARD
+    // Time Complexity: O(c^3), where c is cuts length
+    // Space Complexity: O(c^2) DP plus O(c) recursion stack
     private int cutStickSolve(int i, int j, int[] cuts, int[][] dp) {
         if (i > j) {
             return 0;
@@ -1181,6 +1277,8 @@ public class dp {
         return dp[i][j] = minCost;
     }
 
+    // Time Complexity: O(c^3 + c log c), where c is cuts length
+    // Space Complexity: O(c^2)
     public int minCostToCutStick(int n, int[] cutsInput) {
         int c = cutsInput.length;
         int[] cuts = new int[c + 2];
@@ -1203,6 +1301,8 @@ public class dp {
     }
 
     // Burst Balloons
+    // Time Complexity: O(n^3)
+    // Space Complexity: O(n^2)
     public int maxCoins(int[] nums) {
         int n = nums.length;
 
@@ -1233,6 +1333,8 @@ public class dp {
     }
 
     // Different Ways to Evaluate a Boolean Expression -- HARD
+    // Time Complexity: O(n^3)
+    // Space Complexity: O(n^2) DP plus recursion stack
     private int solve(int i, int j, int isTrue, String exp, int[][][] dp) {
         if (i > j) {
             return 0;
@@ -1285,6 +1387,8 @@ public class dp {
         return dp[i][j][isTrue] = (int) ways;
     }
 
+    // Time Complexity: O(n^3)
+    // Space Complexity: O(n^2)
     public int evaluateExp(String exp) {
         int n = exp.length();
 
@@ -1300,6 +1404,8 @@ public class dp {
     }
 
     // Palindrome Partitioning II -- HARD
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private boolean isPalindrome(String s, int left, int right) {
         while (left < right) {
             if (s.charAt(left) != s.charAt(right)) {
@@ -1311,6 +1417,8 @@ public class dp {
         return true;
     }
 
+    // Time Complexity: O(n^3)
+    // Space Complexity: O(n)
     public int minCut(String s) {
         int n = s.length();
 
@@ -1339,6 +1447,8 @@ public class dp {
     }
 
     // Partition Array for Maximum Sum -- HARD
+    // Time Complexity: O(n * k)
+    // Space Complexity: O(n)
     public int maxSumAfterPartitioning(int[] arr, int k) {
         int n = arr.length;
 
@@ -1374,6 +1484,8 @@ public class dp {
     // Maximum Rectangle Area With All 1's -- HARD (Skip)
 
     // Count Square Submatrices With All Ones
+    // Time Complexity: O(m * n)
+    // Space Complexity: O(m * n)
     public int countSquares(int[][] matrix) {
         int m = matrix.length;
         int n = matrix[0].length;

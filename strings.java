@@ -3,6 +3,8 @@ import java.util.PriorityQueue;
 
 public class strings {
     // Remove Outermost Parentheses
+    // Time Complexity: O(n)
+    // Space Complexity: O(n) for the result
     public String removeOuterParentheses(String s) {
         StringBuilder ans = new StringBuilder();
         int count = 0;
@@ -25,6 +27,8 @@ public class strings {
     }
 
     // Reverse a sentence
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public String reverseWords(String s) {
         String[] arr = s.trim().split("\\s+");
         StringBuilder ans = new StringBuilder();
@@ -40,6 +44,8 @@ public class strings {
     }
 
     // Largest Odd Number in String
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public String largestOddNumber(String num) {
         for(int i = num.length() - 1; i >= 0; i--){
             char ch = num.charAt(i);
@@ -52,6 +58,8 @@ public class strings {
     }
 
     // Longest Common Prefix
+    // Time Complexity: O(S), where S is the total characters compared
+    // Space Complexity: O(1)
     public String longestCommonPrefix(String[] strs) {
         if(strs == null || strs.length == 0) return "";
         
@@ -67,6 +75,8 @@ public class strings {
     }
 
     // Isomorphic Strings
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public boolean isIsomorphic(String s, String t) {
         int[] mapS = new int[256];
         int[] mapT = new int[256];
@@ -87,6 +97,8 @@ public class strings {
     }
 
     // Rotated Substring
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public boolean rotateString(String s, String goal) {
         if(s.length() != goal.length()) {
             return false;
@@ -97,6 +109,8 @@ public class strings {
     }
 
     // Check if two strings are anagram of each other
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public boolean isAnagram(String s, String t) {
         if (s.length() != t.length()) return false;
 
@@ -117,6 +131,8 @@ public class strings {
     }
 
     // Sort Characters by Frequency
+    // Time Complexity: O(n + u log u), where u is the number of unique characters
+    // Space Complexity: O(n + u)
     public String frequencySort(String s) {
         HashMap<Character, Integer> map = new HashMap<>();
 
@@ -145,6 +161,8 @@ public class strings {
     }
 
     // Maximum Nesting Depth of the Parentheses
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int maxDepth(String s) {
         int depth = 0;
         int maxDepth = 0;
@@ -162,6 +180,8 @@ public class strings {
     }
 
     // Roman to Integer
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int romanToInt(String s) {
         HashMap<Character, Integer> map = new HashMap<>();
 
@@ -193,6 +213,8 @@ public class strings {
     }
 
     // String to Integer (atoi)
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int myAtoi(String s) {
         int i = 0;
         int n = s.length();
@@ -227,10 +249,14 @@ public class strings {
 
     // Count Number of Substrings
     // Problem Statement: You are given a string s and a positive integer k. Return the number of substrings that contain exactly k distinct characters.
+    // Time Complexity: O(n)
+    // Space Complexity: O(k)
     public int substringsWithKDistinct(String s, int k) {
         return atMostKdifferentCharacters(s, k) - atMostKdifferentCharacters(s, k - 1);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(k)
     public int atMostKdifferentCharacters(String s, int k) {
         if(k < 0) return 0;
 
@@ -259,6 +285,8 @@ public class strings {
 
 
     // Longest Palindromic Substring
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public String longestPalindrome(String s) {
         if (s == null || s.length() < 1) {
             return "";
@@ -281,6 +309,8 @@ public class strings {
          return s.substring(start, end + 1);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private int expandFromCenter(String s, int left, int right){
         while(left >= 0 && right < s.length() && s.charAt(right) == s.charAt(left)) {
             left--;
@@ -291,6 +321,8 @@ public class strings {
     }
 
     // Sum of Beauty of All Substrings
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int beautySum(String s) {
         int n = s.length();
         int result = 0;
@@ -324,6 +356,8 @@ public class strings {
     //----------------
 
     // Minimum number of bracket reversals to make an expression balanced
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int minAddToMakeValid(String s) {
         int openNeeded = 0;
         int closeNeeded = 0;
@@ -345,6 +379,8 @@ public class strings {
     }
 
     // Count and say
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public String countAndSay(int n) {
         if(n <= 0) return "";
         String current = "1";
@@ -371,6 +407,8 @@ public class strings {
     }
 
     // Rabin Karp Algorithm - Repeated String Match
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int repeatedStringMatch(String a, String b) {
         int n = a.length();
         int m = b.length();
@@ -402,6 +440,8 @@ public class strings {
         return -1;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private int[] computeLPS(String pattern) {
         int m = pattern.length();
         int[] lps = new int[m];
@@ -426,6 +466,8 @@ public class strings {
     }
 
     // Z function + Revision
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int[] zFunction(String s) {
         int n = s.length();
         int[] z = new int[n];
@@ -452,6 +494,8 @@ public class strings {
     }
 
     // KMP Algorithm or LPS array
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int strStr(String haystack, String needle) {
         int n = haystack.length();
         int m = needle.length();
@@ -498,6 +542,8 @@ public class strings {
     }
 
     // Shortest Palindrome + Revision
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public String shortestPalindrome(String s) {
         String reversed = new StringBuilder(s).reverse().toString();
         String combined = s + "#" + reversed;
@@ -525,6 +571,8 @@ public class strings {
     }
 
     // Longest happy prefix
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public String longestPrefix(String s) {
         int n = s.length();
         int[] lps = new int[n];
@@ -551,6 +599,8 @@ public class strings {
     }
 
     // Count Palindromic Subsequences
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private int expandFromCenterHelper(String s, int left, int right) {
         int count = 0;
         while(left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)){
@@ -561,6 +611,8 @@ public class strings {
         return count;
     }
     
+     // Time Complexity: O(n)
+     // Space Complexity: O(1)
      public int countSubstrings(String s) {
         if(s == null || s.length() == 0) return 0;
         int totalPalindromes = 0;

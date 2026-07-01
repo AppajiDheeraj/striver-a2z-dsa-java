@@ -5,10 +5,14 @@ public class heap {
     static class MinHeap {
         ArrayList<Integer> heap = new ArrayList<>();
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public void initializeHeap() {
             heap.clear();
         }
 
+        // Time Complexity: O(log n)
+        // Space Complexity: O(1)
         public void insert(int key) {
             heap.add(key);
 
@@ -26,10 +30,14 @@ public class heap {
             }
         }
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public int getMin() {
             return heap.get(0);
         }
 
+        // Time Complexity: O(log n)
+        // Space Complexity: O(1)
         public void extractMin() {
             int n = heap.size();
 
@@ -39,14 +47,20 @@ public class heap {
             heapifyDown(0);
         }
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public int heapSize() {
             return heap.size();
         }
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public boolean isEmpty() {
             return heap.isEmpty();
         }
 
+        // Time Complexity: O(log n)
+        // Space Complexity: O(1)
         public void changeKey(int index, int newVal) {
             int oldVal = heap.get(index);
             heap.set(index, newVal);
@@ -67,6 +81,8 @@ public class heap {
             }
         }
 
+        // Time Complexity: O(log n)
+        // Space Complexity: O(1)
         private void heapifyDown(int i) {
             int n = heap.size();
 
@@ -93,6 +109,8 @@ public class heap {
         }
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public static boolean isHeap(int[] nums) {
         int n = nums.length;
 
@@ -112,6 +130,8 @@ public class heap {
         return true;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(log n) recursion stack
     public static int[] minToMaxHeap(int[] nums) {
         int n = nums.length;
 
@@ -122,6 +142,8 @@ public class heap {
         return nums;
     }
 
+    // Time Complexity: O(log n)
+    // Space Complexity: O(log n) recursion stack
     private static void maxHeapify(int[] nums, int n, int i) {
         int largest = i;
 
@@ -146,6 +168,8 @@ public class heap {
     }
 
     // Kth largest element in an array
+    // Time Complexity: O(n log k)
+    // Space Complexity: O(k)
     public int findKthLargest(int[] nums, int k) {
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
 
@@ -160,6 +184,8 @@ public class heap {
     }
 
     // Kth smallest element in an array
+    // Time Complexity: O(n log k)
+    // Space Complexity: O(k)
     public int findKthSmallest(int[] nums, int k) {
         PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
 
@@ -174,6 +200,8 @@ public class heap {
     }
 
     // Sort a K-Sorted Array (Nearly Sorted Array)
+    // Time Complexity: O(n log k)
+    // Space Complexity: O(k)
     public int[] sortKSortedArray(int[] arr, int k) {
         int n = arr.length;
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
@@ -206,6 +234,8 @@ public class heap {
         ListNode(int val, ListNode next) { this.val = val; this.next = next; }
     
     }
+    // Time Complexity: O(N log k), where N is total nodes and k is lists length
+    // Space Complexity: O(k)
     public ListNode mergeKLists(ListNode[] lists) {
         if (lists == null || lists.length == 0) return null;
 
@@ -233,6 +263,8 @@ public class heap {
     }
 
     // Replace Elements by Their Rank
+    // Time Complexity: O(n log n)
+    // Space Complexity: O(n)
     public List<Integer> replaceWithRank(List<Integer> arr) {
         PriorityQueue<Integer> minHeap = new PriorityQueue<>(arr);
         Map<Integer, Integer> rankMap = new HashMap<>();
@@ -254,6 +286,8 @@ public class heap {
     }
 
     // Task Scheduler
+    // Time Complexity: O(t), where t is tasks length
+    // Space Complexity: O(1)
     public int leastInterval(char[] tasks, int n) {
         int[] frequencies = new int[26];
         int maxFreq = 0;
@@ -276,6 +310,8 @@ public class heap {
     }
 
     // Hand of Straights
+    // Time Complexity: O(n log n)
+    // Space Complexity: O(n)
     public boolean isNStraightHand(int[] hand, int groupSize) {
         if (hand.length % groupSize != 0) return false;
         HashMap<Integer, Integer> freq = new HashMap<>();
@@ -311,6 +347,8 @@ public class heap {
             int time;
             Tweet next;
 
+            // Time Complexity: O(1)
+            // Space Complexity: O(1)
             Tweet(int id, int time) {
                 this.id = id;
                 this.time = time;
@@ -323,6 +361,8 @@ public class heap {
             Set<Integer> followed;
             Tweet tweetHead;
 
+            // Time Complexity: O(1)
+            // Space Complexity: O(1)
             User(int id) {
                 this.id = id;
                 this.followed = new HashSet<>();
@@ -330,16 +370,22 @@ public class heap {
                 this.tweetHead = null;
             }
 
+            // Time Complexity: O(1) average
+            // Space Complexity: O(1)
             void follow(int id) {
                 followed.add(id);
             }
 
+            // Time Complexity: O(1) average
+            // Space Complexity: O(1)
             void unfollow(int id) {
                 if (id != this.id) {
                     followed.remove(id);
                 }
             }
 
+            // Time Complexity: O(1)
+            // Space Complexity: O(1)
             void post(int id, int time) {
                 Tweet newTweet = new Tweet(id, time);
                 newTweet.next = tweetHead;
@@ -349,10 +395,14 @@ public class heap {
 
         private Map<Integer, User> userMap;
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public Twitter() {
             userMap = new HashMap<>();
         }
         
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public void postTweet(int userId, int tweetId) {
             if (!userMap.containsKey(userId)) {
                 userMap.put(userId, new User(userId));
@@ -360,6 +410,8 @@ public class heap {
             userMap.get(userId).post(tweetId, timestamp++);
         }
         
+        // Time Complexity: O(f log f + 10 log f), where f is followed users count
+        // Space Complexity: O(f)
         public List<Integer> getNewsFeed(int userId) {
             List<Integer> feed = new ArrayList<>();
             if (!userMap.containsKey(userId)) return feed;
@@ -387,6 +439,8 @@ public class heap {
             return feed;
         }
         
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public void follow(int followerId, int followeeId) {
             if (!userMap.containsKey(followerId)) {
                 userMap.put(followerId, new User(followerId));
@@ -397,6 +451,8 @@ public class heap {
             userMap.get(followerId).follow(followeeId);
         }
         
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public void unfollow(int followerId, int followeeId) {
             if (userMap.containsKey(followerId)) {
                 userMap.get(followerId).unfollow(followeeId);
@@ -405,6 +461,8 @@ public class heap {
     }
 
     // Minimum Cost to Connect Sticks
+    // Time Complexity: O(n log n)
+    // Space Complexity: O(n)
     public int connectSticks(List<Integer> sticks) {
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
 
@@ -431,6 +489,8 @@ public class heap {
         private PriorityQueue<Integer> minHeap;
         private int k;
 
+        // Time Complexity: O(n log k)
+        // Space Complexity: O(k)
         public KthLargest(int k, int[] nums) {
             this.k = k;
             minHeap = new PriorityQueue<>();
@@ -444,6 +504,8 @@ public class heap {
             }
         }
 
+        // Time Complexity: O(log k)
+        // Space Complexity: O(1)
         public int add(int val) {
             minHeap.offer(val);
 
@@ -455,6 +517,8 @@ public class heap {
     }
 
     // Maximum Sum Combination
+    // Time Complexity: O(n log n + k log k)
+    // Space Complexity: O(k)
     public List<Integer> maxCombinations(int[] A, int[] B, int k) {
 
         Arrays.sort(A);
@@ -501,11 +565,15 @@ public class heap {
         private PriorityQueue<Integer> leftMaxHeap;
         private PriorityQueue<Integer> rightMinHeap;
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public MedianFinder() {
             leftMaxHeap = new PriorityQueue<>(Collections.reverseOrder());
             rightMinHeap = new PriorityQueue<>();
         }
 
+        // Time Complexity: O(log n)
+        // Space Complexity: O(1)
         public void addNum(int num) {
             if(leftMaxHeap.isEmpty() || num <= leftMaxHeap.peek()) {
                 leftMaxHeap.add(num);
@@ -520,6 +588,8 @@ public class heap {
             }
         }
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public double findMedian() {
             if (leftMaxHeap.size() == rightMinHeap.size()) {
                 return (leftMaxHeap.peek() + rightMinHeap.peek()) / 2.0;
@@ -530,6 +600,8 @@ public class heap {
     }
 
     // Top K Frequent Elements
+    // Time Complexity: O(n log k)
+    // Space Complexity: O(n)
     public int[] topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> countMap = new HashMap<>();
         for (int num : nums) {

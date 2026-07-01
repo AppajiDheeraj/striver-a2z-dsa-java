@@ -4,6 +4,8 @@ import java.util.Set;
 
 public class sliding_window_2_pointer {
     // Longest Substring without Repeating Characters
+    // Time Complexity: O(n)
+    // Space Complexity: O(k) or O(1), depending on the tracked window state
     public int lengthOfLongestSubstring(String s) {
         Set<Character> set = new HashSet<>();
         int left = 0, maxLen = 0;
@@ -20,6 +22,8 @@ public class sliding_window_2_pointer {
     }
 
     // Given a binary array nums and an integer k, return the maximum number of consecutive 1's in the array if you can flip at most k 0's.
+    // Time Complexity: O(n)
+    // Space Complexity: O(k) or O(1), depending on the tracked window state
     public int longestOnes(int[] nums, int k) {
         int left = 0, maxLen = 0, zeroCount = 0;
         for(int right = 0; right < nums.length; right++){
@@ -40,6 +44,8 @@ public class sliding_window_2_pointer {
     }
 
     // Fruit Into Baskets
+     // Time Complexity: O(n)
+     // Space Complexity: O(k) or O(1), depending on the tracked window state
      public int totalFruit(int[] fruits) {
         int left = 0;
         int maxLen = 0;
@@ -64,6 +70,8 @@ public class sliding_window_2_pointer {
      }
 
     // Longest Repeating Character Replacement
+    // Time Complexity: O(n)
+    // Space Complexity: O(k) or O(1), depending on the tracked window state
     public int characterReplacement(String s, int k) {
         int left = 0;
         int maxFreq = 0;
@@ -87,6 +95,8 @@ public class sliding_window_2_pointer {
     }
 
     // Binary Subarrays With Sum
+    // Time Complexity: O(n)
+    // Space Complexity: O(k) or O(1), depending on the tracked window state
     public int numSubarraysWithSum(int[] nums, int goal) {
 
         HashMap<Integer, Integer> map = new HashMap<>();
@@ -111,10 +121,14 @@ public class sliding_window_2_pointer {
     }
 
     //EXACTLY(k) = ATMOST(k) - ATMOST(k-1) Version 2
+    // Time Complexity: O(n)
+    // Space Complexity: O(k) or O(1), depending on the tracked window state
     public int numSubarraysWithSumII(int[] nums, int goal) {
         return atMost(nums, goal) - atMost(nums, goal - 1);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(k) or O(1), depending on the tracked window state
     public int atMost(int[] nums, int goal){
         if(goal < 0) return 0;
 
@@ -137,10 +151,14 @@ public class sliding_window_2_pointer {
     }
 
     // Count Number of Nice Subarrays
+    // Time Complexity: O(n)
+    // Space Complexity: O(k) or O(1), depending on the tracked window state
     public int numberOfSubarraysIII(int[] nums, int k) {
         return atMostIII(nums, k) - atMostIII(nums, k - 1);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(k) or O(1), depending on the tracked window state
     public int atMostIII(int[] nums, int goal){
         if(goal < 0) return 0;
 
@@ -163,6 +181,8 @@ public class sliding_window_2_pointer {
     }
 
     // Number of Substrings Containing All Three Characters
+    // Time Complexity: O(n)
+    // Space Complexity: O(k) or O(1), depending on the tracked window state
     public int numberOfSubstrings(String s) {
         int[] freq = new int[3];
 
@@ -183,6 +203,8 @@ public class sliding_window_2_pointer {
     }
 
     // CardPoints Maximization
+    // Time Complexity: O(n)
+    // Space Complexity: O(k) or O(1), depending on the tracked window state
     public int maxScore(int[] cardPoints, int k) {
         int n = cardPoints.length;
         int leftSum = 0;
@@ -202,6 +224,8 @@ public class sliding_window_2_pointer {
     }
 
     // Longest Substring with At Most K Distinct Characters
+    // Time Complexity: O(n)
+    // Space Complexity: O(k) or O(1), depending on the tracked window state
     public int longestSubString(String s, int k){
         int n = s.length();
         int left = 0;
@@ -226,10 +250,14 @@ public class sliding_window_2_pointer {
     }
 
     // Count Substrings With Exactly K Distinct Characters
+    // Time Complexity: O(n)
+    // Space Complexity: O(k) or O(1), depending on the tracked window state
     public int substringsWithKDistinct(String s, int k) {
         return atMostKdifferentCharacters(s, k) - atMostKdifferentCharacters(s, k - 1);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(k) or O(1), depending on the tracked window state
     public int atMostKdifferentCharacters(String s, int k) {
         if(k < 0) return 0;
 
@@ -258,6 +286,8 @@ public class sliding_window_2_pointer {
     }
 
     // Subarrays with K Different Integers
+    // Time Complexity: O(n)
+    // Space Complexity: O(k) or O(1), depending on the tracked window state
     public int atMostKdifferentIntegers(int[] nums, int k){
         int n = nums.length;
         int left = 0;
@@ -282,11 +312,15 @@ public class sliding_window_2_pointer {
         return count;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(k) or O(1), depending on the tracked window state
     public int subarraysWithKDistinct(int[] nums, int k) {
         return atMostKdifferentIntegers(nums, k) - atMostKdifferentIntegers(nums, k-1);
     }
 
     // Minimum Window Substring
+    // Time Complexity: O(n)
+    // Space Complexity: O(k) or O(1), depending on the tracked window state
     public String minWindow(String s, String t) {
         if(s.length() < t.length()) return "";
 
@@ -326,6 +360,8 @@ public class sliding_window_2_pointer {
     }
 
     // Minimum Window Subsequence - Given strings s1 and s2, return the minimum contiguous substring part of s1, so that s2 is a subsequence of the part.
+    // Time Complexity: O(n * m) worst case
+    // Space Complexity: O(1) excluding the returned substring
     public String minWindowSubSequence(String s1, String s2) {
         int n = s1.length(), m = s2.length();
         int start = -1, minLen = Integer.MAX_VALUE;

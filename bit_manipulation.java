@@ -5,6 +5,8 @@ import java.util.List;
 class BitManipulation {
     // n - 1 flips the rightmost 1 to 0 and all bits after it to 1
     // n + 1 flips the rightmost 0 to 1 and all bits after it to 0
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     public boolean isPowerOfTwo(int n) {
         if (n > 0 && (n & (n - 1)) == 0) {
             return true;
@@ -14,6 +16,8 @@ class BitManipulation {
 
     // Equivalent math form for power-of-8 bit-position mask (0x49249249):
     // mask = sum_{k=0}^{10} (1 << (3*k))
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     public boolean isPowerOfFour(int n) {
         if (n > 0 && (n & (n - 1)) == 0 && (n & 0x55555555) != 0) {
             return true;
@@ -21,6 +25,8 @@ class BitManipulation {
         return false;
     }
 
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     public boolean isPowerOfThree(int n) {
         if (n > 0 && 1162261467 % n == 0) {
             return true;
@@ -28,6 +34,8 @@ class BitManipulation {
         return false;
     }
 
+    // Time Complexity: O(32)
+    // Space Complexity: O(1)
     public int hammingWeight1(int n) {
         int ans = 0;
         while (n != 0) {
@@ -37,6 +45,8 @@ class BitManipulation {
         return ans;
     }
 
+    // Time Complexity: O(32)
+    // Space Complexity: O(1)
     public int hammingWeight(int n) {
         int ans = 0;
         while (n != 0) {
@@ -48,6 +58,8 @@ class BitManipulation {
         return ans;
     }
 
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     public void swapper(int i, int j) {
         i = i ^ j;
         j = i ^ j; // j = (i ^ j) ^ j = i
@@ -55,26 +67,38 @@ class BitManipulation {
     }
 
     // Check if the i-th bit is set or not
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     public boolean isIthBitSet(int n, int i) {
         return (n & (1 << i)) != 0;
     }
 
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     public int setIthBit(int n, int i) {
         return n | (1 << i);
     }
 
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     public int clearIthBit(int n, int i) {
         return n & ~(1 << i);
     }
 
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     public int toggleIthBit(int n, int i) {
         return n ^ (1 << i);
     }
 
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     public int setRightmostZeroBit(int n) {
         return n | (n + 1);
     }
 
+    // Time Complexity: O(32)
+    // Space Complexity: O(1)
     public int minBitFlips(int start, int goal) {
         int xor = start ^ goal;
         int count = 0;
@@ -87,6 +111,8 @@ class BitManipulation {
         return count;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int singleNumber(int[] nums) {
         int ans = 0;
         for (int i = 0; i < nums.length; i++) {
@@ -95,6 +121,8 @@ class BitManipulation {
         return ans;
     }
 
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     public int xorFromZeroToN(int n) {
         if (n % 4 == 0)
             return n;
@@ -106,10 +134,14 @@ class BitManipulation {
             return 0;
     }
 
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     public int xorfromLtoR(int l, int r) {
         return xorFromZeroToN(r) ^ xorFromZeroToN(l - 1);
     }
 
+    // Time Complexity: O(32)
+    // Space Complexity: O(1)
     public int divide(int dividend, int divisor) {
         boolean negative = (dividend < 0) ^ (divisor < 0);
         long dvd = Math.abs((long) dividend);
@@ -130,6 +162,8 @@ class BitManipulation {
         return ans;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int[] singleNumberIII(int[] nums) {
         int xor = 0;
         for (int num : nums) {
@@ -149,6 +183,8 @@ class BitManipulation {
         return new int[] { a, b };
     }
 
+    // Time Complexity: O(n * 2^n)
+    // Space Complexity: O(n * 2^n) for the result
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> ans = new ArrayList<>();
         int n = nums.length;
@@ -165,6 +201,8 @@ class BitManipulation {
         return ans;
     }
 
+    // Time Complexity: O(n sqrt n)
+    // Space Complexity: O(1)
     public int countPrimes(int n) {
         int count = 0;
         for (int i = 2; i < n; i++) {
@@ -176,6 +214,8 @@ class BitManipulation {
         return count;
     }
 
+    // Time Complexity: O(sqrt n)
+    // Space Complexity: O(1)
     public boolean isPrime(int num) {
         for (int i = 2; i * i <= num; i++) {
             if (num % i == 0) {
@@ -187,6 +227,8 @@ class BitManipulation {
 
     // Use Sieve of Eratosthenes to optimize the countPrimes function. Time
     // complexity: O(n log log n)
+    // Time Complexity: O(n log log n)
+    // Space Complexity: O(n)
     public int countPrimes_optimized(int n) {
         if (n <= 2)
             return 0;
@@ -208,6 +250,8 @@ class BitManipulation {
         return count;
     }
 
+    // Time Complexity: O(sqrt n log sqrt n)
+    // Space Complexity: O(sqrt n)
     public static List<Integer> printDivisors(int n){
         List<Integer> list = new ArrayList<>();
         for(int i = 1; i <= Math.sqrt(n); i++){
@@ -222,6 +266,8 @@ class BitManipulation {
         return list;
     }
 
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
     public double myPow(double x, int n) {
         long N = n;
         double pow = 1;
@@ -239,6 +285,8 @@ class BitManipulation {
         return pow;
     }
 
+    // Time Complexity: O(q * sqrt M), where q is queries length and M is the largest query
+    // Space Complexity: O(total number of prime factors in the output)
     public List<List<Integer>> primeFactorization(int[] queries) {
         List<List<Integer>> ans = new ArrayList<>();
         for(int query : queries) {

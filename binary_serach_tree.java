@@ -9,6 +9,8 @@ public class binary_serach_tree {
         TreeNode right;
         TreeNode() {}
         TreeNode(int val) { this.val = val; }
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         TreeNode(int val, TreeNode left, TreeNode right) {
             this.val = val;
             this.left = left;
@@ -16,6 +18,8 @@ public class binary_serach_tree {
         }
     }
 
+    // Time Complexity: O(h), where h is the tree height
+    // Space Complexity: O(h) recursion stack
     public TreeNode searchBST(TreeNode root, int val) {
         if(root == null || root.val == val){
             return root;
@@ -29,6 +33,8 @@ public class binary_serach_tree {
     }
 
     // Find minimum value node in BST
+    // Time Complexity: O(h), where h is the tree height
+    // Space Complexity: O(1)
     public TreeNode findMin(TreeNode root) {
         if(root == null) return null;
 
@@ -40,6 +46,8 @@ public class binary_serach_tree {
     }
 
     // Find maximum value node in BST
+    // Time Complexity: O(h), where h is the tree height
+    // Space Complexity: O(1)
     public TreeNode findMax(TreeNode root) {
         if(root == null) return null;
 
@@ -51,6 +59,8 @@ public class binary_serach_tree {
     }
 
     // Floor of BST
+    // Time Complexity: O(h), where h is the tree height
+    // Space Complexity: O(1)
     public int floorInBST(TreeNode root, int key) {
         int floor = -1;
         while(root != null){
@@ -69,6 +79,8 @@ public class binary_serach_tree {
     }
 
     // Ceil of BST
+     // Time Complexity: O(h), where h is the tree height
+     // Space Complexity: O(1)
      public int ceilInBST(TreeNode root, int key) {
         int ceil = -1;
         while(root != null){
@@ -87,6 +99,8 @@ public class binary_serach_tree {
     }
 
     // Insert a given Node
+    // Time Complexity: O(h), where h is the tree height
+    // Space Complexity: O(h) recursion stack
     public TreeNode insertIntoBST(TreeNode root, int val) {
         if(root == null) return new TreeNode(val);
 
@@ -100,6 +114,8 @@ public class binary_serach_tree {
     }
 
     // Delete a given Node
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     public TreeNode deleteNode(TreeNode root, int key) {
         if(root == null) return null;
         
@@ -123,6 +139,8 @@ public class binary_serach_tree {
     // Kth Smallest Element in a BST
     int count = 0;
     int ans = -1;
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public void inorder(TreeNode root, int k){
         if(root == null) return;
 
@@ -137,16 +155,22 @@ public class binary_serach_tree {
         inorder(root.right, k);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public int kthSmallest(TreeNode root, int k) {
         inorder(root,k);
         return ans;
     }
 
     // check if a tree is BST or Not
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public boolean isValidBST(TreeNode root) {
         return validate(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public boolean validate(TreeNode root, long min, long max){
         if(root == null) return true;
 
@@ -156,6 +180,8 @@ public class binary_serach_tree {
     }
 
     // Lowest Common Ancestor of a BST
+    // Time Complexity: O(h), where h is the tree height
+    // Space Complexity: O(h) recursion stack
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if(root == null) return null;
 
@@ -171,10 +197,14 @@ public class binary_serach_tree {
     // Construct a BST from a preorder traversal
     int index = 0;
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public TreeNode bstFromPreorder(int[] preorder) {
         return build(preorder, Integer.MAX_VALUE);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public TreeNode build(int[] preorder, int bound) {
         if(index == preorder.length || preorder[index] > bound){
             return null;
@@ -188,6 +218,8 @@ public class binary_serach_tree {
 
 
     // Inorder Successor/Predecessor in BST
+    // Time Complexity: O(h), where h is the tree height
+    // Space Complexity: O(1)
     public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
         TreeNode successor = null;
         while (root!=null) {
@@ -201,6 +233,8 @@ public class binary_serach_tree {
         return successor;
     }
 
+    // Time Complexity: O(h), where h is the tree height
+    // Space Complexity: O(1)
     public TreeNode inorderPredecessor(TreeNode root, TreeNode p) {
         TreeNode predecessor = null;
         while (root!=null) {
@@ -215,6 +249,8 @@ public class binary_serach_tree {
     }
 
     // Merge 2 BST's
+    // Time Complexity: O(n + m)
+    // Space Complexity: O(n + m)
     public List<Integer> merge(TreeNode root1, TreeNode root2){
         List<Integer> list1 = new ArrayList<>();
         List<Integer> list2 = new ArrayList<>();
@@ -225,6 +261,8 @@ public class binary_serach_tree {
         return mergeSorted(list1, list2);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public void inorderTraversal(TreeNode root, List<Integer> list) {
         if(root == null) return;
 
@@ -233,6 +271,8 @@ public class binary_serach_tree {
         inorderTraversal(root.right, list);
     }
 
+    // Time Complexity: O(n + m)
+    // Space Complexity: O(n + m) for the result
     public List<Integer> mergeSorted(List<Integer> a, List<Integer> b) {
         List<Integer> ans = new ArrayList<>();
         int i = 0, j = 0;
@@ -261,6 +301,8 @@ public class binary_serach_tree {
     }
 
     // Two Sum In BST | Check if there exists a pair with Sum K
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public boolean helper(TreeNode root, int k, HashSet<Integer> set){
         if(root == null) return false;
 
@@ -273,6 +315,8 @@ public class binary_serach_tree {
         return helper(root.left, k, set) || helper(root.right, k, set);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public boolean findTarget(TreeNode root, int k) {
         HashSet<Integer> set = new HashSet<>();
         return helper(root, k, set);
@@ -283,6 +327,8 @@ public class binary_serach_tree {
     TreeNode second = null;
     TreeNode prev = null;
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public void HelperRecoverTree(TreeNode root) {
         if(root == null) return;
 
@@ -296,6 +342,8 @@ public class binary_serach_tree {
         HelperRecoverTree(root.right);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public void recoverTree(TreeNode root) {
         HelperRecoverTree(root);
 
@@ -307,6 +355,8 @@ public class binary_serach_tree {
     // Largest BST in Binary Tree
     int maxSum = 0;
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public int[] postOrder(TreeNode root) {
         if(root == null){
             return new int[]{
@@ -336,6 +386,8 @@ public class binary_serach_tree {
         };
     }
     
+    // Time Complexity: O(n)
+    // Space Complexity: O(h) recursion stack
     public int maxSumBST(TreeNode root) {
         postOrder(root);
         return maxSum;

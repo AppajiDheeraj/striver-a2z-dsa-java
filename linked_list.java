@@ -2,6 +2,8 @@ class Node {
     int data;
     Node next;
 
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     Node(int data) {
         this.data = data;
         this.next = null;
@@ -12,6 +14,8 @@ class Linked_List {
     Node head;
 
     // Insert at head
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     public void insertAtHead(int data) {
         Node newNode = new Node(data);
         newNode.next = head;
@@ -19,6 +23,8 @@ class Linked_List {
     }
 
     // Delete head
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     public void deleteHead() {
         if (head == null) {
             return;
@@ -27,6 +33,8 @@ class Linked_List {
     }
 
     // Find length
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int length() {
         int count = 0;
         Node temp = head;
@@ -40,6 +48,8 @@ class Linked_List {
     }
 
     // Search for a value
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public boolean search(int key) {
         Node temp = head;
 
@@ -54,6 +64,8 @@ class Linked_List {
     }
 
     // Middle of LinkedList [Tortoise-Hare Method]
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public Node middleNode() {
         Node slow = head;
         Node fast = head;
@@ -67,6 +79,8 @@ class Linked_List {
     }
 
     // Reverse a LinkedList [Iterative]
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public void reverseIterative() {
         Node prev = null;
         Node current = head;
@@ -82,6 +96,8 @@ class Linked_List {
     }
 
     // Reverse a LL [Recursive]
+    // Time Complexity: O(n)
+    // Space Complexity: O(n) recursion stack
     private Node reverseRecursiveHelper(Node node) {
         if (node == null || node.next == null) {
             return node;
@@ -94,11 +110,15 @@ class Linked_List {
         return newHead;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(n) recursion stack
     public void reverseRecursive() {
         head = reverseRecursiveHelper(head);
     }
 
     // Detect a loop in LL
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public boolean hasCycle() {
         Node slow = head;
         Node fast = head;
@@ -116,6 +136,8 @@ class Linked_List {
     }
 
     // Find the starting point in LL
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public Node detectCycleStart() {
         Node slow = head;
         Node fast = head;
@@ -140,6 +162,8 @@ class Linked_List {
     }
 
     // Length of loop in LL
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int lengthOfLoop() {
         Node slow = head;
         Node fast = head;
@@ -165,6 +189,8 @@ class Linked_List {
     }
 
     // Check if LL is palindrome or not
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public boolean isPalindrome() {
         if (head == null || head.next == null) {
             return true;
@@ -196,6 +222,8 @@ class Linked_List {
         return true;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private Node reverseList(Node node) {
         Node prev = null;
         Node current = node;
@@ -211,6 +239,8 @@ class Linked_List {
     }
 
     // Segregate odd and even nodes in Linked List
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public void segregateOddEvenNodes() {
         if (head == null || head.next == null) {
             return;
@@ -231,6 +261,8 @@ class Linked_List {
     }
 
     // Remove Nth node from the back of the LL
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public void removeNthFromEnd(int n) {
         Node dummy = new Node(0);
         dummy.next = head;
@@ -255,6 +287,8 @@ class Linked_List {
     }
 
     // Delete the middle node in LL
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public void deleteMiddle() {
         if (head == null || head.next == null) {
             head = null;
@@ -275,10 +309,14 @@ class Linked_List {
     }
 
     // Sort LL
+    // Time Complexity: O(n log n)
+    // Space Complexity: O(log n) recursion stack
     public void sortList() {
         head = mergeSort(head);
     }
 
+    // Time Complexity: O(n log n)
+    // Space Complexity: O(log n) recursion stack
     private Node mergeSort(Node node) {
         if (node == null || node.next == null) {
             return node;
@@ -294,6 +332,8 @@ class Linked_List {
         return mergeTwoLists(left, right);
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private Node getMiddleForSort(Node node) {
         Node slow = node;
         Node fast = node.next;
@@ -306,6 +346,8 @@ class Linked_List {
         return slow;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     private Node mergeTwoLists(Node list1, Node list2) {
         Node dummy = new Node(0);
         Node temp = dummy;
@@ -331,6 +373,8 @@ class Linked_List {
     }
 
     // Sort a Linked List of 0's 1's and 2's
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public void sortZeroOneTwo() {
         int zero = 0;
         int one = 0;
@@ -367,6 +411,8 @@ class Linked_List {
     }
 
     // Find the intersection point of Y LL
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public Node getIntersectionNode(Node headA, Node headB) {
         if (headA == null || headB == null) {
             return null;
@@ -393,6 +439,8 @@ class Linked_List {
     }
 
     // Add one to a number represented by LL
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public void addOne() {
         head = reverseList(head);
 
@@ -421,6 +469,8 @@ class Linked_List {
     }
 
     // Add two numbers in Linked List
+    // Time Complexity: O(max(n, m))
+    // Space Complexity: O(max(n, m)) for the result
     public Node addTwoNumbers(Node l1, Node l2) {
         Node dummy = new Node(0);
         Node temp = dummy;
@@ -448,6 +498,8 @@ class Linked_List {
     }
 
     // Print LL
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public void printList() {
         Node temp = head;
 
@@ -465,6 +517,8 @@ class DNode {
     DNode prev;
     DNode next;
 
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     DNode(int data) {
         this.data = data;
         this.prev = null;
@@ -476,6 +530,8 @@ class DoublyLinkedList {
     DNode head;
 
     // Insert node before head
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     public void insertBeforeHead(int data) {
         DNode newNode = new DNode(data);
 
@@ -490,6 +546,8 @@ class DoublyLinkedList {
     }
 
     // Delete head
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     public void deleteHead() {
         if (head == null) {
             return;
@@ -505,6 +563,8 @@ class DoublyLinkedList {
     }
 
     // Reverse doubly linked list
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public void reverse() {
         DNode current = head;
         DNode temp = null;

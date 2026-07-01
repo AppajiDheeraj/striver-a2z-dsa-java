@@ -16,12 +16,16 @@ public class stacks_queue {
         int top;
         int size;
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         StackUsingArray(int size) {
             this.size = size;
             arr = new int[size];
             top = -1;
         }
 
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public void push(int x) {
             if (top == size - 1) {
                 System.out.println("Stack Overflow");
@@ -30,6 +34,8 @@ public class stacks_queue {
             arr[++top] = x;
         }
 
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public int pop() {
             if (top == -1) {
                 System.out.println("Stack Underflow");
@@ -38,6 +44,8 @@ public class stacks_queue {
             return arr[top--];
         }
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public int peek() {
             if (top == -1) {
                 System.out.println("Stack is Empty");
@@ -46,6 +54,8 @@ public class stacks_queue {
             return arr[top];
         }
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public boolean isEmpty() {
             return top == -1;
         }
@@ -60,6 +70,8 @@ public class stacks_queue {
         int rear;
         int capacity;
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         QueueUsingArray(int capacity) {
             this.capacity = capacity;
             arr = new int[capacity];
@@ -67,6 +79,8 @@ public class stacks_queue {
             rear = -1;
         }
 
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public void enqueue(int x) {
             if ((rear + 1) % capacity == front) {
                 System.out.println("Queue Overflow");
@@ -81,6 +95,8 @@ public class stacks_queue {
             arr[rear] = x;
         }
 
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public int dequeue() {
             if (front == -1) {
                 System.out.println("Queue Underflow");
@@ -99,6 +115,8 @@ public class stacks_queue {
             return element;
         }
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public int peek() {
             if (front == -1) {
                 System.out.println("Queue is Empty");
@@ -108,6 +126,8 @@ public class stacks_queue {
             return arr[front];
         }
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public boolean isEmpty() {
             return front == -1;
         }
@@ -120,6 +140,8 @@ public class stacks_queue {
         Queue<Integer> q1 = new LinkedList<>();
         Queue<Integer> q2 = new LinkedList<>();
 
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public void push(int x) {
             q2.offer(x);
 
@@ -132,6 +154,8 @@ public class stacks_queue {
             q2 = temp;
         }
 
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public int pop() {
             if (q1.isEmpty()) {
                 System.out.println("Stack is Empty");
@@ -141,6 +165,8 @@ public class stacks_queue {
             return q1.poll();
         }
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public int top() {
             if (q1.isEmpty()) {
                 System.out.println("Stack is Empty");
@@ -150,6 +176,8 @@ public class stacks_queue {
             return q1.peek();
         }
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public boolean isEmpty() {
             return q1.isEmpty();
         }
@@ -162,10 +190,14 @@ public class stacks_queue {
         Stack<Integer> s1 = new Stack<>();  // Pushing newer Elements
         Stack<Integer> s2 = new Stack<>();  // Dequee or Pop operations
 
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public void enqueue(int x) {
             s1.push(x);
         }
 
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public int dequeue() {
             if (s1.isEmpty() && s2.isEmpty()) {
                 System.out.println("Queue is Empty");
@@ -181,6 +213,8 @@ public class stacks_queue {
             return s2.pop();
         }
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public int peek() {
             if (s1.isEmpty() && s2.isEmpty()) {
                 System.out.println("Queue is Empty");
@@ -196,6 +230,8 @@ public class stacks_queue {
             return s2.peek();
         }
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public boolean isEmpty() {
             return s1.isEmpty() && s2.isEmpty();
         }
@@ -210,6 +246,8 @@ public class stacks_queue {
             int data;
             Node next;
 
+            // Time Complexity: O(1)
+            // Space Complexity: O(1)
             Node(int data) {
                 this.data = data;
             }
@@ -217,12 +255,16 @@ public class stacks_queue {
 
         Node top;
 
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public void push(int x) {
             Node newNode = new Node(x);
             newNode.next = top;
             top = newNode;
         }
 
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public int pop() {
             if (top == null) {
                 System.out.println("Stack Underflow");
@@ -234,6 +276,8 @@ public class stacks_queue {
             return element;
         }
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public int peek() {
             if (top == null) {
                 System.out.println("Stack is Empty");
@@ -243,6 +287,8 @@ public class stacks_queue {
             return top.data;
         }
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public boolean isEmpty() {
             return top == null;
         }
@@ -257,6 +303,8 @@ public class stacks_queue {
             int data;
             Node next;
 
+            // Time Complexity: O(1)
+            // Space Complexity: O(1)
             Node(int data) {
                 this.data = data;
             }
@@ -265,6 +313,8 @@ public class stacks_queue {
         Node front;
         Node rear;
 
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public void enqueue(int x) {
             Node newNode = new Node(x);
 
@@ -277,6 +327,8 @@ public class stacks_queue {
             rear = newNode;
         }
 
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public int dequeue() {
             if (front == null) {
                 System.out.println("Queue Underflow");
@@ -293,6 +345,8 @@ public class stacks_queue {
             return element;
         }
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public int peek() {
             if (front == null) {
                 System.out.println("Queue is Empty");
@@ -302,12 +356,16 @@ public class stacks_queue {
             return front.data;
         }
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public boolean isEmpty() {
             return front == null;
         }
     }
 
     // Valid Parentheses
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public boolean isValid(String s) {
 
         Deque<Character> stack = new ArrayDeque<>();
@@ -338,11 +396,15 @@ public class stacks_queue {
         Stack<Integer> stack;
         Stack<Integer> minStack;
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public MinStack() {
             stack = new Stack<>();
             minStack = new Stack<>();
         }
 
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public void push(int val) {
 
             stack.push(val);
@@ -352,22 +414,30 @@ public class stacks_queue {
             }
         }
 
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public void pop() {
             if(stack.pop().equals(minStack.peek())) {
                 minStack.pop();
             }
         }
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public int top() {
             return stack.peek();
         }
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public int getMin() {
             return minStack.peek();
         }
     }
     
     // Infix to PostFix
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     public static int precedence(char ch){
         if(ch == '^') return 3;
         if(ch == '*' || ch == '/') return 2;
@@ -375,6 +445,8 @@ public class stacks_queue {
         return -1;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public String InfixToPostfix(String s){
         Stack<Character> stack = new Stack<>();
         StringBuilder ans = new StringBuilder();
@@ -407,6 +479,8 @@ public class stacks_queue {
     }
 
     // Infix to Prefix
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public String InfixToPrefix(String s) {
 
         StringBuilder sb = new StringBuilder(s);
@@ -436,6 +510,8 @@ public class stacks_queue {
     // ---------------------------------------------
 
     // Postfix to Infix
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public String PostfixToInfix(String s) {
         Stack<String> stack = new Stack<>();
 
@@ -461,6 +537,8 @@ public class stacks_queue {
     }
 
     // Postfix to Prefix
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public String PostfixToPrefix(String s) {
         Stack<String> stack = new Stack<>();
 
@@ -492,6 +570,8 @@ public class stacks_queue {
     // ---------------------------------------------
 
     // Prefix to Postfix
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public String PrefixToPostfix(String s) {
         Stack<String> stack = new Stack<>();
 
@@ -517,6 +597,8 @@ public class stacks_queue {
     }
 
     // Prefix to Infix
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public String PrefixToInfix(String s) {
         Stack<String> stack = new Stack<>();
 
@@ -545,6 +627,8 @@ public class stacks_queue {
     //----------- V . V . V . Important ----------
 
     // Next Greater Element
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int[] NextGreaterElement(int[] nums){
         int n = nums.length;
         int[] ans = new int[n];
@@ -568,6 +652,8 @@ public class stacks_queue {
         return ans;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int[] nextGreaterElement(int[] nums1, int[] nums2) {
         Stack<Integer> stack = new Stack<>();
         HashMap<Integer, Integer> map = new HashMap<>();
@@ -602,6 +688,8 @@ public class stacks_queue {
         // Use i % n to wrap around the array
         // First traversal helps build stack
         // Actual answers are filled only when i < n
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int[] NextGreaterElementII(int[] nums){
         int n = nums.length;
         int[] ans = new int[n];
@@ -630,6 +718,8 @@ public class stacks_queue {
     }
 
     // Next Smaller Element
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int[] NextSmallerElement(int[] nums){
         int n = nums.length;
         int[] ans = new int[n];
@@ -653,6 +743,8 @@ public class stacks_queue {
     }
 
     // Previous Smaller Element
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int[] PrevSmallerElement(int[] nums){
         int n = nums.length;
         int[] ans = new int[n];
@@ -676,6 +768,8 @@ public class stacks_queue {
     }
     
     // Trapping Rain Water
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int trap(int[] height) {
         int n = height.length;
 
@@ -700,6 +794,8 @@ public class stacks_queue {
         return water;
     }
 
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int trapOptimized(int[] height){
         int left = 0;
         int right = height.length - 1;
@@ -731,6 +827,8 @@ public class stacks_queue {
     }
 
     // Sum of Subarray Minimums
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int sumSubarrayMins(int[] arr) {
         int n = arr.length;
         Stack<Integer> stack = new Stack<>();
@@ -762,6 +860,8 @@ public class stacks_queue {
 
 
     // Asteroid Collision
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int[] asteroidCollision(int[] asteroids) {
         Deque<Integer> stack = new ArrayDeque<>();
 
@@ -796,11 +896,15 @@ public class stacks_queue {
     }
 
     // Sum of Subarray Ranges
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public long subArrayRanges(int[] nums) {
         return sumMax(nums) - sumMin(nums);
     }
 
     // Sum of subarray minimums
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     private long sumMin(int[] nums) {
         int n = nums.length;
         Deque<Integer> stack = new ArrayDeque<>();
@@ -830,6 +934,8 @@ public class stacks_queue {
     }
 
     // Sum of subarray maximums
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     private long sumMax(int[] nums) {
         int n = nums.length;
         Deque<Integer> stack = new ArrayDeque<>();
@@ -858,6 +964,8 @@ public class stacks_queue {
     }
     
     // Remove K Digits
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public String removeKdigits(String num, int k) {
         Stack<Character> stack = new Stack<>();
         for(int i=0; i<num.length(); i++){
@@ -894,6 +1002,8 @@ public class stacks_queue {
     }
 
     // Largest Rectangle in Histogram
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int largestRectangleArea(int[] heights){
         int n = heights.length;
 
@@ -915,6 +1025,8 @@ public class stacks_queue {
     }
     
     // Maximum Rectangles
+    // Time Complexity: O(rows * cols)
+    // Space Complexity: O(cols)
     public int maximalRectangle(char[][] matrix) {
         int rows = matrix.length;
         int cols = matrix[0].length;
@@ -938,6 +1050,8 @@ public class stacks_queue {
 
 
     // Sliding Window maximum
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
     public int[] maxSlidingWindow(int[] nums, int k) {
         int n = nums.length;
         int[] ans = new int[n - k + 1];
@@ -974,10 +1088,14 @@ public class stacks_queue {
     static class StockSpanner {
         Stack<int[]> stack;
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public StockSpanner() {
             stack = new Stack<>();
         }
 
+        // Time Complexity: O(1) amortized
+        // Space Complexity: O(n) total stored prices
         public int next(int price){
             int span = 1;
 
@@ -992,6 +1110,8 @@ public class stacks_queue {
     }
 
     // Celebrity Problem
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
     public int celebrity(int[][] M) {
         int n = M.length;
 
@@ -1023,6 +1143,8 @@ public class stacks_queue {
             Node prev;
             Node next;
 
+            // Time Complexity: O(1)
+            // Space Complexity: O(1)
             Node(int key, int value) {
                 this.key = key;
                 this.value = value;
@@ -1036,6 +1158,8 @@ public class stacks_queue {
 
         HashMap<Integer, Node> map = new HashMap<>();
 
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public LRUCache(int capacity) {
             this.cap = capacity;
             head.next = tail;
@@ -1043,6 +1167,8 @@ public class stacks_queue {
         }
 
         // Function to add a node right after head
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         void addNode(Node newNode){
             Node temp = head.next;
             newNode.next = temp;
@@ -1052,6 +1178,8 @@ public class stacks_queue {
         }
 
         // Function to remove a given node from list
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         void deleteNode(Node delNode) {
             Node delPrev = delNode.prev;
             Node delNext = delNode.next;
@@ -1059,6 +1187,8 @@ public class stacks_queue {
             delNext.prev = delPrev;
         }
 
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public int get(int key_) {
             // If key exists in cache
             if (map.containsKey(key_)) {
@@ -1077,6 +1207,8 @@ public class stacks_queue {
             return -1;
         }
 
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public void put(int key_, int value) {
             // If key already exists
             if (map.containsKey(key_)) {
@@ -1101,6 +1233,8 @@ public class stacks_queue {
         Node next;
         Node prev;
         
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         Node(int _key, int _value) {
             key = _key;
             value = _value;
@@ -1114,6 +1248,8 @@ public class stacks_queue {
         Node head;
         Node tail;
         
+        // Time Complexity: O(n)
+        // Space Complexity: O(1)
         List() {
             head = new Node(0, 0);
             tail = new Node(0, 0);
@@ -1123,6 +1259,8 @@ public class stacks_queue {
         }
         
         // Function to add node in front
+        // Time Complexity: O(n)
+        // Space Complexity: O(1)
         void addFront(Node node) {
             Node temp = head.next;
             node.next = temp;
@@ -1133,6 +1271,8 @@ public class stacks_queue {
         }
         
         // Function to remove node from the list
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         void removeNode(Node delnode) {
             Node prevNode = delnode.prev;
             Node nextNode = delnode.next;
@@ -1150,6 +1290,8 @@ public class stacks_queue {
         private int curSize; // To store current size of cache
         
         // Constructor
+        // Time Complexity: O(1)
+        // Space Complexity: O(1)
         public LFUCache(int capacity) {
             maxSizeCache = capacity;
             minFreq = 0;
@@ -1158,6 +1300,8 @@ public class stacks_queue {
             freqListMap = new HashMap<>();
         }
 
+        // Time Complexity: O(n)
+        // Space Complexity: O(1)
         private void updateFreqListMap(Node node) {
             // Remove from Hashmap
             keyNode.remove(node.key);
@@ -1191,6 +1335,8 @@ public class stacks_queue {
             keyNode.put(node.key, node);
         }
 
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public int get(int key) {
             // Return the value if key exists
             if (keyNode.containsKey(key)) {
@@ -1205,6 +1351,8 @@ public class stacks_queue {
         }
         
         // Method to insert key-value pair in LFU cache
+        // Time Complexity: O(1) average
+        // Space Complexity: O(1)
         public void put(int key, int value) {
             /* If the size of Cache is 0, 
             no data-items can be inserted */
