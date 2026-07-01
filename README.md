@@ -18,6 +18,7 @@ This repository is a clean Java-based DSA practice workspace. Each file is self-
 - Search patterns: binary search, bounds, rotated arrays, peak finding, and related variations.
 - Trees and graph-style thinking: binary trees, binary search trees, and traversal practice.
 - Technique drills: bit manipulation, greedy, sliding window, two pointers, stacks, queues, tries, patterns, and recursion.
+- Java OOP practice: classes, objects, constructors, encapsulation, inheritance, polymorphism, abstraction, interfaces, and object relationships.
 
 ## File Guide
 
@@ -32,12 +33,14 @@ This repository is a clean Java-based DSA practice workspace. Each file is self-
 - [greedy.java](greedy.java) - greedy strategy problems.
 - [heap.java](heap.java) - priority queue and heap-based problems.
 - [linked_list.java](linked_list.java) - linked list operations and pointer-based practice.
+- [OOPS.java](OOPS.java) - runnable Java OOP examples for interview-style write-and-explain practice.
 - [pattern.java](pattern.java) - pattern printing exercises.
 - [recursion.java](recursion.java) - recursion and backtracking-style drills.
 - [sliding_window_2_pointer.java](sliding_window_2_pointer.java) - sliding window and two-pointer techniques.
 - [stacks_queue.java](stacks_queue.java) - stack and queue based problems.
 - [strings.java](strings.java) - string manipulation, parsing, and matching practice.
 - [trie.java](trie.java) - trie data structure examples.
+- [resources/java.md](resources/java_oops.md) - Java notes, including OOP definitions, differences, and practice prompts.
 
 ## Quick Start
 
