@@ -19,6 +19,7 @@ This repository is a clean Java-based DSA practice workspace. Each file is self-
 - Trees and graph-style thinking: binary trees, binary search trees, and traversal practice.
 - Technique drills: bit manipulation, greedy, sliding window, two pointers, stacks, queues, tries, patterns, and recursion.
 - Java OOP practice: classes, objects, constructors, encapsulation, inheritance, polymorphism, abstraction, interfaces, and object relationships.
+- Interview CS fundamentals: compact computer networking notes for OA and interview revision.
 
 ## File Guide
 
@@ -28,6 +29,7 @@ This repository is a clean Java-based DSA practice workspace. Each file is self-
 - [binary_trees.java](binary_trees.java) - binary tree traversal and problems.
 - [binary_serach_tree.java](binary_serach_tree.java) - binary search tree operations and practice.
 - [bit_manipulation.java](bit_manipulation.java) - bitwise techniques and common problems.
+- [Computer_Networks.md](Computer_Networks.md) - compact networking notes with topic links for OA and interview revision.
 - [dp.java](dp.java) - dynamic programming concepts, states, and optimization patterns.
 - [graph.java](graph.java) - graph traversal, shortest paths, and connectivity problems.
 - [greedy.java](greedy.java) - greedy strategy problems.
