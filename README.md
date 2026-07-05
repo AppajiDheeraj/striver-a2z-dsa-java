@@ -19,7 +19,7 @@ This repository is a clean Java-based DSA practice workspace. Each file is self-
 - Trees and graph-style thinking: binary trees, binary search trees, and traversal practice.
 - Technique drills: bit manipulation, greedy, sliding window, two pointers, stacks, queues, tries, patterns, and recursion.
 - Java OOP practice: classes, objects, constructors, encapsulation, inheritance, polymorphism, abstraction, interfaces, and object relationships.
-- Interview CS fundamentals: compact computer networking notes for OA and interview revision.
+- Interview CS fundamentals: compact notes and PDF references for OA and interview revision.
 
 ## File Guide
 
@@ -29,20 +29,28 @@ This repository is a clean Java-based DSA practice workspace. Each file is self-
 - [binary_trees.java](binary_trees.java) - binary tree traversal and problems.
 - [binary_serach_tree.java](binary_serach_tree.java) - binary search tree operations and practice.
 - [bit_manipulation.java](bit_manipulation.java) - bitwise techniques and common problems.
-- [Computer_Networks.md](Computer_Networks.md) - compact networking notes with topic links for OA and interview revision.
 - [dp.java](dp.java) - dynamic programming concepts, states, and optimization patterns.
 - [graph.java](graph.java) - graph traversal, shortest paths, and connectivity problems.
 - [greedy.java](greedy.java) - greedy strategy problems.
 - [heap.java](heap.java) - priority queue and heap-based problems.
 - [linked_list.java](linked_list.java) - linked list operations and pointer-based practice.
-- [OOPS.java](OOPS.java) - runnable Java OOP examples for interview-style write-and-explain practice.
 - [pattern.java](pattern.java) - pattern printing exercises.
 - [recursion.java](recursion.java) - recursion and backtracking-style drills.
 - [sliding_window_2_pointer.java](sliding_window_2_pointer.java) - sliding window and two-pointer techniques.
 - [stacks_queue.java](stacks_queue.java) - stack and queue based problems.
 - [strings.java](strings.java) - string manipulation, parsing, and matching practice.
 - [trie.java](trie.java) - trie data structure examples.
-- [resources/java.md](resources/java_oops.md) - Java notes, including OOP definitions, differences, and practice prompts.
+- [Computer_Networks.md](resources/Computer_Networks.md) - compact networking notes with topic links for OA and interview revision.
+- [OOPS.java](resources/OOPS.java) - runnable Java OOP examples for interview-style write-and-explain practice.
+- [java_oops.md](resources/java_oops.md) - Java OOP definitions, differences, and practice prompts.
+- [Language Notes](resources/Language%20Notes/) - language notes for quick revision.
+  - [java.md](resources/Language%20Notes/java.md) - Java notes.
+  - [Go.md](resources/Language%20Notes/Go.md) - Go notes.
+- [Core Subjects](resources/Core%20Subjects/) - PDF references for core CS subjects.
+  - [DBMS_Full_Notes.pdf](resources/Core%20Subjects/DBMS_Full_Notes.pdf) - DBMS reference notes.
+  - [OS_love_babbar.pdf](resources/Core%20Subjects/OS_love_babbar.pdf) - operating systems reference notes.
+  - [Object Oriented Programming (1) (1).pdf](resources/Core%20Subjects/Object%20Oriented%20Programming%20%281%29%20%281%29.pdf) - OOP reference notes.
+  - [Computer Networking Notes.pdf](resources/Core%20Subjects/Computer%20Networking%20Notes.pdf) - computer networking reference notes.
 
 ## Quick Start
 
