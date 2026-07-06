@@ -651,7 +651,239 @@ Redis    Kafka    SQL/NoSQL
      Worker Services
 ```
 
-## 20. Case Study: Video Streaming
+## 20. Case Study: URL Shortener
+
+Scope example: design a TinyURL/Bitly-like service that converts long URLs into short readable URLs and redirects users back to the original URL.
+
+### Functional Requirements
+
+- User submits a long URL and receives a short URL.
+- Visiting the short URL redirects to the original long URL.
+- Same long URL can return the same short URL if 1-to-1 mapping is required.
+- Support optional custom aliases like `/dheeraj`.
+- Short URLs should be readable, collision-free, and hard to predict.
+- Support expiry time for short URLs.
+- Support basic offline analytics like click count, device, browser, country, and referrer.
+
+### Non-Functional Requirements
+
+| Requirement | Why It Matters |
+|---|---|
+| **High Availability** | Redirects should almost always work. |
+| **Low Latency** | Redirection must feel instant. |
+| **High Scalability** | System is read-heavy; redirects are much more frequent than URL creation. |
+| **Durability** | Short URL mappings should not be lost. |
+| **Fault Tolerance** | Failures should not bring down redirects. |
+
+### Core APIs
+
+| API | Method | Purpose | Notes |
+|---|---|---|---|
+| `/url` | `POST` or `PUT` | Create short URL. | `PUT` is useful if same long URL should always map to same short URL. |
+| `/{shortCode}` | `GET` | Redirect to original URL. | Returns `301`, `302`, or `307` with `Location: longUrl`. |
+
+Example create request:
+
+```http
+POST /url
+Content-Type: application/json
+
+{
+  "longUrl": "https://example.com/some/very/long/path",
+  "customAlias": "optional-name",
+  "expiresAt": "optional-datetime"
+}
+```
+
+Example create response:
+
+```json
+{
+  "longUrl": "https://example.com/some/very/long/path",
+  "shortUrl": "https://sho.rt/xy725ab",
+  "createdAt": "datetime",
+  "isActive": true
+}
+```
+
+### Redirect Status Codes
+
+| Code | Meaning | Use In URL Shortener |
+|---|---|---|
+| **301 Moved Permanently** | Permanent redirect; browser/CDN may cache it. | Good for SEO and lower server load, but can reduce analytics accuracy if client caches. |
+| **302 Found** | Temporary redirect. | Good when analytics tracking is important because requests usually hit server again. |
+| **307 Temporary Redirect** | Temporary redirect that preserves original HTTP method/body. | Rare for simple short-link redirects. |
+| **404 Not Found** | Short code does not exist or expired. | Return when mapping is missing/inactive. |
+
+Interview point: use **301** when SEO/caching matters; use **302** when accurate click analytics matters more.
+
+### Data Model
+
+| Table / Store | Key Fields | Purpose |
+|---|---|---|
+| **URL Mapping Store** | `shortCode`, `longUrl`, `createdAt`, `expiresAt`, `isActive`, `userId`, `lastVisitedAt` | Main lookup from short URL to long URL. |
+| **Long URL Index** | `longUrl -> shortCode` | Needed if same long URL should return same short URL. |
+| **Analytics Store** | `shortCode`, `timestamp`, `ip/country`, `userAgent`, `referrer` | Offline click analytics. |
+| **User Store** | `userId`, `name`, `email` | Optional if accounts are supported. |
+
+Pick NoSQL/key-value store for URL mappings because access pattern is simple and high-throughput: `shortCode -> longUrl`. Pick SQL for users if relational/account features matter.
+
+### Short Code Generation
+
+| Approach | Meaning | Trade-Off |
+|---|---|---|
+| **Random ID** | Generate random short code. | Simple but collisions must be checked. |
+| **Hash Long URL** | Hash long URL and truncate. | Deterministic but collisions and predictability are concerns. |
+| **Counter + Base62** | Generate unique numeric ID and encode using Base62. | Fast and collision-free, but predictable unless randomized/obfuscated. |
+| **Token Range Service** | Allocate non-overlapping ID ranges to key generators. | Scalable and collision-free, but needs coordination. |
+
+Best interview answer: use a **Key Generation Service (KGS)** with pre-allocated non-overlapping ID ranges, then encode IDs using **Base62**.
+
+### Encoding
+
+Short codes should be readable and URL-safe.
+
+| Encoding | Characters | Notes |
+|---|---|---|
+| **Base62** | `a-z`, `A-Z`, `0-9` | Common choice; compact and readable. |
+| **Base58** | Removes confusing chars like `0`, `O`, `I`, `l` | More user-friendly. |
+
+Formula:
+
+```txt
+Total short URLs = base ^ length
+```
+
+Example: Base62 with 7 characters gives `62^7`, which is roughly `3.5 trillion` possible short codes.
+
+### High-Level Design
+
+```txt
+Client
+  |
+  v
+DNS / CDN
+  |
+  v
+Load Balancer / Reverse Proxy
+  |
+  v
+API Servers
+  |            |
+  |            v
+  |        Analytics Queue ---> Analytics Workers ---> Data Warehouse
+  |
+  v
+Cache Redis/Memcached
+  |
+  v
+URL Mapping Store
+  |
+  v
+Long URL
+```
+
+### Write Path: Create Short URL
+
+```txt
+Client submits long URL
+  -> API validates URL/custom alias/expiry
+  -> Check longUrl index if 1-to-1 mapping is required
+  -> KGS generates shortCode
+  -> Store shortCode -> longUrl
+  -> Store longUrl -> shortCode index
+  -> Return short URL
+```
+
+Concurrency issue: if many users submit the same long URL/custom alias at the same time, use a unique constraint, distributed lock, or conditional write to avoid duplicate/colliding mappings.
+
+### Read Path: Redirect
+
+```txt
+Client opens short URL
+  -> CDN/reverse proxy/API receives request
+  -> Check cache for shortCode
+  -> On cache miss, read mapping store
+  -> If found and active, return redirect with Location header
+  -> Emit click event asynchronously for analytics
+  -> If missing/expired, return 404
+```
+
+### Caching Strategy
+
+| Layer | Purpose |
+|---|---|
+| **CDN / Reverse Proxy Cache** | Cache very popular redirects close to users. |
+| **Redis / Memcached** | Cache hot `shortCode -> longUrl` mappings. |
+| **Cache Aside** | App checks cache first, DB on miss, then fills cache. |
+| **LRU Eviction** | Good because recently accessed links are likely to be reused. |
+| **TTL** | Prevent stale mappings after expiry/deactivation. |
+
+Cache warning: if most short URLs are accessed only once, caching every first access can cause cache thrashing. Cache only after repeated access or use admission control for hot links.
+
+### Bloom Filter Usage
+
+| Use | Benefit | Trade-Off |
+|---|---|---|
+| Check if `shortCode` may exist before DB lookup. | Avoids unnecessary DB hits for invalid short URLs. | False positives are possible. |
+| Check if `longUrl` may already exist. | Avoids some expensive lookups for duplicate long URLs. | Adds operational complexity. |
+
+Bloom filter can say "definitely not present" or "maybe present", never "definitely present".
+
+### Analytics
+
+Do not block redirection for analytics.
+
+```txt
+Redirect request
+  -> Return redirect immediately
+  -> Publish click event to queue
+  -> Batch process events later
+  -> Store in analytics warehouse
+```
+
+Useful analytics fields: `shortCode`, timestamp, IP/country, user agent, device, browser, referrer.
+
+### Cleanup and Expiry
+
+| Method | Meaning | Trade-Off |
+|---|---|---|
+| **Lazy Cleanup** | Delete/mark expired URL when someone accesses it. | Simple but unused expired URLs remain stored. |
+| **Scheduled Cleanup Service** | Scan and delete/archive expired records during low traffic. | Saves storage but can load the database. |
+| **Archival** | Move cold old data to cheap object storage. | Reduces cost but adds retrieval complexity. |
+
+### Bottlenecks and Fixes
+
+| Bottleneck | Fix |
+|---|---|
+| DB read load during redirects | Cache hot mappings, use read replicas, shard by `shortCode`. |
+| Short code collision | KGS with non-overlapping ranges, unique constraints, conditional writes. |
+| Hot short URL | CDN/reverse proxy cache, collapsed forwarding, cache replication. |
+| Duplicate long URL creation | Long URL index, distributed lock, conditional write. |
+| Analytics overload | Queue + batch processing. |
+| Invalid short URL spam | Rate limiting + Bloom filter + 404 fast path. |
+
+### Security
+
+- Validate and sanitize long URLs.
+- Block malicious/phishing URLs if required.
+- Rate limit by API key, user ID, IP, or cookie.
+- Use least privilege for services and databases.
+- Use TLS and secure auth for user/account APIs.
+- Prevent custom alias takeover using uniqueness checks.
+
+### Interview Trade-Offs
+
+- URL shortener is **read-heavy**, so optimize redirection path first.
+- Use **NoSQL/key-value** storage for `shortCode -> longUrl` because lookup pattern is simple and high scale.
+- Use **cache-aside** for hot redirects, but avoid caching every one-time link.
+- Use **KGS + Base62** for short code generation to avoid collisions and keep codes readable.
+- Use **async queue** for analytics so redirect latency remains low.
+- Use **301** for SEO/cache-heavy redirects and **302** for better analytics accuracy.
+
+Good final line: "I would keep the redirect path extremely fast: cache first, key-value lookup second, and analytics async. The main trade-offs are collision-free key generation, cache freshness, analytics accuracy, and handling hot links without overloading the database."
+
+## 21. Case Study: Video Streaming
 
 Scope example: design the path from uploaded video to user playback, not the entire Netflix/YouTube product.
 
@@ -718,7 +950,7 @@ Video Player
 - Use adaptive bitrate because user bandwidth and device size change.
 - Cache future segments in the player, but avoid downloading the whole video upfront.
 
-## 21. Interview Flow
+## 22. Interview Flow
 
 1. **Clarify requirements**: users, features, reads/writes, latency, availability, consistency.
 2. **Estimate scale**: QPS, storage, bandwidth, peak traffic.
@@ -737,7 +969,7 @@ Video Player
 - "I would use async processing because this work does not need to block the user request."
 - "I would add sharding only after replication, indexing, caching, and query optimization are no longer enough."
 
-## 22. Source Links For Deeper Revision
+## 23. Source Links For Deeper Revision
 
 - Main article: [30 System Design Concepts](https://blog.algomaster.io/p/30-system-design-concepts)
 - [What's an API?](https://blog.algomaster.io/p/whats-an-api)
@@ -757,6 +989,6 @@ Video Player
 - [API Gateway](https://blog.algomaster.io/p/what-is-an-api-gateway)
 - [Idempotency](https://blog.algomaster.io/p/idempotency-in-distributed-systems)
 
-## 23. Best Final Line in Interviews
+## 24. Best Final Line in Interviews
 
 > The final design depends on the scale and trade-offs. For a small system, I would keep it simple with one database and cache. As traffic grows, I would add load balancing, replication, sharding, queues, CDN, monitoring, and stronger fault tolerance.
