@@ -41,6 +41,7 @@ This repository is a clean Java-based DSA practice workspace. Each file is self-
 - [strings.java](strings.java) - string manipulation, parsing, and matching practice.
 - [trie.java](trie.java) - trie data structure examples.
 - [Computer_Networks.md](resources/Computer_Networks.md) - compact networking notes with topic links for OA and interview revision.
+- [system_design.md](resources/System_Design/system_design.md) - interview-ready system design playbook covering requirements, scaling, APIs, databases, reliability, and trade-offs.
 - [OOPS.java](resources/OOPS.java) - runnable Java OOP examples for interview-style write-and-explain practice.
 - [java_oops.md](resources/java_oops.md) - Java OOP definitions, differences, and practice prompts.
 - [Language Notes](resources/Language%20Notes/) - language notes for quick revision.
