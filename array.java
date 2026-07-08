@@ -93,7 +93,7 @@ public class array {
         return count <= 1;
     }
 
-    // Remove Duplicates from Sorted Array
+    // Remove duplicates in-place and return the number of unique elements.(Sorted array)
     // Time Complexity: O(n)
     // Space Complexity: O(1)
     public int removeDuplicates(int[] nums) {
@@ -462,7 +462,7 @@ public class array {
         return ans;
     }
 
-    // Next Permutation
+    // Next Permutation -- decreasing order
     // Time Complexity: O(n)
     // Space Complexity: O(1)
     public void nextPermutation(int[] nums) {
@@ -513,9 +513,9 @@ public class array {
     }
 
     // Leaders in an Array
-     // Time Complexity: O(n)
-     // Space Complexity: O(n)
-     public ArrayList<Integer> leaders(int[] nums) {
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
+    public ArrayList<Integer> leaders(int[] nums) {
         ArrayList<Integer> ans = new ArrayList<>();
         int max = nums[nums.length - 1];
         ans.add(max);
@@ -595,6 +595,8 @@ public class array {
     }
 
     // Rotate matrix by 90 degrees
+    // 1. Transpose the matrix
+    // 2. Reverse every row
     // Time Complexity: O(n^2)
     // Space Complexity: O(1)
     public void rotate(int[][] matrix) {
@@ -858,7 +860,7 @@ public class array {
     }
 
     // Merge Overlapping Subintervals
-    // Time Complexity: O(n)
+    // Time Complexity: O(n log n)
     // Space Complexity: O(1)
     public int[][] merge(int[][] intervals) {
         if(intervals.length == 0) return new int[0][];
@@ -883,7 +885,7 @@ public class array {
     
 
     // Merge two sorted arrays without extra space
-    // Time Complexity: O(n)
+    // Time Complexity: O(m + n)
     // Space Complexity: O(1)
     public void mergeSortedArrays(int[] nums1, int m, int[] nums2, int n) {
         int i = m - 1;
@@ -989,6 +991,23 @@ public class array {
     }
 
     // Reverse Pairs
+    // Brute Force
+    // Time Complexity: O(n^2)
+    // Space Complexity: O(1)
+    public int reversePairsBrute(int[] nums) {
+        int count = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if ((long) nums[i] > 2L * nums[j]) {
+                    count++;
+                }
+            }
+        }
+
+        return count;
+    }
+    
     // Time Complexity: O(n)
     // Space Complexity: O(1)
     private static int mergeReversePairs(int[] nums, int low, int mid, int high) {
@@ -1053,6 +1072,12 @@ public class array {
         int pre = 1, suf = 1;
         int res = Integer.MIN_VALUE;
         int n = nums.length;
+        // We scan from both sides because negative numbers can flip the product sign.
+        // If there is an odd number of negative values, the maximum product may come by
+        // excluding either the prefix up to the first negative or the suffix after the last negative.
+        // The prefix product handles subarrays from the left side,
+        // and the suffix product handles subarrays from the right side.
+        // Whenever product becomes 0, we reset it because 0 breaks the subarray continuity.
 
         for(int i = 0; i < n; i++){
             pre *= nums[i];

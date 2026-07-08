@@ -225,8 +225,13 @@ class BitManipulation {
         return true;
     }
 
-    // Use Sieve of Eratosthenes to optimize the countPrimes function. Time
-    // complexity: O(n log log n)
+    // Use Sieve of Eratosthenes to optimize countPrimes.
+    // Idea: Mark multiples of every prime as composite.
+    // For prime 2, we mark about n/2 numbers; for prime 3, about n/3;
+    // for prime 5, about n/5; and so on.
+    // Total work = n * (1/2 + 1/3 + 1/5 + 1/7 + ... over primes)
+    // The sum of reciprocals of primes grows like log log n,
+    // so the overall time complexity becomes O(n log log n).
     // Time Complexity: O(n log log n)
     // Space Complexity: O(n)
     public int countPrimes_optimized(int n) {
