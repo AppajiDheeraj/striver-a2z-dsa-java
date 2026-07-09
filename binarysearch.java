@@ -349,7 +349,12 @@ public class binarysearch {
         long hours = 0;
 
         for(int i = 0; i < piles.length; i++){
-            hours += (piles[i] + speed - 1)/ speed; // ceil(pile/speed)
+            hours += piles[i] / speed;
+
+            // If bananas are left after full-speed eating, Koko needs one extra hour.
+            if (piles[i] % speed != 0) {
+                hours++;
+            }
         }
 
         return hours;
@@ -584,6 +589,18 @@ public class binarysearch {
     }
 
     // Book Allocation Problem
+    // Given n books, where arr[i] represents the number of pages in the ith book,
+    // and m students, allocate books to students such that:
+    //
+    // 1. Each book is allocated to exactly one student.
+    // 2. Each student gets at least one book.
+    // 3. Books must be allocated in continuous order.
+    // 4. The maximum pages assigned to any student should be minimized.
+    //
+    // n = number of books
+    // m = number of students
+    // arr[i] = pages in ith book
+    //
     // Time Complexity: O(n)
     // Space Complexity: O(1)
     private static int countStudents(int[] arr, int maxPagesAllowed) {
@@ -727,10 +744,23 @@ public class binarysearch {
     public static int numberOfGasStationsRequired(double dist, int[] arr){
         int count = 0;
         for(int i = 1; i < arr.length; i++){
-            int numberInBetween = (int)((arr[i] - arr[i - 1]) / dist);
-            if ((arr[i] - arr[i - 1]) == (dist * numberInBetween)) {
+            // gap = distance between two existing adjacent gas stations.
+            double gap = arr[i] - arr[i - 1];
+
+            // numberInBetween = how many new gas stations are needed inside this gap
+            // so that every smaller gap becomes <= dist.
+            // Example: gap = 10, dist = 3
+            // 10 / 3 = 3, so we need 3 stations inside this gap.
+            int numberInBetween = (int)(gap / dist);
+
+            // If gap is exactly divisible by dist, then gap / dist gives number of parts,
+            // but stations needed = parts - 1 because both endpoints already have stations.
+            // Example: gap = 9, dist = 3
+            // Parts = 3: 1---4---7---10, but new stations needed = 2, not 3.
+            if (gap == (dist * numberInBetween)) {
                 numberInBetween--;
             }
+
             count += numberInBetween;
         }
         return count;
@@ -761,6 +791,23 @@ public class binarysearch {
     }
 
     // Median of 2 sorted arrays
+    // Thought Process:
+    // We binary search on the smaller array and decide how many elements to take from it
+    // for the left half of the final merged array.
+    // If we take mid1 elements from nums1, then mid2 elements must be taken from nums2
+    // so that the total left half size is correct.
+    //
+    // l1 = largest element on left side of nums1
+    // r1 = smallest element on right side of nums1
+    // l2 = largest element on left side of nums2
+    // r2 = smallest element on right side of nums2
+    //
+    // A partition is valid when l1 <= r2 and l2 <= r1.
+    // This means every element on the left side is <= every element on the right side.
+    // Once the partition is valid:
+    // Odd total length  -> median = max(l1, l2)
+    // Even total length -> median = (max(l1, l2) + min(r1, r2)) / 2
+    //
     // Time Complexity: O(log(min(n, m)))
     // Space Complexity: O(1)
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {

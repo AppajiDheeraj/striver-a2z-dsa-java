@@ -193,6 +193,18 @@ public class strings {
         map.put('D', 500);
         map.put('M', 1000);
 
+        // Core logic:
+        // Normally, Roman values are added from left to right.
+        // Example: VI = 5 + 1 = 6.
+        // But if a smaller value comes before a larger value,
+        // it means subtraction is needed.
+        // Example: IV = 5 - 1 = 4, IX = 10 - 1 = 9.
+        // So for every character:
+        // 1. Get current Roman value.
+        // 2. If there is a next value and current < next, subtract current.
+        // 3. Otherwise, add current.
+        // This works because special cases like IV, IX, XL, XC, CD, CM
+        // are exactly the cases where a smaller symbol appears before a larger symbol.
         int sum = 0;
         for(int i = 0; i < s.length(); i++){
             int current = map.get(s.charAt(i));
@@ -321,7 +333,7 @@ public class strings {
     }
 
     // Sum of Beauty of All Substrings
-    // Time Complexity: O(n)
+    // Time Complexity: O(n²)
     // Space Complexity: O(1)
     public int beautySum(String s) {
         int n = s.length();
@@ -493,8 +505,34 @@ public class strings {
         return z;
     }
 
-    // KMP Algorithm or LPS array
-    // Time Complexity: O(n)
+    // strStr() Brute Force / Sliding Window
+    // Idea: Try every window of size needle.length() in haystack and compare characters.
+    // Time Complexity: O(n * m) in worst case, where n = haystack length and m = needle length
+    // Space Complexity: O(1)
+    public int strStrBrute(String haystack, String needle) {
+        int n = haystack.length();
+        int m = needle.length();
+
+        if (m > n) return -1;
+
+        for (int i = 0; i <= n - m; i++) {
+            int j = 0;
+
+            while (j < m && haystack.charAt(i + j) == needle.charAt(j)) {
+                j++;
+            }
+
+            if (j == m) return i;
+        }
+
+        return -1;
+    }
+
+    // strStr() using Rabin-Karp / Rolling Hash
+    // Idea: Compare hash of needle with hash of each haystack window.
+    // If hashes match, verify characters to avoid false positives due to hash collision.
+    // Average Time Complexity: O(n + m)
+    // Worst Case Time Complexity: O(n * m), when many hash collisions happen
     // Space Complexity: O(1)
     public int strStr(String haystack, String needle) {
         int n = haystack.length();
@@ -550,6 +588,7 @@ public class strings {
 
         int[] lps = new int[combined.length()];
 
+        // KMP Logic to compute the longest prefix which is also a suffix
         for (int i = 1; i < combined.length(); i++) {
             int length = lps[i - 1];
 

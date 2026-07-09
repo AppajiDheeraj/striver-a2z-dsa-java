@@ -144,6 +144,7 @@ public class greedy {
         return result;
     }
 
+    // Each index tells how far you can move.
     // Jump Game - I
     // Time Complexity: O(n)
     // Space Complexity: O(1)

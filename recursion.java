@@ -356,6 +356,12 @@ public class recursion {
         }
 
         for (int i = start; i <= 9; i++) {
+            // Since numbers are increasing from start to 9, if adding i crosses n,
+            // then all later numbers will also cross n, so we can stop this loop.
+            if (sum + i > n) {
+                break;
+            }
+
             temp.add(i);
             combinationSum3Helper(ans, temp, k, n, sum + i, i + 1);
             temp.remove(temp.size() - 1);
@@ -459,13 +465,13 @@ public class recursion {
     // Space Complexity: O(2^n * n) for the result and O(n) recursion stack/path
     public List<List<String>> partition(String s){
         List<List<String>> ans = new ArrayList<>();
-        backtrack(0, s, new ArrayList<>(), ans); 
+        recurse(0, s, new ArrayList<>(), ans); 
         return ans;
     }
 
     // Time Complexity: O(2^n * n^2)
     // Space Complexity: O(2^n * n) for the result and O(n) recursion stack/path
-    private void backtrack(int index, String s, List<String> path,  List<List<String>> ans){
+    private void recurse(int index, String s, List<String> path,  List<List<String>> ans){
         if(index == s.length()){
             ans.add(new ArrayList<>(path));
             return;
@@ -474,7 +480,7 @@ public class recursion {
         for(int i=index; i < s.length(); i++){
             if(isPalindrome(s, index, i)){
                 path.add(s.substring(index, i + 1));
-                backtrack(i+1, s, path, ans);
+                recurse(i+1, s, path, ans);
                 path.remove(path.size()-1);
             }
         }

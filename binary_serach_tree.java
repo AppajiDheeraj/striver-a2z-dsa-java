@@ -79,19 +79,19 @@ public class binary_serach_tree {
     }
 
     // Ceil of BST
-     // Time Complexity: O(h), where h is the tree height
-     // Space Complexity: O(1)
-     public int ceilInBST(TreeNode root, int key) {
+    // Time Complexity: O(h), where h is the tree height
+    // Space Complexity: O(1)
+    public int ceilInBST(TreeNode root, int key) {
         int ceil = -1;
-        while(root != null){
-            if(root.val == key){
+        while (root != null) {
+            if (root.val == key) {
                 return root.val;
             }
 
-            if(root.val > key){
+            if (root.val > key) {
                 ceil = root.val;
                 root = root.left;
-            }else {
+            } else {
                 root = root.right;
             }
         }
@@ -216,7 +216,6 @@ public class binary_serach_tree {
         return root;
     }
 
-
     // Inorder Successor/Predecessor in BST
     // Time Complexity: O(h), where h is the tree height
     // Space Complexity: O(1)
@@ -329,6 +328,7 @@ public class binary_serach_tree {
 
     // Time Complexity: O(n)
     // Space Complexity: O(h) recursion stack
+    // Example : 1, 2, 3, 4, 5 -> 1, 4, 3, 2, 5
     public void HelperRecoverTree(TreeNode root) {
         if(root == null) return;
 
@@ -352,7 +352,7 @@ public class binary_serach_tree {
         second.val = temp;
     }
 
-    // Largest BST in Binary Tree
+    // Largest BST in Binary Tree -- REDO
     int maxSum = 0;
 
     // Time Complexity: O(n)
