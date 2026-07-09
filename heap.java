@@ -167,6 +167,41 @@ public class heap {
         }
     }
 
+    // Iterative version of maxHeapify
+    // Same logic as recursive maxHeapify, but uses while loop instead of recursion.
+    // Time Complexity: O(log n)
+    // Space Complexity: O(1)
+    private static void maxHeapifyIterative(int[] nums, int n, int i) {
+        while (true) {
+            int largest = i;
+
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+
+            if (left < n && nums[left] > nums[largest]) {
+                largest = left;
+            }
+
+            if (right < n && nums[right] > nums[largest]) {
+                largest = right;
+            }
+
+            // If parent is already bigger than both children,
+            // heap property is satisfied, so stop.
+            if (largest == i) {
+                break;
+            }
+
+            int temp = nums[i];
+            nums[i] = nums[largest];
+            nums[largest] = temp;
+
+            // The smaller/wrong element has moved down to index largest.
+            // Continue checking from there.
+            i = largest;
+        }
+    }
+
     // Kth largest element in an array
     // Time Complexity: O(n log k)
     // Space Complexity: O(k)
@@ -229,11 +264,21 @@ public class heap {
     public class ListNode {
         int val;
         ListNode next;
-        ListNode() {}
-        ListNode(int val) { this.val = val; }
-        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
-    
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+
     }
+    
     // Time Complexity: O(N log k), where N is total nodes and k is lists length
     // Space Complexity: O(k)
     public ListNode mergeKLists(ListNode[] lists) {
