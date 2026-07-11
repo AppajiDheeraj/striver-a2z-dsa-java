@@ -218,6 +218,12 @@ public class binary_trees {
     }
 
     // Post-order Traversal of Binary Tree using 2 stack
+    // Core Intuition:
+    // Postorder means Left -> Right -> Root.
+    // If we do a modified preorder as Root -> Right -> Left, then reversing it gives Left -> Right -> Root.
+    // st1 is used to process nodes in Root -> Right -> Left style.
+    // st2 stores that order, and popping from st2 automatically reverses it into postorder.
+    // So this approach is easier to remember as: "make reverse postorder first, then reverse it using second stack."
     // Time Complexity: O(n)
     // Space Complexity: O(n)
     public static List<Integer> postOrder2Stack(TreeNode root) {
@@ -253,6 +259,14 @@ public class binary_trees {
     }
 
     // Post-order Traversal of Binary Tree using 1 stack
+    // Core Intuition:
+    // Postorder means a node should be printed only after both its left and right subtrees are done.
+    // We first keep going left and push nodes into the stack, just like inorder traversal.
+    // When we come back to a node, we check its right child:
+    // - if right child exists and is not already processed, go to the right side first.
+    // - otherwise, both left and right are done, so now we can add the node to answer.
+    // lastVisited helps us remember whether the right subtree was already completed.
+    // Interview line: "I delay printing the root until I am sure its right subtree is also processed."
     // Time Complexity: O(n)
     // Space Complexity: O(n)
     public static List<Integer> postOrder1Stack(TreeNode root) {
@@ -732,25 +746,22 @@ public class binary_trees {
             int maxWidth = 0;
             while (!q.isEmpty()) {
                 int size = q.size();
-                long minIndex = q.peek().index;
                 long first = 0;
                 long last = 0;
 
                 for (int i = 0; i < size; i++) {
                     Pair curr = q.poll();
-
-                    long currIndex = curr.index - minIndex;
                     TreeNode node = curr.node;
 
-                    if(i == 0) first = currIndex;
+                    if(i == 0) first = curr.index;
 
-                    if(i == size - 1) last = currIndex;
+                    if(i == size - 1) last = curr.index;
 
                     if(node.left != null) {
-                        q.offer(new Pair(node.left, 2 * currIndex + 1));
+                        q.offer(new Pair(node.left, 2 * curr.index + 1));
                     }
                     if (node.right != null) {
-                        q.offer(new Pair(node.right,2 * currIndex + 2));
+                        q.offer(new Pair(node.right, 2 * curr.index + 2));
                     }
                 }
 
@@ -760,7 +771,7 @@ public class binary_trees {
         }
     }
 
-    // Children Sum Property in Binary Tree
+    // Children Sum Property in Binary Tree -- sometimes update twice
     // Time Complexity: O(n)
     // Space Complexity: O(h) recursion stack
     public void changeTree(TreeNode root) {
@@ -852,9 +863,9 @@ public class binary_trees {
     }
 
     // Minimum time taken to burn the BT from a given Node
-     // Time Complexity: O(n)
-     // Space Complexity: O(n)
-     public int minTime(TreeNode root, TreeNode target) {
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
+    public int minTime(TreeNode root, TreeNode target) {
         markParents(root, null);
 
         Queue<TreeNode> q = new LinkedList<>();
@@ -869,22 +880,22 @@ public class binary_trees {
             int size = q.size();
             time++;
 
-            for(int i = 0; i< size; i++){
+            for (int i = 0; i < size; i++) {
                 TreeNode curr = q.poll();
 
-                if(curr.left != null && !visited.contains(curr.left)) {
+                if (curr.left != null && !visited.contains(curr.left)) {
                     visited.add(curr.left);
                     q.offer(curr.left);
                 }
 
-                if(curr.right != null && !visited.contains(curr.right)) {
+                if (curr.right != null && !visited.contains(curr.right)) {
                     visited.add(curr.right);
                     q.offer(curr.right);
                 }
 
                 TreeNode parent = parentMap.get(curr);
 
-                if(parent != null && !visited.contains(parent)) {
+                if (parent != null && !visited.contains(parent)) {
                     visited.add(parent);
                     q.offer(parent);
                 }

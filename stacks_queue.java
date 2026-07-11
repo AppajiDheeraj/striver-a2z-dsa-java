@@ -826,7 +826,31 @@ public class stacks_queue {
         return water;
     }
 
-    // Sum of Subarray Minimums
+    // Sum of Subarray Minimums - Brute Force
+    // Brute Force Thought Process:
+    // Start every subarray from index i.
+    // Extend it till j and keep track of the minimum seen so far.
+    // Add that minimum to answer for every subarray.
+    // This checks all subarrays, so it is O(n^2).
+    // Time Complexity: O(n^2)
+    // Space Complexity: O(1)
+    public int sumSubarrayMinsBrute(int[] arr) {
+        int mod = 1000000007;
+        long ans = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            int min = arr[i];
+
+            for (int j = i; j < arr.length; j++) {
+                min = Math.min(min, arr[j]);
+                ans = (ans + min) % mod;
+            }
+        }
+
+        return (int) ans;
+    }
+
+    // Sum of Subarray Minimums - Optimized using Monotonic Stack
     // Time Complexity: O(n)
     // Space Complexity: O(n)
     public int sumSubarrayMins(int[] arr) {
@@ -850,10 +874,18 @@ public class stacks_queue {
                 long leftCount = mid - left;
                 long rightCount = right - mid;
 
+                // arr[mid] is the minimum for:
+                // leftCount choices of starting index
+                // × rightCount choices of ending index.
+                // Therefore, number of such subarrays = leftCount * rightCount,
+                // and total contribution = arr[mid] * leftCount * rightCount.
+
                 ans += (long)arr[mid] * leftCount * rightCount;
                 ans %= mod;
             }
-            stack.push(i);
+            if(i < n){
+                stack.push(i);
+            }
         }
         return (int)ans;
     }
@@ -1050,6 +1082,30 @@ public class stacks_queue {
 
 
     // Sliding Window maximum
+    // Sliding Window Maximum - Brute Force
+    // Brute Force Thought Process:
+    // Start every window from index i.
+    // Check all k elements inside that window.
+    // Store the maximum for each window.
+    // Time Complexity: O(n * k)
+    // Space Complexity: O(1) excluding answer array
+    public int[] maxSlidingWindowBrute(int[] nums, int k) {
+        int n = nums.length;
+        int[] ans = new int[n - k + 1];
+
+        for (int start = 0; start <= n - k; start++) {
+            int max = nums[start];
+
+            for (int j = start; j < start + k; j++) {
+                max = Math.max(max, nums[j]);
+            }
+
+            ans[start] = max;
+        }
+
+        return ans;
+    }
+
     // Time Complexity: O(n)
     // Space Complexity: O(n)
     public int[] maxSlidingWindow(int[] nums, int k) {

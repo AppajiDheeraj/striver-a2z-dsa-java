@@ -44,20 +44,20 @@ public class sliding_window_2_pointer {
     }
 
     // Fruit Into Baskets
-     // Time Complexity: O(n)
-     // Space Complexity: O(k) or O(1), depending on the tracked window state
-     public int totalFruit(int[] fruits) {
+    // Time Complexity: O(n)
+    // Space Complexity: O(k) or O(1), depending on the tracked window state
+    public int totalFruit(int[] fruits) {
         int left = 0;
         int maxLen = 0;
 
         HashMap<Integer, Integer> map = new HashMap<>();
 
-        for(int right = 0; right < fruits.length; right++){
-            map.put(fruits[right], map.getOrDefault(fruits[right], 0)+1);
+        for (int right = 0; right < fruits.length; right++) {
+            map.put(fruits[right], map.getOrDefault(fruits[right], 0) + 1);
 
-            while(map.size() > 2){
+            while (map.size() > 2) {
                 map.put(fruits[left], map.get(fruits[left]) - 1);
-                if(map.get(fruits[left]) == 0) {
+                if (map.get(fruits[left]) == 0) {
                     map.remove(fruits[left]);
                 }
                 left++;
@@ -67,7 +67,7 @@ public class sliding_window_2_pointer {
         }
 
         return maxLen;
-     }
+    }
 
     // Longest Repeating Character Replacement
     // Time Complexity: O(n)
@@ -91,6 +91,35 @@ public class sliding_window_2_pointer {
 
             maxLen = Math.max(maxLen, right - left + 1);
         }
+        return maxLen;
+    }
+
+    // Longest Repeating Character Replacement using HashMap
+    // Same logic as above, but useful when character set is not fixed to only A-Z.
+    // Time Complexity: O(n)
+    // Space Complexity: O(k), where k is the number of distinct characters in the window
+    public int characterReplacementMap(String s, int k) {
+        int left = 0;
+        int maxFreq = 0;
+        int maxLen = 0;
+
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        for (int right = 0; right < s.length(); right++) {
+            char ch = s.charAt(right);
+
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+            maxFreq = Math.max(maxFreq, map.get(ch));
+
+            while ((right - left + 1) - maxFreq > k) {
+                char leftCh = s.charAt(left);
+                map.put(leftCh, map.get(leftCh) - 1);
+                left++;
+            }
+
+            maxLen = Math.max(maxLen, right - left + 1);
+        }
+
         return maxLen;
     }
 
@@ -120,7 +149,7 @@ public class sliding_window_2_pointer {
         return count;
     }
 
-    //EXACTLY(k) = ATMOST(k) - ATMOST(k-1) Version 2
+    // EXACTLY(k) = ATMOST(k) - ATMOST(k-1) Version 2
     // Time Complexity: O(n)
     // Space Complexity: O(k) or O(1), depending on the tracked window state
     public int numSubarraysWithSumII(int[] nums, int goal) {
@@ -150,7 +179,7 @@ public class sliding_window_2_pointer {
         return count;
     }
 
-    // Count Number of Nice Subarrays
+    // Count Number of Nice Subarrays -- subarray has exactly k odd numbers
     // Time Complexity: O(n)
     // Space Complexity: O(k) or O(1), depending on the tracked window state
     public int numberOfSubarraysIII(int[] nums, int k) {

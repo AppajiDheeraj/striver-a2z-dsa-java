@@ -845,7 +845,7 @@ public class graph {
     }
     
 
-    // Bipartite Graph (DFS) -- 1 -> Red + -1 -> Blue
+    // Bipartite Graph (BFS) -- 1 -> Red + -1 -> Blue
     // Time Complexity: O(n)
     // Space Complexity: O(1)
     public boolean isBipartite(int[][] graph) {
@@ -1313,7 +1313,7 @@ public class graph {
         return dist;
     }
 
-    //  Shortest Path in Binary Matrix
+    // Shortest Path in Binary Matrix
     // Time Complexity: O(n)
     // Space Complexity: O(1)
     public int shortestPathBinaryMatrix(int[][] grid) {
@@ -2079,7 +2079,7 @@ public class graph {
         return dist[n - 1][n - 1];
     }
 
-    // Bridges in graph
+    // Bridges in graph -- Can my child subtree reach any ancestor of mine without using my edge?
     private int timer = 1;
     // Time Complexity: O(V + E)
     // Space Complexity: O(V + E)

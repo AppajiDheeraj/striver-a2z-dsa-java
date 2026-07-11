@@ -6,7 +6,9 @@ public class dp {
     // 1D DP
     // =========================
 
-    // Climbing Stairs - 
+    // Climbing Stairs
+    // Question: Given n stairs, you can climb either 1 step or 2 steps at a time.
+    // Return the number of distinct ways to reach the nth stair.
     // Time Complexity: O(n)
     // Space Complexity: O(n)
     public int countWays(int n) {
@@ -20,7 +22,11 @@ public class dp {
         return dp[n];
     }
 
-    // Frog Jump with K Distances
+    // Frog Jump
+    // Question: Given heights of stones, a frog starts at index 0 and wants to reach index n - 1.
+    // From each stone, it can jump either 1 step or 2 steps.
+    // The energy cost of a jump is abs(height[current] - height[previous]).
+    // Return the minimum total energy required to reach the last stone.
     // Time Complexity: O(n)
     // Space Complexity: O(n)
     private int solve(int ind, int[] height, int[] dp) {
@@ -50,6 +56,8 @@ public class dp {
     }
 
     // Maximum Sum of Non-Adjacent Elements
+    // Question: Given an array, choose elements such that no two chosen elements are adjacent.
+    // Return the maximum possible sum of the chosen elements.
     // Time Complexity: O(n)
     // Space Complexity: O(n)
     public static int maximumNonAdjacentSum(int[] arr) {
@@ -77,7 +85,9 @@ public class dp {
         System.out.println(maximumNonAdjacentSum(arr));
     }
 
-    // House Robber
+    // House Robber II
+    // Question: Given money in houses arranged in a circle, rob houses such that no two adjacent houses are robbed.
+    // Since the first and last houses are also adjacent, return the maximum money that can be robbed.
     // Time Complexity: O(n)
     // Space Complexity: O(n)
     private int solve(int[] arr, int start, int end) {
@@ -119,6 +129,9 @@ public class dp {
     // =========================
 
     // Ninja's Training
+    // Question: Given points for 3 tasks over n days, choose one task per day.
+    // The same task cannot be chosen on two consecutive days.
+    // Return the maximum points possible.
     // Time Complexity: O(n * 4 * 3)
     // Space Complexity: O(n * 4)
     public int ninjaTraining(int n, int[][] points) {
@@ -149,6 +162,8 @@ public class dp {
     }
 
     // Grid Unique Paths
+    // Question: Given an m x n grid, start from the top-left cell and reach the bottom-right cell.
+    // You can move only right or down. Return the number of unique paths.
     // Time Complexity: O(m * n)
     // Space Complexity: O(m * n)
     public int uniquePaths(int m, int n) {
@@ -176,6 +191,9 @@ public class dp {
     }
     
     // Unique Paths II
+    // Question: Given a grid with obstacles, start from the top-left cell and reach the bottom-right cell.
+    // You can move only right or down. Cells with 1 are blocked.
+    // Return the number of unique valid paths.
     // Time Complexity: O(m * n)
     // Space Complexity: O(m * n)
     public int uniquePathsWithObstacles(int[][] matrix) {
@@ -212,6 +230,8 @@ public class dp {
     }
     
     // Minimum Path Sum In a Grid
+    // Question: Given a grid of non-negative values, start from the top-left cell and reach the bottom-right cell.
+    // You can move only right or down. Return the minimum path sum.
     // Time Complexity: O(m * n)
     // Space Complexity: O(m * n)
     public int minPathSum(int[][] grid) {
@@ -246,6 +266,9 @@ public class dp {
     }
     
     // Triangle
+    // Question: Given a triangle array, start from the top and move to adjacent numbers on the row below.
+    // Return the minimum path sum from top to bottom.
+    // Start from bottom to top as things converge
     // Time Complexity: O(n^2)
     // Space Complexity: O(n^2)
     public int minimumTotal(int[][] triangle) {
@@ -276,6 +299,7 @@ public class dp {
     // =========================
 
     // Subset Sum Equal to Target
+    // Question: Given an array and a target k, check whether there exists a subset with sum equal to k. - dp[i][target]
     // Time Complexity: O(n * k)
     // Space Complexity: O(n * k)
     public boolean subsetSumToK(int[] arr, int k) {
@@ -307,6 +331,7 @@ public class dp {
     }
 
     // Partition Equal Subset Sum
+    // Question: Given an array, check whether it can be partitioned into two subsets with equal sum.
     // Time Complexity: O(n * sum)
     // Space Complexity: O(n * sum)
     public boolean canPartition(int[] nums) {
@@ -369,6 +394,7 @@ public class dp {
     }
 
     // Count Subsets With Sum K
+    // Question: Given an array and a target k, count the number of subsets with sum equal to k.
     // Time Complexity: O(n * k)
     // Space Complexity: O(n * k)
     public int countSubsetsWithSumK(int[] arr, int k) {
@@ -440,6 +466,8 @@ public class dp {
     }
 
     // Minimum Coins
+    // Question: Given coin denominations and an amount, return the minimum number of coins needed to make that amount.
+    // You can use each coin any number of times. If it is not possible, return -1.
     // Time Complexity: O(n * amount)
     // Space Complexity: O(n * amount)
     public int minimumCoins(int[] coins, int amount) {
@@ -460,6 +488,8 @@ public class dp {
                 int pick = 1000000000;
 
                 if (coins[i] <= target) {
+                    // Unbounded: stay at i because the same coin can be reused.
+                    // Bounded/0-1: use i - 1 because the current item can be picked only once.
                     pick = 1 + dp[i][target - coins[i]];
                 }
 
@@ -490,6 +520,8 @@ public class dp {
     }
 
     // Coin Change 2
+    // Question: Given coin denominations and an amount, count the number of ways to make that amount.
+    // You can use each coin any number of times.
     // Time Complexity: O(n * amount)
     // Space Complexity: O(n * amount)
     public int change(int amount, int[] coins) {
@@ -508,6 +540,8 @@ public class dp {
                 int pick = 0;
 
                 if (coins[i] <= target) {
+                    // Unbounded: stay at i because the same coin can be reused.
+                    // Bounded/0-1: use i - 1 because the current item can be picked only once.
                     pick = dp[i][target - coins[i]];
                 }
 
@@ -518,7 +552,7 @@ public class dp {
         return dp[n - 1][amount];
     }
 
-    // Unbounded Knapsack
+    // Unbounded Knapsack -- dp[i][weight] -- same item can be picked unlimited times:
     // Time Complexity: O(n * capacity)
     // Space Complexity: O(n * capacity)
     public int unboundedKnapsack(int[] weights, int[] values, int capacity) {
@@ -564,6 +598,8 @@ public class dp {
     // =========================
 
     // Longest Common Subsequence
+    // Question: Given two strings, return the length of their longest common subsequence.
+    // A subsequence keeps relative order but does not need to be contiguous.
     // Time Complexity: O(n * m)
     // Space Complexity: O(n * m)
     public int longestCommonSubsequence(String text1, String text2) {
@@ -725,6 +761,7 @@ public class dp {
     }
 
     // Distinct Subsequences
+    // Number of ways to form the first j characters of t using the first i characters of s.
     // Time Complexity: O(n * m)
     // Space Complexity: O(n * m)
     public int numDistinct(String s, String t) {
@@ -820,6 +857,8 @@ public class dp {
     // =========================
 
     // Best Time to Buy and Sell Stock
+    // Question: Given stock prices, choose one day to buy and one later day to sell.
+    // Return the maximum profit possible. If no profit is possible, return 0.
     // Time Complexity: O(n)
     // Space Complexity: O(1)
     public int maxProfit(int[] prices) {
@@ -835,7 +874,7 @@ public class dp {
         return maxProfit;
     }
     
-    // Best Time to Buy and Sell Stock II
+    // Best Time to Buy and Sell Stock II -- dp[i][buy]
     // Time Complexity: O(n)
     // Space Complexity: O(n)
     public int maxProfitII(int[] prices) {
@@ -935,6 +974,7 @@ public class dp {
     // =========================
 
     // Longest Increasing Subsequence
+    // Question: Given an array, return the length of the longest strictly increasing subsequence.
     // Time Complexity: O(n^2)
     // Space Complexity: O(n)
     public int longestIncreasingSubsequenceLength(int[] nums) {
@@ -1001,7 +1041,7 @@ public class dp {
         return lis;
     }
 
-    // Longest Increasing Subsequence - Binary Search Approach
+    // Longest Increasing Subsequence - Binary Search Approach -- SKIP
     // Time Complexity: O(n log n)
     // Space Complexity: O(n)
     public int lengthOfLISBinarySearch(int[] nums) {
@@ -1034,7 +1074,7 @@ public class dp {
         return temp.size();
     }
 
-    // Returns the index of the first element
+    // Returns the index of the first element - SKIP
     // that is greater than or equal to target.
     // Time Complexity: O(log n)
     // Space Complexity: O(1)
@@ -1446,7 +1486,7 @@ public class dp {
         return dp[0];
     }
 
-    // Partition Array for Maximum Sum -- HARD
+    // Partition Array for Maximum Sum -- HARD -- dp[i] = maximum sum possible from index i to n - 1
     // Time Complexity: O(n * k)
     // Space Complexity: O(n)
     public int maxSumAfterPartitioning(int[] arr, int k) {
@@ -1484,6 +1524,7 @@ public class dp {
     // Maximum Rectangle Area With All 1's -- HARD (Skip)
 
     // Count Square Submatrices With All Ones
+    // Question: Given a binary matrix, count the total number of square submatrices that contain only 1s.
     // Time Complexity: O(m * n)
     // Space Complexity: O(m * n)
     public int countSquares(int[][] matrix) {
